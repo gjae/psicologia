@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Support\Facades\Hash;
 // use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -26,14 +27,19 @@ class ExampleTest extends TestCase
     public function test_it_registers_psychologist()
     {
         $response = $this->post('/registerpsychologist',[
-            'name'=>'Juan',
+            'name'=>'Miria',
             'lastname'=>'alvarez',
-            'email'=>'juan@asd.co',
-            'therapy_id'=>'1',
+            'email'=>'abc@gmail.com',
+            'phone'=>'20515',
+            'therapy_id'=>'2',
             'personal_phone'=>'012485822',
             'bussiness_phone'=>'0212452152',
             'gender'=>'M',
-            'specialty'=>'Terapia conductual'
+            'id_user'=>7, //el ultimo que se cree
+            'photo'=>'terapista.png',
+            'role'=>3,
+            'specialty'=>'Terapia conductual',
+            'password'=>Hash::make('12345678')  
         ]);
 
         $response->assertStatus(200);

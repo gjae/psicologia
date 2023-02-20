@@ -23,6 +23,7 @@ class UserSeeder extends Seeder
             "email"   => "monterrico@gmail.com",
             'phone'   => '5451520202',
             'gender'    => 'M',
+            'role'    => 1,
             'age'    => '24',
             'password' => Hash::make('01452')  
         ]);
@@ -33,6 +34,7 @@ class UserSeeder extends Seeder
             "email"   => "ypadrino@gmail.com",
             'phone'   => '5451520202',
             'gender'    => 'F',
+            'role'    => 2,
             'age'    => '29',
             'password' => Hash::make('000000')  
         ]);
@@ -42,6 +44,7 @@ class UserSeeder extends Seeder
             "email"   => "pmoya@gmail.com",
             'phone'   => '54515435302',
             'gender'    => 'H',
+            'role'    => 1,
             'age'    => '25',
             'password' => Hash::make('012345')  
         ]);

@@ -22,12 +22,11 @@
                     </ul>
                     <div class="tab-content">
                     <div id="red" class="tab-pane active">
-                    <select>
-                        <option value="0">Terapia de pareja</option>
-                        <option value="1">Terapia personal</option>
-                        <option value="2">Terapia de menores</option>
-                    </select>
-                    <button class="btn btn-info"> Siguiente</button>
+                        <select name="therapy_type" class="form-control">
+                            @foreach($terapias as $terapia) 
+                                <option value="{{$terapia->id}}">{{$terapia->therapy_type}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div id="orange" class="tab-pane">
                     <h1>Cuál es el problema?</h1>

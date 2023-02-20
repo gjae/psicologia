@@ -12,6 +12,8 @@
 @section('body_data', $layoutHelper->makeBodyData())
 
 @section('body')
+
+
     <div class="wrapper">
 
         {{-- Preloader Animation --}}

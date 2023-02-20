@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Therapy;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,11 +16,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('auth.login');
-});
+})->name('inicio');
 
+Route::get('terapias',function(){
+    return Therapy::all();
+})->name('terapias');
+
+Route::resource('usuarios',App\Http\Controllers\UserController::class);
+Route::resource('psicologos',App\Http\Controllers\PsychologistController::class);
+
+/*Route::post('rating',[App\Http\Controllers\PsychologistController::class,'rating']);*/
 Auth::routes();
 
-Route::post('/registerpsychologist',[App\Http\Controllers\Auth\RegisterController::class, 'createPsychologist']);
+Route::post('/registerpsychologist',[App\Http\Controllers\Auth\RegisterController::class, 'createPsychologist'])->name('registerpsychologist');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

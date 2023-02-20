@@ -1,4 +1,7 @@
+@if(auth()->user()->id==2)
+<!--Usuario con rol 2: Administrador.-->
 <aside class="main-sidebar {{ config('adminlte.classes_sidebar', 'sidebar-dark-primary elevation-4') }}">
+
 
     {{-- Sidebar brand logo --}}
     @if(config('adminlte.logo_img_xl'))
@@ -25,3 +28,4 @@
     </div>
 
 </aside>
+@endif

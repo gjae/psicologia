@@ -20,8 +20,15 @@
 
     {{-- Main Content --}}
     <div class="content">
+
+    @if(auth()->user()->role == 1)
+        <center><span class="display-5 text-dark">Hola {{auth()->user()->name}}. Reserva tu cita con uno de nuestros psicólogos</span> </center> 
+    @endif
+
+
         <div class="{{ config('adminlte.classes_content') ?: $def_container_class }}">
             @yield('content')
+
         </div>
     </div>
 

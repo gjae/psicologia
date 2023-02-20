@@ -24,13 +24,11 @@ class User extends Authenticatable
         'gender',
         'age',
         'role',
-        'confirmed',
-        'token',
         'email',
         'password',
     ];
     public function IsPsychologist(){
-    	return $this->belongsTo(Psychologist::class,'id_user','id');
+    	return $this->hasOne(Psychologist::class,'id_user','id');
     }
     public function Reservations(){
     	return $this->belongsTo(Reservations::class,'id_user','id');

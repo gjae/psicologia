@@ -20,6 +20,8 @@
 
 @section('auth_header', __('adminlte::adminlte.login_message'))
 
+
+
 @section('auth_body')
     <form action="{{ $login_url }}" method="post">
         @csrf
@@ -84,6 +86,8 @@
 @stop
 
 @section('auth_footer')
+<center>
+    
     {{-- Password reset link --}}
     @if($password_reset_url)
         <p class="my-0">
@@ -101,4 +105,7 @@
             </a>
         </p>
     @endif
+
+    
+</center>
 @stop
