@@ -2,15 +2,15 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-
+    
     {{-- Base Meta Tags --}}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" type="image/png" href="{{ asset('/images/psicologo-monterrico.png') }}">
-    <link rel="shortcut icon" sizes="192x192" href="{{ asset('/images/psicologo-monterrico.png') }}">
-
+    <link rel="shortcut icon" type="image/png" href="{{ asset('/images/logo.png') }}">
+    <link rel="shortcut icon" sizes="192x192" href="{{ asset('/images/logo.png') }}">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     {{-- Custom Meta Tags --}}
     @yield('meta_tags')
 
@@ -107,7 +107,7 @@
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
 
-<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 </body>
 
 </html>

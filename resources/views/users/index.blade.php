@@ -14,29 +14,45 @@
     }
 </style>
 
-<table id="example" class="table table-striped table-bordered">
-    <thead>
-    <tr>
-        <th>Nombre Completo</th>
-        <th>Teléfono</th>
-        <th>Email</th>
-        <th>Edad</th>
-        <th>Género</th>
-    </tr>
-</thead>
-@foreach($users as $user)
-<tbody>
-    <tr>
-        <td>{{$user->name}} {{$user->lastname}}</td>
-        <td>{{$user->phone}}</td>
-        <td>{{$user->email}}</td>
-        <td>{{$user->age}}</td>
-        <td>{{$user->gender}}</td>
-    </tr>
-</tbody>
-@endforeach
+<div class="card">
+    <div class="card-header">
+        <h1>Usuarios registrados</h1>
+    </div>
+    <div class="card-body">
+        <table id="example" class="table table-responsive  table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Nombre Completo</th>
+                    <th>Teléfono</th>
+                    <th>Email</th>
+                    <th>Edad</th>
+                    <th>Género</th>
+                    <th>Rol</th>
+                </tr>
+            </thead>
+            @foreach($users as $user)
+            <tbody>
+                <tr>
+                    <td>{{$user->name}} {{$user->lastname}}</td>
+                    <td>{{$user->phone}}</td>
+                    <td>{{$user->email}}</td>
+                    <td>{{$user->age}}</td>
+                    <td>{{$user->gender}}</td>
+                    
+                    <td> @if($user->role == 1) 
+                            Paciente 
+                        @elseif($user->role == 3) 
+                            Psicologo 
+                        @elseif($user->role == 2) 
+                            Administrador 
+                        @endif</td>
+                </tr>
+            </tbody>
+            @endforeach
+        </table>
+    </div>
+</div>
 
-</table>
 
 
     @section('js')

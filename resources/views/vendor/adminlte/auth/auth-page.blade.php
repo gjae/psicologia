@@ -1,14 +1,15 @@
 @extends('adminlte::master')
 <style>
-    body{
+    .login-page{
         
-        /*background-size: cover;*/
+        background-image: url("../public/images/terapista.jpg");
+        background-repeat: no-repeat;
+            background-size: cover;
+        background-position: center ;
+        justify-content: flex-start !important;
     }
-
     .left{
         height:auto;
-        background-image: url("../public/images/terapista.jpg");background-position: center;
-        background-repeat: no-repeat;
     }
 </style>
 @php( $dashboard_url = View::getSection('dashboard_url') ?? config('adminlte.dashboard_url', 'home') )
@@ -28,45 +29,44 @@
 
 @section('body')
     <div class="container-fluid" >
-<div class="row">
-    <div class="col-lg-12">
-        <center>
-            @if(session()->has('success'))
-                <div class="alert alert-success">
-                    {{ session()->get('success') }}
-                </div>
-            @endif
-        </center>
-    </div>
-</div>
-
-
-        {{-- Logo --}}
         <div class="row">
-            <div class="col-lg-12" style="background-color:#fff;">
+            <div class="col-lg-12">
                 <center>
-                <a href="{{ $dashboard_url }}">
-                <img src="{{ asset('images/psicologo-monterrico.png') }}">
-                </a>
+                    @if(session()->has('success'))
+                        <div class="alert alert-success">
+                            {{ session()->get('success') }}
+                        </div>
+                    @endif
                 </center>
             </div>
-            
         </div>
-        <div class="row flex">
-            <div class="col-md-6">
-                 <img class="im-lat" src="{{ asset('images/terapista.jpg') }}">
-            </div>
-            <div class="col-md-6 m" align="right">
-                <div class="{{ $auth_type ?? 'login' }}-box p-4">
 
+        <div>
+
+            <div class="col">
+                {{-- Logo --}}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <center>
+                        <a href="{{ $dashboard_url }}">
+                        <img src="{{ asset('images/psicologo-monterrico.png') }}">
+                        </a>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="row">
+                <div class="col-lg-4"></div>
+                <div class="col-lg-4">
+                    <!--img class="im-lat" src="{{ asset('images/terapista.jpg') }}"-->
                     {{-- Card Box --}}
                     <div class="card {{ config('adminlte.classes_auth_card', 'card-outline card-primary') }}">
-
                         {{-- Card Header --}}
                         @hasSection('auth_header')
                             <div class="card-header {{ config('adminlte.classes_auth_header', '') }}">
                                 <h3 class="card-title float-none text-center">
-                                    @yield('auth_header')
+                                    Inicia sesion
                                 </h3>
                             </div>
                         @endif
@@ -84,8 +84,8 @@
                         @endif
 
                     </div>
-
                 </div>
+                <div class="col-lg-4"></div>
             </div>
         </div>
     </div>

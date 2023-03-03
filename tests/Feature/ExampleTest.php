@@ -35,7 +35,7 @@ class ExampleTest extends TestCase
             'personal_phone'=>'012485822',
             'bussiness_phone'=>'0212452152',
             'gender'=>'M',
-            'id_user'=>7, //el ultimo que se cree
+            'id_user'=>4, //el ultimo que se cree
             'photo'=>'terapista.png',
             'role'=>3,
             'specialty'=>'Terapia conductual',

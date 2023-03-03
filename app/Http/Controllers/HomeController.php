@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Psychologist;
+use App\Models\Schedules;
+use App\Models\Reservations;
 use Illuminate\Http\Request;
 use App\Models\Therapy;
 
@@ -25,6 +28,9 @@ class HomeController extends Controller
     public function index()
     {
         $terapias=Therapy::all();
-        return view('home',compact('terapias'));
+        $horarios=Schedules::all();
+        $psicologos=Psychologist::all();
+        $reservations= Reservations::all();
+        return view('home',compact('terapias','horarios','psicologos'));
     }
 }

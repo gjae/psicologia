@@ -1,9 +1,8 @@
-<nav class="main-header navbar
+<nav class=" navbar
     {{ config('adminlte.classes_topnav_nav', 'navbar-expand-md') }}
     {{ config('adminlte.classes_topnav', 'navbar-white navbar-light') }}">
 
     <div class="{{ config('adminlte.classes_topnav_container', 'container') }}">
-
         {{-- Navbar brand logo --}}
         @if(config('adminlte.logo_img_xl'))
             @include('adminlte::partials.common.brand-logo-xl')
@@ -30,6 +29,7 @@
         </div>
 
         {{-- Navbar right links --}}
+
         <ul class="navbar-nav ml-auto order-1 order-md-3 navbar-no-expand">
             {{-- Custom right links --}}
             @yield('content_top_nav_right')

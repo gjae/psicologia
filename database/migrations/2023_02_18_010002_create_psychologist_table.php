@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('bussiness_phone');
             $table->string('specialty');
             $table->string('photo')->nullable();
+            $table->integer('ranking')->nullable();
             $table->integer('therapy_id')->unsigned();
             $table->integer('id_user')->unsigned();
             $table->timestamps();

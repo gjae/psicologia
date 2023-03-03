@@ -1,9 +1,10 @@
 
 
-<nav class="main-header navbar
+<nav class=" navbar
     {{ config('adminlte.classes_topnav_nav', 'navbar-expand') }}
     {{ config('adminlte.classes_topnav', 'navbar-white navbar-light') }}">
 
+   
     {{-- Navbar left links --}}
     <ul class="navbar-nav">
         {{-- Left sidebar toggler link --}}
@@ -38,5 +39,15 @@
             @include('adminlte::partials.navbar.menu-item-right-sidebar-toggler')
         @endif
     </ul>
+
+     <span class="text-primary"> <i>
+        @if(Auth::user()->role == 1) 
+                Paciente 
+            @elseif(Auth::user()->role == 3) 
+            
+                Psicologo 
+            @elseif(Auth::user()->role == 2) 
+                Administrador 
+            @endif  </i></span>
 
 </nav>

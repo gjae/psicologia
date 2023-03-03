@@ -1,3 +1,4 @@
+@if(auth()->user()->role==2)
 <li class="nav-item">
     <a class="nav-link" data-widget="pushmenu" href="#"
         @if(config('adminlte.sidebar_collapse_remember'))
@@ -13,3 +14,4 @@
         <span class="sr-only">{{ __('adminlte::adminlte.toggle_navigation') }}</span>
     </a>
 </li>
+@endif

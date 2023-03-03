@@ -59,21 +59,20 @@ class RegisterController extends Controller
             'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'age' => ['required',new AgeValidator(),'digits:2'],
-            'phone' => ['required','int','digits:7']
+            'age' => ['required','digits:2'],
+            'phone' => ['required','numeric:7']
         ],$messages = 
         [
             'required' => 'El campo :attribute es requerido.',
             
             'max'      => 'El campo :attribute debe contener hasta :max caracteres.',
             
-            'digits'      => 'El campo :attribute debe contener :digits caracteres.',
+            'numeric'      => 'El campo :attribute debe contener :numeric caracteres.',
 
             'email'      => 'El correo ya ha sido registrado por otra persona.',
             
             'alpha'    => 'El campo :attribute debe contener solo caracteres alfabéticos.',
             
-            'age'    => 'Debe ser mayor de 18 años',
             'integer'  => 'El campo :attribute debe contener solo caracteres numéricos.',
             
         ]);
@@ -104,25 +103,22 @@ class RegisterController extends Controller
     }
     protected function createPsychologist(Request $request)
     {   
-        //dd($request);
-        //dd($request['photo']);
-        //request()->file('photo');
-        $validator = Validator::make($request->all(), [
+
+       $validator = Validator::make($request->all(), [
             
             'name'   => 'required|max:30',
             
             'lastname' => 'required|max:30',
             
             'genre'   => 'required|max:1',
-            //'age'   => 'required|digits:2|min:18',
             
-            'phone' => ['required','int','size:7'],
-            'age' => 'required|digits_between:18,99',
+            'phone' => ['required','numeric','size:7'],
+            'age' => 'required',
             'email'    => 'required|max:50|unique:users,email',
              
             'password' => 'required|max:30',
             
-            'photo' => 'required', //|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'photo' => 'required',
             
         ],$messages = 
         [
@@ -133,12 +129,10 @@ class RegisterController extends Controller
             'alpha'    => 'El campo :attribute debe contener solo caracteres alfabéticos.',
             
             'integer'  => 'El campo :attribute debe contener solo caracteres numéricos.',
-            'age.digits_between'    => 'Debe tener minimo 18 años',
-            'integer'  => 'El campo :attribute debe contener solo caracteres numéricos.',
 
             'image'  => 'El archivo debe ser una imagen.',
         ]);
-
+       
         if(!User::where('email',$request['email'])->exists())
         {
             User::create([
@@ -148,7 +142,7 @@ class RegisterController extends Controller
             'phone' => $request['personal_phone'],
             'age' => $request['age'],
             'gender' => $request['gender'],
-            'role' => 3, //Paciente
+            'role' => 3, //Psicologo
             'password' => Hash::make($request['password']),
         ]);
         $id_user= User::latest()->first()->id;
@@ -156,21 +150,22 @@ class RegisterController extends Controller
          $imagen = $request->file("photo");
         $nombreimagen = Str::slug("profile-").".".$imagen->guessExtension();
         $ruta = public_path();
+        $imagen->getRealPath();
         copy($imagen->getRealPath(),$ruta.'/images/'.$id_user.$nombreimagen);
-        $url_final= $ruta.'/images/'.$nombreimagen;
+        $url_final= '/images/'.$id_user.$nombreimagen;
 
             Psychologist::create(
             [
                 'therapy_id' => $request['therapy_id'],
                 'id_user' => $id_user,
                 'photo' => $url_final,
+                'ranking' => 0,
                 'personal_phone' => $request['personal_phone'],
                 'bussiness_phone' => $request['bussiness_phone'],
                 'specialty' => $request['specialty']
             ]
             );
         }else{
-            //el usuario ya existe.
             return back()->with('error', 'El psicologo ya está registrado');
         }
                 

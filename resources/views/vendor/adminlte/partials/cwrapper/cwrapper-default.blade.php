@@ -1,4 +1,17 @@
 @inject('layoutHelper', 'JeroenNoten\LaravelAdminLte\Helpers\LayoutHelper')
+<style>
+    .nav li{
+        padding:10px;
+    }
+    .content-wrapper{
+        
+        background-image: url("../public/images/terapista.jpg");
+        background-repeat: no-repeat;
+            background-size: cover;
+        background-position: center ;
+        justify-content: flex-start !important;
+    }
+</style>
 
 @if($layoutHelper->isLayoutTopnavEnabled())
     @php( $def_container_class = 'container' )
@@ -7,7 +20,18 @@
 @endif
 
 {{-- Default Content Wrapper --}}
-<div class="content-wrapper {{ config('adminlte.classes_content_wrapper', '') }}">
+@if(auth()->user()->role==1 || auth()->user()->role==3 )
+<body style="background-image: url('../public/images/terapista.jpg');background-repeat: no-repeat;
+            background-size: cover;
+        background-position: center ;
+        justify-content: flex-start !important;
+        height:100%;">
+    
+<div class="container-fluid monkey">
+@else
+<div class="content-wrapper  {{ config('adminlte.classes_content_wrapper', '') }}">
+
+@endif
 
     {{-- Content Header --}}
     @hasSection('content_header')
@@ -19,13 +43,7 @@
     @endif
 
     {{-- Main Content --}}
-    <div class="content">
-
-    @if(auth()->user()->role == 1)
-        <center><span class="display-5 text-dark">Hola {{auth()->user()->name}}. Reserva tu cita con uno de nuestros psicólogos</span> </center> 
-    @endif
-
-
+    <div class="container">
         <div class="{{ config('adminlte.classes_content') ?: $def_container_class }}">
             @yield('content')
 

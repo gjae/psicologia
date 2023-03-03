@@ -9,7 +9,7 @@ class Psychologist extends Model
 {
     use HasFactory;
     protected $table= 'psychologist';
-    protected $fillable = ['id_user','name','lastname','email','therapy_id','role','personal_phone','bussiness_phone','gender','photo','specialty'];
+    protected $fillable = ['id_user','name','lastname','email','therapy_id','role','ranking','personal_phone','bussiness_phone','gender','photo','specialty'];
 
     public function WorksAtHours(){
     	return $this->hasMany(Schedules::class,'id_psychologist','id');

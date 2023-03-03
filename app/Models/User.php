@@ -31,6 +31,6 @@ class User extends Authenticatable
     	return $this->hasOne(Psychologist::class,'id_user','id');
     }
     public function Reservations(){
-    	return $this->belongsTo(Reservations::class,'id_user','id');
+    	return $this->hasOne(Reservations::class,'id_user','id');
     }
 }
