@@ -53,7 +53,9 @@ Route::post('evaluar/{id}',[App\Http\Controllers\AdminController::class,'evaluar
 
 
 Route::resource('psicologos',App\Http\Controllers\PsychologistController::class);
+Route::get('registrar_horarios',[App\Http\Controllers\PsychologistController::class,'registrar_horarios'])->name('registrar_horarios_index');
 
+Route::post('registrar_horarios',[App\Http\Controllers\PsychologistController::class,'registrar_horarios_store'])->name('registrar_horarios_post');
 
 Auth::routes();
 

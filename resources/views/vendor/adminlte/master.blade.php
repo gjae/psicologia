@@ -11,6 +11,7 @@
     <link rel="shortcut icon" type="image/png" href="{{ asset('/images/logo.png') }}">
     <link rel="shortcut icon" sizes="192x192" href="{{ asset('/images/logo.png') }}">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+   
     {{-- Custom Meta Tags --}}
     @yield('meta_tags')
 

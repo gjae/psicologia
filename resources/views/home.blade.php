@@ -2,6 +2,9 @@
 @section('content')
 
 <style>
+    .icon{
+        font-size:60px;
+    }
     .nav li{
         padding:10px;
     }
@@ -14,7 +17,19 @@
     .callout {
         border-color:red;
     }
-
+    a{
+        color:#3c3c3c;
+        text-decoration:none;
+    }
+    .active a{
+        color:#fff !important;
+    }
+    .active{
+        background-color:#007Bff;
+        border-radius:5px 5px 0px 0px;
+        font-weight: bold;
+        
+    }
 
     @media screen and (max-width: 600px) {
        table {
@@ -55,6 +70,7 @@
         return {
             reserved_pane:false,
             message:false,
+            activeTab: 'tab1',
             open_problem_link:false,
             open_consejos_link:false,
             open_reservas_link:false,
@@ -249,7 +265,7 @@
     }
 </script>
 
-@if(auth()->user()->role == 1)
+@if(auth()->user()->hasRole('paciente'))
 
   
 <div class="container" x-data="cita()" x-init="reserva_gratuita({{auth()->user()->id}})">
@@ -300,44 +316,25 @@
                 <div class="card-header"><h2>Diagnóstico</h2></div>
                     <div class="card-body">
                         <ul class="nav nav-tabs" data-tabs="tabs">
-                            <li class="active">
-                                <a href="#red" id="tipo_terapia_pane_link" data-toggle="tab" x-on:click="tipo_terapia_pane =  true,tipo_problema_pane =  false,
-                                consejos_pane =  false,
-                                reservas_pane =  false,whatsapp=false,
-                    whatsapp_helpgroup=false">Tipo de terapia</a>
+                            <li data-toggle="tab" :class="{'active': activeTab === 'tab1'}">
+                                <a href="#red" id="tipo_terapia_pane_link"  x-on:click.prevent="activeTab = 'tab1'" >Tipo de terapia</a>
                             </li>
-                            <li>
+                            <li data-toggle="tab" :class="{'active': activeTab==='tab2'}">
                                 <a href="#orange"                            
-                                data-toggle="tab" x-on:click="tipo_terapia_pane =  false,tipo_problema_pane =  true,
-                                consejos_pane =  false,
-                                reservas_pane =  false,whatsapp=false,
-                    whatsapp_helpgroup=false" :class="{'hidden': !open_problem_link}">Problema a tratar</a>
+                                 x-on:click.prevent="activeTab= 'tab2'" >Problema a tratar</a>
                             </li>
-                            <li>
-                                <a href="#yellow" data-toggle="tab" x-on:click="tipo_terapia_pane =  false,tipo_problema_pane =  false,
-                                consejos_pane =  true,
-                                reservas_pane =  false,whatsapp=false,
-                    whatsapp_helpgroup=false" :class="{'hidden': !open_consejos_link}">Preguntas</a>
+                            <li data-toggle="tab" :class="{'active': activeTab === 'tab3'}">
+                                <a href="#yellow"  x-on:click.prevent="activeTab = 'tab3'">Preguntas</a>
                             </li>
-                            <li>
-                                <a href="#green" data-toggle="tab" x-on:click="tipo_terapia_pane =  false,tipo_problema_pane =  false,
-                                consejos_pane =  false,
-                                reservas_pane =  true,whatsapp=false,
-                    whatsapp_helpgroup=false" :class="{'hidden': !open_reservas_link}">Reserva</a></li>
-                    
-                            <li>
-                                <a href="#resume" data-toggle="tab" x-on:click="tipo_terapia_pane =  false,tipo_problema_pane =  false,
-                                consejos_pane =  false,
-                                reservas_pane =  false,
-                                whatsapp=false,
-                                whatsapp_helpgroup=false" :class="{'hidden': !open_resumen_link}">Resumen</a></li>
+                            <li data-toggle="tab"  :class="{'active': activeTab === 'tab4'}">
+                                <a href="#green" x-on:click.prevent="activeTab = 'tab4'">Reserva</a></li>
                         </ul>
 
 
                     <!--div class="tab-content"-->
                     <div>
-                        <div id="red" class="tab-pane active" x-show="tipo_terapia_pane">
-                            <select name="therapy_type" class="form-control" x-on:change="problema(),open_problem_link=true" x-model="tipo_terapia_id">
+                        <div id="red" class="tab-pane" x-show="activeTab === 'tab1'" >
+                            <select name="therapy_type" class="form-control" x-on:change="problema(),open_problem_link=true,activeTab= 'tab2'" x-model="tipo_terapia_id" @click="$nextTick(() => $refs.tab2.focus())">
                             <option value="#">Seleccione una opcion</option>    
                             @foreach($terapias as $terapia) 
                                     <option value="{{$terapia->id}}">{{$terapia->therapy_type}}</option>
@@ -345,10 +342,10 @@
                             </select>
                         </div>
 
-                        <div id="orange" x-show="tipo_problema_pane" class="tab-pane">
+                        <div id="orange" x-show="activeTab=== 'tab2'" x-ref="tab2" class="tab-pane">
                         <h1>Cuál es el problema?</h1>
 
-                        <select name="tipo_problema" x-on:change="consejos(),open_consejos_link=true" id="" class="form-control @error('tipo_problema') is-invalid @enderror" x-model="tipo_problema_id">
+                        <select name="tipo_problema" x-on:change="activeTab= 'tab3'"  @click="$nextTick(() => $refs.tab3.focus())" id="" class="form-control @error('tipo_problema') is-invalid @enderror" x-model="tipo_problema_id">
                             <option value="#">Seleccione una opcion</option>       
                             <template x-for="tipo_problema in problemas_bag" :key="tipo_problema.id">
                                 <option :value="tipo_problema.id" x-text="tipo_problema.problem"></option>
@@ -356,9 +353,9 @@
                         </select>
                     </div>
 
-                    <div id="yellow" class="tab-pane" x-show="consejos_pane">
+                    <div id="yellow" class="tab-pane" x-show="activeTab=== 'tab3'" x-ref="tab3" class="tab-pane">
                         <h1>Que busca con ésta sesión?</h1>
-                        <select name="motivo_consulta" class="form-control" id="motivo_consulta" x-model="motivo_consulta" x-on:change="sugerencia(),open_reservas_link=true">
+                        <select name="motivo_consulta" class="form-control" id="motivo_consulta" x-model="motivo_consulta" x-on:change="activeTab= 'tab4'" @click="$nextTick(() => $refs.tab4.focus())">
                             <option> Seleccione una opción</option>    
                             <option value="consejo">Consejo</option>
                             <option value="proceso psicológico">Proceso psicológico</option>
@@ -367,27 +364,34 @@
                         </select>
                     </div>
 
-                    <div id="green" class="tab-pane" x-show="reservas_pane">
+                    <div id="green" class="tab-pane" x-show="activeTab=== 'tab4'" x-ref="tab4" x-transition>
+                            <div class="container" >
+                                <center>
+                                    <h1 @click="$dispatch('mi_evento', heroes)">Reserva tu terapia</h1>
+                                    <h5> Te recomendamos nuestros tres mejores terapeutas </h5>
+                                </center>
+                            </div>
                         
-                        
-                            <center><h1 @click="$dispatch('mi_evento', heroes)">Reserva tu terapia</h1></center>
-
                         <form @submit.prevent="ReservaForm">
-                        @csrf
-                            <h3>Paso 1. Selecciona a tu terapeuta</h3>
-                                <div class="row">
+                            @csrf
+                            <hr>
+                                <div class="row p10">
+                                    <div class="col-lg-12 p-10"><h4 class="text-primary">Paso 1. Selecciona a tu terapeuta</h4></div>
                                     @foreach($psicologos as $psicologo)
-                                        <div class="col-lg-6 p3">
-                                            <a href="#" @click="formData.especialista='{{$psicologo->personalInfo->name}} {{$psicologo->personalInfo->lastname}}'"><img src="{{ asset($psicologo->photo) }}" class="hover-img img-circle" alt="" height="52" width="52" x-on:click="psicologos({{$psicologo->id}}),message= true"></a>
-                                            <h4><i>{{$psicologo->personalInfo->name}} {{$psicologo->personalInfo->lastname}}</i></h4>
+                                        <div class="col-lg-4 p3">
+                                            <center>
+                                                <a href="#" @click="formData.especialista='{{$psicologo->personalInfo->name}} {{$psicologo->personalInfo->lastname}}'"><img src="{{ asset($psicologo->photo) }}" class="hover-img img-circle" alt="" height="52" width="52" x-on:click="psicologos({{$psicologo->id}}),message= true"></a>
+                                                 <h4><i>{{$psicologo->personalInfo->name}} {{$psicologo->personalInfo->lastname}}</i></h4>
+                                            </center>
+                                           
                                         </div> 
                                     @endforeach
                                 </div>
                             </center>
-
-                            <h3>Paso 2. Que día y en que horario desea tener su consulta?</h3>
-                            <div class="row">
-                                <div class="col-lg-6">
+                                <hr>
+                            <div class="row p10">
+                                <h4 class="text-primary">Paso 2. Que día y en que horario desea tener su consulta?</h4>
+                                <div class="container col-lg-6">
                                     <label x-show="message">Fecha de consulta</label>
                                     <input type="date" class="form-control" x-model="formData.appointment_date" min = "<?php echo date("Y-m-d",strtotime(date("Y-m-d")));?>">
                                 </div>
@@ -396,6 +400,9 @@
                             
                                     <select name="horario" class="form-control" id="horario" x-model="horario" @change="resume_pane= true">
                                         <option value="#">Seleccione una opcion</option>
+                                        <template x-if="horarios.length === 0">
+                                            <option value="#">Este psicólogo no ha registrado ningún horario de atención</option>
+                                        </template>
                                         <template x-for="horario in horarios" :key="horario.id">
                                             <option :value="horario.id" x-text="horario.schedule" @click="horario_consulta: horario.schedule"></option>
                                         </template>
@@ -403,7 +410,8 @@
                                 </div>
                             </div>
                             
-                            <div id="resume_pane" x-show="resume_pane">
+                            <hr>
+                            <div id="resume_pane" x-show="resume_pane" >
                                 <h1>Resumen</h1>
 
                                 <div class="card">
@@ -417,26 +425,28 @@
                                     </div>
                                 </div>
                             </div>
-                        
+                            <hr>
                             {{-- Register button --}}
-                            <button type="submit" class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}" @click="ReservaForm()" :disabled="disableButton" >
-                                <span class="fas fa-user-plus"></span>
-                                Reservar
-                            </button>
+                            <div class="container-fluid">
+                                <button type="submit" class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}" @click="ReservaForm()" :disabled="disableButton" >
+                                    <span class="fas fa-bookmark"></span>
+                                    Reservar
+                                </button>
+                            </div>
                         </form>
                     </div>
                     
                     <div class="whatsapp">
                         <blockquote class="blockquote" x-show="whatsapp">
                         <h1 class="h2" >Escríbenos a nuestro whatsapp oficial para obtener un consejo</h1> 
-                        <i x-show="whatsapp"><h3> Haz click en la imagen para llevarte a whatsapp web</h3></i>
+                        <i x-show="whatsapp"><h4> Haz click en la imagen para llevarte a whatsapp web</h4></i>
                         </blockquote>
                         <center><a href="https://wa.link/o9fv1e"><img src="{{asset('images/whatsapp.png')}}" alt="Escríbenos a nuestro whatsapp" srcset="" x-show="whatsapp" width="120"></a>
 
 
                         <blockquote class="blockquote" x-show="whatsapp_helpgroup">
                         <h1 class="h2" >Escríbenos a nuestro grupo de ayuda de Whatsapp</h1>    
-                        <i x-show="whatsapp_helpgroup"><h3> Haz click en la imagen para llevarte a whatsapp web</h3></i>
+                        <i x-show="whatsapp_helpgroup"><h4> Haz click en la imagen para llevarte a whatsapp web</h4></i>
                         </blockquote>
                         <a href="https://wa.link/34z7ns"><img src="{{asset('images/whatsapp.png')}}" alt="Escríbenos a nuestro whatsapp" srcset="" x-show="whatsapp_helpgroup" width="120"></a>
                         </center>
@@ -476,81 +486,94 @@
     </template>
 </div>
 
-@elseif(auth()->user()->role == 2)
+@elseif(auth()->user()->hasRole('administrador') )
 
 
-<h2>Estadísticas generales</h2>
 <div class="row">
-    
-    <div class="col-lg-4">
+    <div class="card col-lg-12">
+        <div class="card-header">
+            
+            <h2>Estadísticas generales</h2>
+        </div>
+        <div class="card-body">
+            <div>
         <div class="small-box bg-gradient-success">
             <div class="inner">
-                <h3>44</h3>
+                <h3>{{$reservaciones}}</h3>
                 <p>Reservaciones totales</p>
             </div>
             <div class="icon">
                 <i class="fas fa-user-plus"></i>
             </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
+            <a href="{{route('reservas.index')}}" class="small-box-footer">
+                Ver <i class="fas fa-arrow-circle-right"></i>
             </a>
         </div>
     </div>
 
-    <div class="col-lg-4">
+    <div>
         <div class="small-box bg-gradient-success">
             <div class="inner">
-                <h3>44</h3>
+                <h3>{{$psicologos_cant}}</h3>
                 <p>Psicólogos registrados</p>
             </div>
             <div class="icon">
                 <i class="fas fa-user-plus"></i>
             </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
+            <a href="{{route('psicologos.index')}}" class="small-box-footer">
+                Ver <i class="fas fa-arrow-circle-right"></i>
             </a>
         </div>
     </div>
 
-    <div class="col-lg-4">
+    <div>
         <div class="small-box bg-gradient-success">
             <div class="inner">
-                <h3>44</h3>
+                <h3>{{$usuarios}}</h3>
                 <p>Usuarios registrados</p>
             </div>
             <div class="icon">
                 <i class="fas fa-user-plus"></i>
             </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
+            <a href="{{route('usuarios.index')}}" class="small-box-footer">
+                Ver <i class="fas fa-arrow-circle-right"></i>
             </a>
         </div>
     </div>
+        </div>
+    </div>
+    
 </div>
-@elseif(auth()->user()->role == 3)
-    <div class="small-box bg-gradient-success">
-        <div class="inner">
-            <h3>44</h3>
-            <p>Citas pendientes</p>
+@elseif(auth()->user()->hasRole('psicologo'))
+<div class="row">
+    <div class="col-lg-4">
+        <div class="small-box bg-gradient-success">
+            <div class="inner">
+                <h3>{{$reservaciones}}</h3>
+                <p>Citas pendientes</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user-plus"></i>
+            </div>
+            <a href="{{route('reservas.index')}}" class="small-box-footer">
+                Ver <i class="fas fa-arrow-circle-right"></i>
+                Aquí en reservas.index hacer lo mismo. La consulta con los 4 whereHas para que dependiendo del usuario autenticado retorne los datos de la consulta
+            </a>
         </div>
-        <div class="icon">
-            <i class="fas fa-user-plus"></i>
-        </div>
-        <a href="#" class="small-box-footer">
-            More info <i class="fas fa-arrow-circle-right"></i>
-        </a>
     </div>
-
-    <div class="info-box">
-        <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
-        <div class="info-box-content">
-            <span class="info-box-text">Puntuación</span>
-            <span class="info-box-number">8</span>
+    <div class="col-lg-4 offset-3">
+        <div class="info-box">
+            <i class="far fa-star fa-lg icon"></i>
+            <div class="info-box-content">
+                <span class="info-box-text">Puntuación</span>
+                <h1 class="info-box-number text-danger">8</h1>
+            </div>
         </div>
-
-        <button class="btn btn-info"> Registrar nuevo horario de atención</button>
-        <button class="btn btn-info"> Actualizar mi información</button>
     </div>
+</div>
+    
+
+    
 @endif
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

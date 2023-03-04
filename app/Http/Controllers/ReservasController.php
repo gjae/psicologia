@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Reservations;
+use Illuminate\Support\Facades\Auth;
 
 class ReservasController extends Controller
 {
@@ -17,7 +18,13 @@ class ReservasController extends Controller
         //
 
 
-        $reservations= Reservations::all();
+        $reservations='';
+        if(Auth::user()->hasRole('administrador')){
+            $reservations=Reservations::all();
+        }
+        if(Auth::user()->hasRole('psicologo')){
+            $reservations=Reservations::whereHas('schedule',function($q){ $q-> whereHas('AtThisHourPsyc',function($l){ $l->whereHas('personalInfo',function($m){ $m ->where('id',Auth::user()->id); }); } ); } )->get();
+        }
         return view('reservaciones',compact('reservations'));
     }
 

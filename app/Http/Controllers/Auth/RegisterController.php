@@ -98,7 +98,7 @@ class RegisterController extends Controller
             'age' => $data['age'],
             'role' => 1, //Paciente
             'password' => Hash::make($data['password']),
-        ]);
+        ])->assignRole('paciente');
 
     }
     protected function createPsychologist(Request $request)
@@ -144,7 +144,7 @@ class RegisterController extends Controller
             'gender' => $request['gender'],
             'role' => 3, //Psicologo
             'password' => Hash::make($request['password']),
-        ]);
+        ])->assignRole('psicologo');
         $id_user= User::latest()->first()->id;
 
          $imagen = $request->file("photo");

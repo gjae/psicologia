@@ -293,24 +293,34 @@ return [
     'menu' => [
 
         [
-            'text' => 'Usuarios',
-            'route'  => 'usuarios.index',
-            'icon'        => 'fa fa-users',
+            'text'      => 'Usuarios',
+            'route'     => 'usuarios.index',
+            'icon'      => 'fa fa-users',
+            'can'       => 'usuarios.index'
         ],
         [
-            'text'        => 'Psicologos',
-            'route'         => 'psicologos.index',
-            'icon'        => 'fa fa-graduation-cap',
+            'text'      => 'Psicologos',
+            'route'     => 'psicologos.index',
+            'icon'      => 'fa fa-graduation-cap',
+            'can'       => 'psicologos.index'
         ],
         [
-            'text'        => 'Puntuar psicologos',
-            'route'         => 'evaluar_psicologo',
-            'icon'        => 'fa fa-star',
+            'text'      => 'Puntuar psicologos',
+            'route'     => 'evaluar_psicologo',
+            'icon'      => 'fa fa-star',
+            'can'       => 'evaluar'
+        ],
+        
+        [
+            'text'      => 'Registrar horarios',
+            'route'     => 'registrar_horarios_index',
+            'icon'      => 'fa fa-clock',
+            'can'       => 'registrar_horarios_index'
         ],
         [
-            'text'        => 'Reservaciones',
-            'route'         => 'reservas.index',
-            'icon'        => 'fa fa-bookmark'
+            'text'      => 'Reservaciones',
+            'route'     => 'reservas.index',
+            'icon'      => 'fa fa-bookmark'
         ],
     ],
 

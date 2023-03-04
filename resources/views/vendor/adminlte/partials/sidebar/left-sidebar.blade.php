@@ -1,4 +1,5 @@
-@if(auth()->user()->id==2)
+@if(auth()->user()->hasRole('administrador') || auth()->user()->hasRole('psicologo'))
+    
 <!--Usuario con rol 2: Administrador.-->
 <aside class="main-sidebar {{ config('adminlte.classes_sidebar', 'sidebar-dark-primary elevation-4') }}">
 

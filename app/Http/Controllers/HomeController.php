@@ -7,6 +7,8 @@ use App\Models\Schedules;
 use App\Models\Reservations;
 use Illuminate\Http\Request;
 use App\Models\Therapy;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -27,10 +29,21 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $reservaciones='';
+        if(Auth::user()->hasRole('administrador')){
+            $reservaciones=count(Reservations::all());
+        }
+        if(Auth::user()->hasRole('psicologo')){
+            $reservaciones=count($reserva1= Reservations::whereHas('schedule',function($q){ $q-> whereHas('AtThisHourPsyc',function($l){ $l->whereHas('personalInfo',function($m){ $m ->where('id',Auth::user()->id); }); } ); } )->get());
+        }
+        //dd($reservaciones);
+        
+        $usuarios=count(user::all());
         $terapias=Therapy::all();
-        $horarios=Schedules::all();
-        $psicologos=Psychologist::all();
-        $reservations= Reservations::all();
-        return view('home',compact('terapias','horarios','psicologos'));
+        $horarios=count(Schedules::all());
+        $psicologos=Psychologist::latest('ranking')->take(3)->get();
+        $psicologos_cant=count(Psychologist::all());
+        //$reservations= Reservations::all();
+        return view('home',compact('terapias','horarios','psicologos','reservaciones','usuarios','psicologos_cant'));
     }
 }

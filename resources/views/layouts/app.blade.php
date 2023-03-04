@@ -14,12 +14,6 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
-    <!-- import CSS -->
-<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-<!-- import JavaScript -->
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
-
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
