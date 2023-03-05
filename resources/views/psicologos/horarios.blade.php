@@ -32,13 +32,24 @@
 				        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 			        },
 			        body: JSON.stringify(this.horario)
-			    })
+			    }).then(r => r.json())
 			    .then((data) => {
+                    console.log(data)
+                    if(data==1){
                         Swal.fire({
                         icon: 'success',
                         title: 'Listo!',
                         })
                         this.buttonDisabled= true;
+                    }
+                    if(data==0){
+                        Swal.fire({
+                        icon: 'error',
+                        title: 'Algo salió mal',
+                        text: 'Asegurate de haber colocado un horario'
+                        })
+                    }
+                        
                 })
                 .catch((data)=> console.log('Error'))
                 }
@@ -56,6 +67,8 @@
                 <h2>Registrar horarios</h2>
             </div>
             <div class="card-body">
+               
+
                 <form @submit.prevent="registrarHorario">
                     @csrf
                     <h3>En que horario prestarás servicio?</h3>

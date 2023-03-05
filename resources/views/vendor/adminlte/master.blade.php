@@ -8,10 +8,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    
     <link rel="shortcut icon" type="image/png" href="{{ asset('/images/logo.png') }}">
     <link rel="shortcut icon" sizes="192x192" href="{{ asset('/images/logo.png') }}">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-   
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     {{-- Custom Meta Tags --}}
     @yield('meta_tags')
 
@@ -21,6 +22,15 @@
         @yield('title', config('adminlte.title', 'AdminLTE 3'))
         @yield('title_postfix', config('adminlte.title_postfix', ''))
     </title>
+    <style>
+        .nav-sidebar li a p,i{
+            color:##e9efff;
+            font-size:1.6em;
+        } 
+        .navbar {
+            margin-bottom:0px;
+        }
+    </style>
 
     {{-- Custom stylesheets (pre AdminLTE) --}}
     @yield('adminlte_css_pre')

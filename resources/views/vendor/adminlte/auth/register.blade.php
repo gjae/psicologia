@@ -63,14 +63,14 @@
         <li class="active"><a href="#pacientes" data-toggle="tab">Registro de Pacientes</a></li>
         <li><a href="#psicologo" data-toggle="tab">Registro de Psicólogos</a></li>
     </ul>
-
+    
     <div class="tab-content" x-data="registro()" x-init="terapias()">
     <div id="pacientes" class="tab-pane active">
         <div class="card">
             <div class="card-body ">
                 <h4>Registro de pacientes</h4>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="psicologos" role="tabpanel" aria-labelledby="home-tab">
+                    <div >
+                        <div id="psicologos" role="tabpanel">
 
                         <form action="{{ $register_url }}" method="post">
                             @csrf
@@ -240,8 +240,8 @@
 
         <div class="card-body ">
             <h4>Registro de psicólogos</h4>
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="psicologos" role="tabpanel" aria-labelledby="home-tab">
+                <div >
+                    <div class=" active" id="psicologos">
 
 
                         {{-- Name field --}}
