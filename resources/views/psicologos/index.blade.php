@@ -20,7 +20,7 @@
     </div>
     <div class="card-body">
         <table id="example" class="table table-responsive table-striped table-bordered">
-            <thead>
+            <thead class="thead-dark">
             <tr>
                 <th></th>
                 <th>Nombre Completo</th>

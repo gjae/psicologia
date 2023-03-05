@@ -24,6 +24,10 @@
     .active a{
         color:#fff !important;
     }
+    .table{
+        width:100%;
+        table-layout: fixed;
+    }
     .active{
         background-color:#007Bff;
         border-radius:5px 5px 0px 0px;
@@ -279,13 +283,12 @@
 
     <div class="container card p-10" x-show="message">
         <div class="card-header">
-
             <h2 >Mis reservaciones</h2>
         </div>
         <div class="card-body container-fluid">
 
-            <table class="table table-striped table-responsive">
-                <thead>
+            <table class="table table-striped table-responsive-lg">
+                <thead class="thead-dark">
                     <th>Paciente</th>
                     <th>Fecha de consulta</th>
                     <th>Hora de consulta</th>
@@ -557,7 +560,6 @@
             </div>
             <a href="{{route('reservas.index')}}" class="small-box-footer">
                 Ver <i class="fas fa-arrow-circle-right"></i>
-                Aquí en reservas.index hacer lo mismo. La consulta con los 4 whereHas para que dependiendo del usuario autenticado retorne los datos de la consulta
             </a>
         </div>
     </div>
@@ -566,7 +568,7 @@
             <i class="far fa-star fa-lg icon"></i>
             <div class="info-box-content">
                 <span class="info-box-text">Puntuación</span>
-                <h1 class="info-box-number text-danger">8</h1>
+                <h1 class="info-box-number text-danger">{{Auth::user()->Ispsychologist->ranking}}</h1>
             </div>
         </div>
     </div>

@@ -19,8 +19,8 @@
         <h1>Reservas</h1>
     </div>
     <div class="card-body">
-        <table id="example" class="table table-responsive table-striped">
-            <thead>
+        <table id="example" class="table table-responsive-lg table-striped">
+            <thead class="thead-dark">
                 <th>Paciente</th>
                 <th>Email</th>
                 <th>Fecha de consulta</th>

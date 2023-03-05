@@ -1,27 +1,31 @@
 @extends('adminlte::page')
-
 @section('content')
-
 @section('css')
-
-
-
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap.min.css">
-@endsection
-
 <style>
     .form-inline{
         display:block ! important;
     }
+    table{
+        width:100%;
+        table-layout:fixed;
+    }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap4.min.css">
+@endsection
+ 
+
+
 
 <div class="card">
     <div class="card-header">
-        <h1>Usuarios registrados</h1>
+        <h1>
+            Usuarios registrados
+        </h1>
     </div>
     <div class="card-body">
-        <table id="example" class="table table-responsive  table-striped table-bordered">
-            <thead>
+        <table id="example" class="table table-responsive-lg  table-striped table-bordered">
+            <thead class="thead-dark">
                 <tr>
                     <th>Nombre Completo</th>
                     <th>Teléfono</th>
@@ -34,7 +38,7 @@
             @foreach($users as $user)
             <tbody>
                 <tr>
-                    <td>{{$user->name}} {{$user->lastname}}</td>
+                    <td data-filter="nombre">{{$user->name}} {{$user->lastname}}</td>
                     <td>{{$user->phone}}</td>
                     <td>{{$user->email}}</td>
                     <td>{{$user->age}}</td>
@@ -54,10 +58,7 @@
     </div>
 </div>
 
-
-
     @section('js')
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap.min.js"></script>
 
@@ -69,5 +70,4 @@
     </script>
         
     @endsection
-
-@stop
+@endsection
