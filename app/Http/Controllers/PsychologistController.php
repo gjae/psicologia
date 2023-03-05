@@ -97,6 +97,12 @@ class PsychologistController extends Controller
     }
     
     public function registrar_horarios_store(Request $request){
-        Schedules::create(['id_psychologist'=>Auth::user()->Ispsychologist->id, 'schedule' => $request[0]]);
+        if($request[0]){
+            Schedules::create(['id_psychologist'=>Auth::user()->Ispsychologist->id, 'schedule' => $request[0]]);
+            return 1;
+        }elseif($request[0]==null){
+            return 0;
+        }
+        
     }
 }

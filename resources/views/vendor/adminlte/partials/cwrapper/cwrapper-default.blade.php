@@ -10,6 +10,10 @@
             background-size: cover;
         background-position: center ;
         justify-content: flex-start !important;
+        padding-top: 20px;
+    }
+    .container-fluid{
+        padding-top:20px;
     }
 </style>
 
@@ -20,14 +24,14 @@
 @endif
 
 {{-- Default Content Wrapper --}}
-@if(auth()->user()->role==1)
+@if(auth()->user()->hasRole('paciente'))
 <body style="background-image: url('../public/images/terapista.jpg');background-repeat: no-repeat;
             background-size: cover;
         background-position: center ;
         justify-content: flex-start !important;
         height:100%;">
     
-<div class="container-fluid monkey">
+<div class="container-fluid">
 @else
 <div class="content-wrapper  {{ config('adminlte.classes_content_wrapper', '') }}">
 
@@ -51,3 +55,4 @@
     </div>
 
 </div>
+</body>

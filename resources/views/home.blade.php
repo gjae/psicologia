@@ -22,14 +22,9 @@
         text-decoration:none;
     }
     .active a{
-        color:#fff !important;
-    }
-    .table{
-        width:100%;
-        table-layout: fixed;
+        color:#000 !important;
     }
     .active{
-        background-color:#007Bff;
         border-radius:5px 5px 0px 0px;
         font-weight: bold;
         
@@ -81,6 +76,7 @@
             open_resumen_link:false,
             mis_reservaciones: [],
 
+            hay_psicologos:false,
             resumen:false,
             disableButton:false,
             id_especialista:'',
@@ -190,7 +186,15 @@
                         this.open_resumen_link= true
                     }
                 })
-                .catch((data)=> console.log('Error'))
+                .catch((data)=> console.log('Error'),
+                
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Algo salió mal',
+                    footer: 'Asegurate de que completaste todo el formulario.'
+                    })
+                )
                 }
             });
             },
@@ -380,7 +384,18 @@
                             @csrf
                             <hr>
                                 <div class="row p10">
-                                    <div class="col-lg-12 p-10"><h4 class="text-primary">Paso 1. Selecciona a tu terapeuta</h4></div>
+                                    <div class="col-lg-12 p-10"><h4 class="text-primary">Paso 1. Selecciona a tu terapeuta</h4>
+                                    @if(count($psicologos)==0)
+                                    
+                                        <center> 
+                                            <div>
+                                                    <h5> Todavía no hay terapeutas registrados en el sistema. Espera que alguien se registre </h5>
+                                            </div>
+                                        </center>
+                                    @endif
+                                </div>
+
+                                    
                                     @foreach($psicologos as $psicologo)
                                         <div class="col-lg-4 p3">
                                             <center>

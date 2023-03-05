@@ -112,7 +112,7 @@
                         then((data) => {
                             Swal.fire({
                             icon: 'success',
-                            title: 'Listo! Ahora este psicologo tiene dos puntos más!',
+                            title: 'Listo!!',
                             })
                             location.reload()
                         }
@@ -149,7 +149,7 @@
                         then((data) => {
                             Swal.fire({
                             icon: 'success',
-                            title: 'Listo! Se le ha restado 1 punto a éste psicólogo!',
+                            title: 'Listo!',
                             })
                             location.reload()
                         }
