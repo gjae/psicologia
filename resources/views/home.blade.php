@@ -245,6 +245,7 @@
                             this.tipo_terapia_pane= false
                             this.reservas_pane= true
                             this.tipo_problema_pane=false
+                            this.activeTab= 'tab4'
                 this.whatsapp=false
                 this.whatsapp_helpgroup=false
                         break;
@@ -358,7 +359,7 @@
 
                     <div id="yellow" class="tab-pane" x-show="activeTab=== 'tab3'" x-ref="tab3" class="tab-pane">
                         <h1>Que busca con ésta sesión?</h1>
-                        <select name="motivo_consulta" class="form-control" id="motivo_consulta" x-model="motivo_consulta" x-on:change="activeTab= 'tab4'" @click="$nextTick(() => $refs.tab4.focus())">
+                        <select name="motivo_consulta" class="form-control" id="motivo_consulta" x-model="motivo_consulta" @change="sugerencia()">
                             <option> Seleccione una opción</option>    
                             <option value="consejo">Consejo</option>
                             <option value="proceso psicológico">Proceso psicológico</option>
@@ -564,11 +565,16 @@
         </div>
     </div>
     <div class="col-lg-4 offset-3">
-        <div class="info-box">
-            <i class="far fa-star fa-lg icon"></i>
-            <div class="info-box-content">
+        
+        <div class="small-box bg-gradient-info">
+            <div class="inner">
                 <span class="info-box-text">Puntuación</span>
-                <h1 class="info-box-number text-danger">{{Auth::user()->Ispsychologist->ranking}}</h1>
+            </div>
+            <div class="icon">
+                <div class="info-box-content" style="padding:10px;">
+                    <h1 class="info-box-number text-dark">{{Auth::user()->Ispsychologist->ranking}}</h1>
+            </div>
+                <i class="fas fa-star"></i>
             </div>
         </div>
     </div>
