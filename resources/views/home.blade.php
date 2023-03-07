@@ -120,7 +120,6 @@
                 fetch(`reserva_gratuita/${param}`).
                 then(r => r.json()).
                 then((data) => {
-					console.log(data)
                         if(data==0){
                                 this.reserved_pane=false,
                                 this.primera_vez=true,
@@ -135,7 +134,6 @@
                             then(r => r.json()).
                             then((data) => {
                                 this.mis_reservaciones= data;
-                                console.log(this.mis_reservaciones)
                             }).catch()
                         }
                     }
@@ -162,7 +160,6 @@
 			        body: JSON.stringify(this.formData)
 			    }).then(r => r.json())
 			    .then((data) => {
-                    console.log(data)
                     if(data==1){
                         Swal.fire({
                         title: 'El horario ya está reservado ',

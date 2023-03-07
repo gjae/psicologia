@@ -17,13 +17,22 @@ class ReservasController extends Controller
     {
         //
 
-
+        /** cantidad de reservaciones - detalle */
         $reservations='';
-        if(Auth::user()->hasRole('administrador')){
+        if (Auth::user()->hasRole('administrador')) {
+            
             $reservations=Reservations::all();
         }
+
         if(Auth::user()->hasRole('psicologo')){
-            $reservations=Reservations::whereHas('schedule',function($q){ $q-> whereHas('AtThisHourPsyc',function($l){ $l->whereHas('personalInfo',function($m){ $m ->where('id',Auth::user()->id); }); } ); } )->get();
+
+            $reservations = Reservations::whereHas('schedule',function($q){ 
+                $q-> whereHas('AtThisHourPsyc',function($l) { 
+                    $l->whereHas('personalInfo',function($m) { 
+                        $m ->where('id',Auth::user()->id); 
+                    }); 
+                }); 
+            })->get();
         }
         return view('reservaciones',compact('reservations'));
     }
@@ -46,25 +55,25 @@ class ReservasController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        //dd($request->appointment_date); 
-        if(Reservations::where('appointment_date',$request->appointment_date)->where('id_schedule',$request->schedule)->exists()){
-            
-            return 1;
+        if( Reservations::where('appointment_date',$request->appointment_date)
+            ->where('id_schedule',$request->schedule)
+            ->exists()) {
+                return 1;
         }else{
+
             Reservations::create([
-                'appointment_date' => $request->appointment_date,
-                'id_user' => $request->id_user,
-                'id_schedule' => $request->schedule,
-                'cause' => $request->cause 
+                'appointment_date'  => $request->appointment_date,
+                'id_user'           => $request->id_user,
+                'id_schedule'       => $request->schedule,
+                'cause'             => $request->cause 
             ]);
             return 0;
         } 
     }
     public function reserva_gratuita($id){
-        //dd($id);
-        if(Reservations::where('id_user',$id)->exists()){
-            return 1; //si existe
+        
+        if (Reservations::where('id_user',$id)->exists()) {
+            return 1; //existe
         }else{
             return 0; //no existe
         }

@@ -28,10 +28,10 @@ class User extends Authenticatable
         'email',
         'password',
     ];
-    public function IsPsychologist(){
+    public function IsPsychologist() {
     	return $this->hasOne(Psychologist::class,'id_user','id');
     }
-    public function Reservations(){
+    public function Reservations() {
     	return $this->hasOne(Reservations::class,'id_user','id');
     }
 }

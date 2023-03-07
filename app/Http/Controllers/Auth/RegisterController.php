@@ -55,25 +55,25 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'lastname' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'age' => ['required','digits:2'],
-            'phone' => ['required','numeric:7']
+            'name'      => ['required', 'string', 'max:255'],
+            'lastname'  => ['required', 'string', 'max:255'],
+            'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'  => ['required', 'string', 'min:8', 'confirmed'],
+            'age'       => ['required','digits:2'],
+            'phone'     => ['required','numeric:7']
         ],$messages = 
         [
-            'required' => 'El campo :attribute es requerido.',
+            'required'      => 'El campo :attribute es requerido.',
             
-            'max'      => 'El campo :attribute debe contener hasta :max caracteres.',
+            'max'           => 'El campo :attribute debe contener hasta :max caracteres.',
             
-            'numeric'      => 'El campo :attribute debe contener :numeric caracteres.',
+            'numeric'       => 'El campo :attribute debe contener :numeric caracteres.',
 
-            'email'      => 'El correo ya ha sido registrado por otra persona.',
+            'email'         => 'El correo ya ha sido registrado por otra persona.',
             
-            'alpha'    => 'El campo :attribute debe contener solo caracteres alfabéticos.',
+            'alpha'         => 'El campo :attribute debe contener solo caracteres alfabéticos.',
             
-            'integer'  => 'El campo :attribute debe contener solo caracteres numéricos.',
+            'integer'       => 'El campo :attribute debe contener solo caracteres numéricos.',
             
         ]);
     }
@@ -90,14 +90,14 @@ class RegisterController extends Controller
         
 
         return User::create([
-            'name' => $data['name'],
-            'lastname' => $data['lastname'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'gender' => $data['gender'],
-            'age' => $data['age'],
-            'role' => 1, //Paciente
-            'password' => Hash::make($data['password']),
+            'name'      => $data['name'],
+            'lastname'  => $data['lastname'],
+            'email'     => $data['email'],
+            'phone'     => $data['phone'],
+            'gender'    => $data['gender'],
+            'age'       => $data['age'],
+            'role'      => 1, //Paciente
+            'password'  => Hash::make($data['password']),
         ])->assignRole('paciente');
 
     }
@@ -106,31 +106,31 @@ class RegisterController extends Controller
 
         $validator = Validator::make($request->all(), [
             
-            'name'   => 'required|max:30',
+            'name'      => 'required|max:30',
             
-            'lastname' => 'required|max:30',
+            'lastname'  => 'required|max:30',
             
-            'gender'   => 'required|max:1',
+            'gender'    => 'required|max:1',
             
-            'phone' => ['required','numeric:7'],
-            'age' => 'required',
-            'email'    => 'required|max:50|unique:users,email',
+            'phone'     => ['required','numeric:7'],
+            'age'       => 'required',
+            'email'     => 'required|max:50|unique:users,email',
              
-            'password' => 'required|max:30|confirmed',
+            'password'  => 'required|max:30|confirmed',
             
-            'photo' => 'required',
+            'photo'     => 'required',
             
         ],$messages = 
         [
-            'required' => 'El campo :attribute es requerido.',
+            'required'  => 'El campo :attribute es requerido.',
             
-            'max'      => 'El campo :attribute debe contener :max caracteres.',
+            'max'       => 'El campo :attribute debe contener :max caracteres.',
             
-            'alpha'    => 'El campo :attribute debe contener solo caracteres alfabéticos.',
+            'alpha'     => 'El campo :attribute debe contener solo caracteres alfabéticos.',
             
-            'integer'  => 'El campo :attribute debe contener solo caracteres numéricos.',
+            'integer'   => 'El campo :attribute debe contener solo caracteres numéricos.',
 
-            'image'  => 'El archivo debe ser una imagen.',
+            'image'     => 'El archivo debe ser una imagen.',
         ]);
 
         if($validator->fails()){
@@ -142,19 +142,17 @@ class RegisterController extends Controller
 
             if(!User::where('email',$request['email'])->exists())
         {
-            
             User::create([
-                'name' => $request['name'],
-                'lastname' => $request['lastname'],
-                'email' => $request['email'],
-                'age' => $request['age'],
-                'gender' => $request['gender'],
-                'role' => 3, //Psicologo
-                'password' => Hash::make($request['password']),
+                'name'      => $request['name'],
+                'lastname'  => $request['lastname'],
+                'email'     => $request['email'],
+                'age'       => $request['age'],
+                'gender'    => $request['gender'],
+                'role'      => 3, //Psicologo
+                'password'  => Hash::make($request['password']),
             ])->assignRole('psicologo');
         
             $id_user= User::latest()->first()->id;
-
             $imagen = $request->file("photo");
             $nombreimagen = Str::slug("profile-").".".$imagen->guessExtension();
             $ruta = public_path();
@@ -164,16 +162,16 @@ class RegisterController extends Controller
 
             Psychologist::create(
             [
-                'therapy_id' => $request['therapy_id'],
-                'id_user' => $id_user,
-                'photo' => $url_final,
-                'ranking' => 0,
-                'personal_phone' => $request['phone'],
-                'bussiness_phone' => $request['bussiness_phone'],
-                'specialty' => $request['specialty']
+                'therapy_id'        => $request['therapy_id'],
+                'id_user'           => $id_user,
+                'photo'             => $url_final,
+                'bio'               => $request['bio'],
+                'ranking'           => 0,
+                'personal_phone'    => $request['phone'],
+                'bussiness_phone'   => $request['bussiness_phone'],
+                'specialty'         => $request['specialty']
             ]
             );
-
             return redirect()->route('inicio')->with('success', 'El psicologo ha sido creado con éxito! Inicie sesión');
         }else{
             return back()->with('error', 'El psicologo ya está registrado');

@@ -34,7 +34,6 @@
 			        body: JSON.stringify(this.horario)
 			    }).then(r => r.json())
 			    .then((data) => {
-                    console.log(data)
                     if(data==1){
                         Swal.fire({
                         icon: 'success',

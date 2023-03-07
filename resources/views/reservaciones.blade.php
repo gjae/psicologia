@@ -52,7 +52,22 @@
 
     <script>
     $(document).ready(function () {
-        $('#example').DataTable();
+        $('#example').DataTable({
+            "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pag.",
+                    "search": "Buscar",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrando pag. _PAGE_ de _PAGES_",
+                    "previous": "Anterior",
+                    "next": "Siguiente",
+                    "infoEmpty": "...",
+                    "infoFiltered": "(filtrado de _MAX_ registros)"
+                },
+                "search": {
+                    "regex": true,
+                    "smart": false
+                }
+        });
     });
 
     </script>

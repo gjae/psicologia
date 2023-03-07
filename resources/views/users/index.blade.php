@@ -58,7 +58,7 @@
                 "language": {
                     "lengthMenu": "Mostrar _MENU_ registros por pag.",
                     "search": "Buscar",
-                    "zeroRecords": "No encontrado",
+                    "zeroRecords": "No se encontraron registros",
                     "info": "Mostrando pag. _PAGE_ de _PAGES_",
                     "previous": "Anterior",
                     "next": "Siguiente",

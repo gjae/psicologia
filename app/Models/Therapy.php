@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Therapy extends Model
 {
     use HasFactory;
-    protected $table= 'therapy';
+    protected $table    = 'therapy';
     protected $fillable = ['therapy_type' ,'description'];
 
-    public function TreatProblem(){
+    public function TreatProblem() {
     	return $this->hasOne(Problems::class,'id_therapy','id');
     }
-    public function Specialist(){
+    public function Specialist() {
     	return $this->belongsTo(User::class,'id_therapy','id');
     }
 }

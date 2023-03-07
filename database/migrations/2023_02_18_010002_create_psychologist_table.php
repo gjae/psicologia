@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('personal_phone');
             $table->string('bussiness_phone');
             $table->string('specialty');
+            $table->string('bio');
             $table->string('photo')->nullable();
             $table->integer('ranking')->nullable();
             $table->integer('therapy_id')->unsigned();

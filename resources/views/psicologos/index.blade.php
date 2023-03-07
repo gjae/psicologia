@@ -24,13 +24,12 @@
             <tr>
                 <th></th>
                 <th>Nombre Completo</th>
-                <th>Teléfono</th>
                 <th>Email</th>
                 <th>Edad</th>
                 <th>Género</th>
                 <th>Especialidad</th>
+                <th>BIO</th>
                 <th>Tipo de terapia que maneja</th>
-                <th>Descripción</th>
                 <th>Teléfono personal</th>
                 <th>Teléfono de empresa</th>
             </tr>
@@ -40,13 +39,12 @@
                 <tr>
                     <td><img src="{{ asset($psicologo->photo) }}" class="img-circle" alt="" height="52" width="52"></td>
                     <td>{{$psicologo->personalInfo->name}} {{$psicologo->personalInfo->lastname}}</td>
-                    <td>{{$psicologo->personalInfo->phone}}</td>
                     <td>{{$psicologo->personalInfo->email}}</td>
                     <td>{{$psicologo->personalInfo->age}}</td>
                     <td>{{$psicologo->personalInfo->gender}}</td>
                     <td>{{$psicologo->specialty}}</td>
+                    <td>{{$psicologo->bio}}</td>
                     <td>{{$psicologo->therapy->therapy_type}}</td>
-                    <td>{{$psicologo->therapy->description}}</td>
                     <td>{{$psicologo->personal_phone}}</td>
                     <td>{{$psicologo->bussiness_phone}}</td>
                 </tr>
@@ -67,7 +65,22 @@
 
     <script>
     $(document).ready(function () {
-        $('#example').DataTable();
+        $('#example').DataTable({
+            "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por pag.",
+                    "search": "Buscar",
+                    "zeroRecords": "No se encontraron registros",
+                    "info": "Mostrando pag. _PAGE_ de _PAGES_",
+                    "previous": "Anterior",
+                    "next": "Siguiente",
+                    "infoEmpty": "...",
+                    "infoFiltered": "(filtrado de _MAX_ registros)"
+                },
+                "search": {
+                    "regex": true,
+                    "smart": false
+                }
+        });
     });
 
     </script>

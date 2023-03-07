@@ -24,7 +24,7 @@
                     .then(
                         (data) => {
                             this.tipo_terapias = data
-                            console.log(this.tipo_terapias)
+                            
                         }
                     )
             }
@@ -407,6 +407,23 @@
                                     <div class="input-group-append">
                                         <div class="input-group-text">
                                             <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                        </div>
+                                    </div>
+
+                                    @error('specialty')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                {{-- BIO field --}}
+                                <div class="input-group mb-3">
+                                    <input type="textarea"  name="bio" class="form-control @error('bio') is-invalid @enderror" value="{{ old('bio') }}" placeholder="BIO" >
+
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-comments {{ config('adminlte.classes_auth_icon', '') }}"></span>
                                         </div>
                                     </div>
 

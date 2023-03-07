@@ -20,6 +20,7 @@ class PsychologistController extends Controller
         //
         
         $psicologos= Psychologist::all();
+
         return view('psicologos.index',compact('psicologos'));
     }
 
@@ -89,6 +90,7 @@ class PsychologistController extends Controller
         //
     }
     public function problems($id_problema){
+
         $problemas= Problems::where('id_therapy',$id_problema)->get();
         return $problemas;
     }
@@ -97,10 +99,12 @@ class PsychologistController extends Controller
     }
     
     public function registrar_horarios_store(Request $request){
-        if($request[0]){
+        if ($request[0]) {
+
             Schedules::create(['id_psychologist'=>Auth::user()->Ispsychologist->id, 'schedule' => $request[0]]);
+
             return 1;
-        }elseif($request[0]==null){
+        }elseif ($request[0] == null) {
             return 0;
         }
         

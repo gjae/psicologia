@@ -42,12 +42,12 @@
 
       <i>
        <h5 class="text-primary"> 
-        @if(Auth::user()->role == 1) 
+        @if(Auth::user()->hasRole('paciente')) 
                 Paciente 
-            @elseif(Auth::user()->role == 3) 
+            @elseif(Auth::user()->hasRole('psicologo')) 
             
                 Psicologo 
-            @elseif(Auth::user()->role == 2) 
+            @elseif(Auth::user()->role==2) 
                 Administrador 
             @endif </h5> </i>
 

@@ -8,14 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Schedules extends Model
 {
     use HasFactory;
-    protected $table= 'schedules';
+    protected $table    = 'schedules';
     protected $fillable = ['id_psychologist','schedule'];
 
-    public function AtThisHourPsyc(){
+    public function AtThisHourPsyc() {
     	return $this->hasOne(Psychologist::class,'id','id_psychologist');
     }
 
-    public function AtThisHourReservations(){
+    public function AtThisHourReservations() {
     	return $this->hasOne(reservations::class,'id','id_psychologist');
     }
 }
