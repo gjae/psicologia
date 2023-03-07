@@ -17,7 +17,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('lastname');
-            $table->string('phone');
+            $table->string('phone')->nullable();
             $table->string('gender');
             $table->integer('age')->nullable();
             $table->integer('role')->nullable();

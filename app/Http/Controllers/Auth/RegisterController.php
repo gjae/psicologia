@@ -104,19 +104,19 @@ class RegisterController extends Controller
     protected function createPsychologist(Request $request)
     {   
 
-       $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             
             'name'   => 'required|max:30',
             
             'lastname' => 'required|max:30',
             
-            'genre'   => 'required|max:1',
+            'gender'   => 'required|max:1',
             
-            'phone' => ['required','numeric','size:7'],
+            'phone' => ['required','numeric:7'],
             'age' => 'required',
             'email'    => 'required|max:50|unique:users,email',
              
-            'password' => 'required|max:30',
+            'password' => 'required|max:30|confirmed',
             
             'photo' => 'required',
             
@@ -132,27 +132,34 @@ class RegisterController extends Controller
 
             'image'  => 'El archivo debe ser una imagen.',
         ]);
-       
-        if(!User::where('email',$request['email'])->exists())
-        {
-            User::create([
-            'name' => $request['name'],
-            'lastname' => $request['lastname'],
-            'email' => $request['email'],
-            'phone' => $request['personal_phone'],
-            'age' => $request['age'],
-            'gender' => $request['gender'],
-            'role' => 3, //Psicologo
-            'password' => Hash::make($request['password']),
-        ])->assignRole('psicologo');
-        $id_user= User::latest()->first()->id;
 
-         $imagen = $request->file("photo");
-        $nombreimagen = Str::slug("profile-").".".$imagen->guessExtension();
-        $ruta = public_path();
-        $imagen->getRealPath();
-        copy($imagen->getRealPath(),$ruta.'/images/'.$id_user.$nombreimagen);
-        $url_final= '/images/'.$id_user.$nombreimagen;
+        if($validator->fails()){
+            return redirect('register')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+            if(!User::where('email',$request['email'])->exists())
+        {
+            
+            User::create([
+                'name' => $request['name'],
+                'lastname' => $request['lastname'],
+                'email' => $request['email'],
+                'age' => $request['age'],
+                'gender' => $request['gender'],
+                'role' => 3, //Psicologo
+                'password' => Hash::make($request['password']),
+            ])->assignRole('psicologo');
+        
+            $id_user= User::latest()->first()->id;
+
+            $imagen = $request->file("photo");
+            $nombreimagen = Str::slug("profile-").".".$imagen->guessExtension();
+            $ruta = public_path();
+            $imagen->getRealPath();
+            copy($imagen->getRealPath(),$ruta.'/images/'.$id_user.$nombreimagen);
+            $url_final= '/images/'.$id_user.$nombreimagen;
 
             Psychologist::create(
             [
@@ -160,16 +167,16 @@ class RegisterController extends Controller
                 'id_user' => $id_user,
                 'photo' => $url_final,
                 'ranking' => 0,
-                'personal_phone' => $request['personal_phone'],
+                'personal_phone' => $request['phone'],
                 'bussiness_phone' => $request['bussiness_phone'],
                 'specialty' => $request['specialty']
             ]
             );
+
+            return redirect()->route('inicio')->with('success', 'El psicologo ha sido creado con éxito! Inicie sesión');
         }else{
             return back()->with('error', 'El psicologo ya está registrado');
         }
-                
-        return redirect()->route('inicio')->with('success', 'El psicologo ha sido creado con éxito! Inicie sesión');
-          
+        
     }
 }

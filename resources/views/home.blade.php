@@ -516,7 +516,7 @@
         </div>
         <div class="card-body">
             <div>
-        <div class="small-box bg-gradient-success">
+        <div class="small-box bg-gradient-primary">
             <div class="inner">
                 <h3>{{$reservaciones}}</h3>
                 <p>Reservaciones totales</p>
@@ -531,7 +531,7 @@
     </div>
 
     <div>
-        <div class="small-box bg-gradient-success">
+        <div class="small-box bg-gradient-primary">
             <div class="inner">
                 <h3>{{$psicologos_cant}}</h3>
                 <p>Psicólogos registrados</p>
@@ -546,7 +546,7 @@
     </div>
 
     <div>
-        <div class="small-box bg-gradient-success">
+        <div class="small-box bg-gradient-primary">
             <div class="inner">
                 <h3>{{$usuarios}}</h3>
                 <p>Usuarios registrados</p>
@@ -566,7 +566,7 @@
 @elseif(auth()->user()->hasRole('psicologo'))
 <div class="row">
     <div class="col-lg-4">
-        <div class="small-box bg-gradient-success">
+        <div class="small-box bg-gradient-primary">
             <div class="inner">
                 <h3>{{$reservaciones}}</h3>
                 <p>Citas pendientes</p>

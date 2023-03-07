@@ -40,7 +40,8 @@
         @endif
     </ul>
 
-     <span class="text-primary"> <i>
+      <i>
+       <h5 class="text-primary"> 
         @if(Auth::user()->role == 1) 
                 Paciente 
             @elseif(Auth::user()->role == 3) 
@@ -48,6 +49,6 @@
                 Psicologo 
             @elseif(Auth::user()->role == 2) 
                 Administrador 
-            @endif  </i></span>
+            @endif </h5> </i>
 
 </nav>
