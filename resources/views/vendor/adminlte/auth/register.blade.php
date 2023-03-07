@@ -58,6 +58,8 @@
                     </div>
                 @endif
             </center>
+
+            
         </div>
     </div>
     @section('auth_body')
@@ -65,9 +67,13 @@
         <li ><a href="#pacientes" data-toggle="tab">Registro de Pacientes</a></li>
         <li ><a href="#psicologo" data-toggle="tab">Registro de Psicólogos</a></li>
     </ul>
-    
     <div class="tab-content" x-data="registro()" x-init="terapias()">
+           
+    @if(session()->has('psicologo'))
+            <div id="pacientes" class="tab-pane" > 
+        @else
         <div id="pacientes" class="tab-pane active" >
+        @endif
             <div class="card">
                 <div class="card-body ">
                     <h4>Registro de pacientes</h4>
@@ -231,7 +237,12 @@
             </div>
         </div>
 
-        <div id="psicologo" class="tab-pane " x-bind:class="{'active': activetab== 'dos'}">
+        @if(session()->has('psicologo'))
+            <div id="psicologo" class="tab-pane active"> 
+        @else
+        <div id="psicologo" class="tab-pane">
+        @endif
+
             <form action="{{ $registerpsycho_url }}" method="post" enctype="multipart/form-data" >
                 @csrf
                 <div class="card">

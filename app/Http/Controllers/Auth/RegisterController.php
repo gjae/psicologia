@@ -136,7 +136,8 @@ class RegisterController extends Controller
         if($validator->fails()){
             return redirect('register')
                 ->withErrors($validator)
-                ->withInput();
+                ->withInput()
+                ->with('psicologo',1);
         }
 
             if(!User::where('email',$request['email'])->exists())
