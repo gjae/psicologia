@@ -1,0 +1,7 @@
+Proyecto monterrico: versiones de herramientas
+
+Laravel 9.5.2
+Laravel/ui 4.2
+AdminLTE 3.8
+Vite 4.1.2
+laravel collective 6.4

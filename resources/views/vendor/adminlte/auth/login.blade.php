@@ -1,7 +1,7 @@
 @extends('adminlte::auth.auth-page', ['auth_type' => 'login'])
 
 @section('adminlte_css_pre')
-    <link rel="stylesheet" href="{{ asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+    <!-- <link rel="stylesheet" href="{{ asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css') }}"> -->
 @stop
 
 @php( $login_url = View::getSection('login_url') ?? config('adminlte.login_url', 'login') )
@@ -27,21 +27,21 @@
         @csrf
 
         {{-- Email field --}}
-        <div class="input-group mb-3">
-            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                   value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}" autofocus>
-
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
+        <div class="ayuda-login">
+            <div class="input-group mb-3">
+                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                       value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}" autofocus>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                    </div>
                 </div>
+                @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
-
-            @error('email')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
         </div>
 
         {{-- Password field --}}
@@ -68,7 +68,7 @@
                 <div class="icheck-primary" title="{{ __('adminlte::adminlte.remember_me_hint') }}">
                     <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
-                    <label for="remember">
+                    <label class="remember-login" for="remember">
                         {{ __('adminlte::adminlte.remember_me') }}
                     </label>
                 </div>
@@ -100,7 +100,7 @@
 
     {{-- Register link --}}
     @if($register_url)
-        <p class="my-0">
+        <p class="my-0 footer-login">
             <a href="{{ $register_url }}">
                 {{ __('adminlte::adminlte.register_a_new_membership') }}
             </a>

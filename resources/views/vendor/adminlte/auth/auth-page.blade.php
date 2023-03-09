@@ -1,6 +1,6 @@
 @extends('adminlte::master')
 <style>
-    .login-page{
+   /*  .login-page{
         
         background-image: url("../public/images/terapista.jpg");
         background-repeat: no-repeat;
@@ -10,7 +10,7 @@
     }
     .left{
         height:auto;
-    }
+    } */
 </style>
 @php( $dashboard_url = View::getSection('dashboard_url') ?? config('adminlte.dashboard_url', 'home') )
 
@@ -66,7 +66,7 @@
                         @hasSection('auth_header')
                             <div class="card-header {{ config('adminlte.classes_auth_header', '') }}">
                                 <h3 class="card-title float-none text-center">
-                                    Inicia sesion
+                                    Inicia sesión
                                 </h3>
                             </div>
                         @endif
