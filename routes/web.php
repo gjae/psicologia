@@ -34,7 +34,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::middleware(["web","auth"])->group(function () {
+Route::middleware(["web","auth","verified"])->group(function () {
 
     
 
@@ -106,7 +106,7 @@ Route::middleware(["web","auth"])->group(function () {
 
 });
 
-
+Route::get('seleccionar_especialista/{id_terapia}',[App\Http\Controllers\PsychologistController::class,'seleccionarEspecialista'])->name('especialistaEn');
 
 Route::get('/', function () {
 
@@ -116,7 +116,7 @@ Route::get('/', function () {
 
 
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 
 

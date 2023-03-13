@@ -6,7 +6,8 @@ namespace App\Models;
 
 
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\Recoverpass;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -21,7 +22,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 
 {
 
@@ -69,6 +70,16 @@ class User extends Authenticatable
 
     	return $this->hasOne(Reservations::class,'id_user','id');
 
+    }
+    /**
+     * Send the password reset notification.
+     *
+     * @param string $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new Recoverpass($token));
     }
 
 }

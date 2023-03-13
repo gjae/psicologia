@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Reservations;
+use App\Models\Schedules;
+use App\Models\Psychologist;
 
 class UserController extends Controller
 {
@@ -83,5 +86,23 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+        $tipo_usuario= User::where('id',$id)->first()->role;
+        if($tipo_usuario == '3'){
+
+            $id_psicologo= User::where('id',$id)->first()->isPsychologist->id;
+
+            Reservations::whereHas('schedule',function($q) use ($id_psicologo){
+            $q->where('id_psychologist',$id_psicologo);
+            })->delete();
+
+            Schedules::where('id_psychologist',$id_psicologo)->delete();
+            Psychologist::where('id',$id_psicologo)->delete();
+            User::where('id',$id)->delete();
+        }
+        if($tipo_usuario=='1'){
+            Reservations::where('id_user',$id)->delete();
+            User::where('id',$id)->delete();
+            return redirect('/usuarios');
+        }
     }
 }
