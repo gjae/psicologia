@@ -44,7 +44,8 @@
                             title: 'Listo!!',
 
                             })
-
+                            
+                            location.reload()
 
                         }).catch()
 

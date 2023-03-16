@@ -77,11 +77,11 @@
                         icon: 'success',
 
                         title: 'Listo!',
-                        footer:'Para agregar otro horario, porfavor recargue la página'
 
                         })
 
                         this.buttonDisabled= true;
+                        location.reload()
 
                     }
 
