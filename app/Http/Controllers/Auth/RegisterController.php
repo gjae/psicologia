@@ -122,6 +122,8 @@ class RegisterController extends Controller
 
             'password'  => ['required', 'string', 'min:8', 'confirmed'],
 
+            'gender'  => ['required', 'string'],
+
             'age'       => ['required','digits:2'],
 
             'phone'     => ['required','numeric:7']

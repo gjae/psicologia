@@ -6,9 +6,10 @@
 @if ($level === 'error')
 # @lang('Whoops!')
 @else
-# @lang('Hello!')
+# @lang('Hola!')
 @endif
 @endif
+
 
 {{-- Intro Lines --}}
 @foreach ($introLines as $line)
@@ -35,20 +36,14 @@
 
 @endforeach
 
-{{-- Salutation --}}
-@if (! empty($salutation))
-{{ $salutation }}
-@else
-@lang('Regards'),<br>Mediante este texto puedes ubicar la vista blade que está formando este email
-{{ config('app.name') }}
-@endif
+<p>Psicólogo Monterrico</p>
 
 {{-- Subcopy --}}
 @isset($actionText)
 <x-slot:subcopy>
 @lang(
-    "If you're having trouble clicking the \":actionText\" button, copy and paste the URL below\n".
-    'into your web browser:',
+    "Si tienes problemas al hacer click en el botón \":actionText\" , copia y pega la siguiente URL\n".
+    'en tu navegador:',
     [
         'actionText' => $actionText,
     ]
