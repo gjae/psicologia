@@ -31,7 +31,7 @@ class AuthServiceProvider extends ServiceProvider
                 ->subject('Verifica tu correo')
                 ->line('Recibes éste correo porque hemos recibido tu solicitud de registro en nuestro sitio web. Confírmanos que eres tú.')
                 ->line('Haz click en el botón de abajo para verificar tu correo.')
-                ->action('Verify Email Address', $url);
+                ->action('Verifica tu correo', $url);
         });
 
         //

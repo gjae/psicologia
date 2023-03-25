@@ -1,4 +1,5 @@
 center a img {
+<<<<<<< HEAD
 
     margin: 30px 0;
 
@@ -268,11 +269,146 @@ input[type="time"].form-control {
 
     height:35px;
 
+=======
+    margin: 30px 0;
+}
+
+/* login */
+.footer-login {
+    font-size: 16px;
+}
+
+.remember-login {
+    font-size: 16px;
+}
+
+.login-page,
+.register-page {
+    background-image: url(terapista.jpg);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.card-header .card-title {
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.btn.btn-primary {
+    font-size: 16px;
+    margin: 20px 0;
+    text-transform: uppercase;
+}
+
+/* admin */
+.sidebar-mini {
+    font-size: 14px;
+}
+.main-sidebar .brand-link span {
+    font-size: 16px;
+    padding: 10px 0;
+}
+
+.card-body .inner p {
+    font-size: 16px;
+}
+
+a.small-box-footer {
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+a.small-box-footer i {
+    font-size: 16px;
+}
+
+.nav-link span h5 {
+    margin-right: 15px;
+    text-transform: uppercase;
+}
+i h5.text-primary {
+    color: #494b51 !important;
+    margin-right: 15px;
+}
+
+.nav-link .fa-bars {
+    padding: 10px;
+}
+
+/* crear cuenta register-blade */
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+}
+
+.registro-btn {
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+}
+.card-footer p {
+    font-size: 16px;
+}
+
+.card-body h4 {
+    padding: 10px 0;
+}
+
+.input-group input {
+    font-size: 18px;
+}
+
+.input-group input[type="file"] {
+    font-size: 12px;
+    height: 40px;
+}
+
+.input-group option {
+    font-size: 16px;
+}
+
+.input-group select {
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+}
+
+/* reserva cita */
+
+.nav.nav-tabs li a {
+    font-size: 14px;
+}
+
+.container center h1 {
+    margin: 20px 0;
+}
+
+.tab-pane h1 {
+    margin: 20px 0;
+}
+
+.sidebar-mini select.form-control,
+input[type="date"].form-control,
+input[type="time"].form-control {
+    font-size: 20px;
+    height: 35px;
+>>>>>>> f9bea73d007fcb4372dbb5b59126b60ed35c6935
 }
 
 /* estlos pendientes registro */
 
+<<<<<<< HEAD
 .login-page .card-body.login-card-body, 
+=======
+.login-page .card-body.login-card-body,
+>>>>>>> f9bea73d007fcb4372dbb5b59126b60ed35c6935
 .login-page .card-body.login-card-body button.align-baseline {
     font-size: 14px;
 }
@@ -280,7 +416,14 @@ input[type="time"].form-control {
 img.hover-img.img-circle {
     margin: 10px 10px 10px 20px;
 }
+<<<<<<< HEAD
 table i h4, 
 table h6 {
     margin-left: 20px;
 }
+=======
+table i h4,
+table h6 {
+    margin-left: 20px;
+}
+>>>>>>> f9bea73d007fcb4372dbb5b59126b60ed35c6935

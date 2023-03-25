@@ -22,7 +22,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable // implements MustVerifyEmail
 
 {
 
@@ -52,7 +52,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
         'age',
 
-        'role',
+        //'role',
 
         'email',
 

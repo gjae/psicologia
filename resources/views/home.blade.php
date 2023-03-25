@@ -3,7 +3,7 @@
 @section('content')
 
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
 <style>
 
     .icon{
@@ -136,7 +136,7 @@
 
         return {
             
-
+            current_date:'',
             reserved_pane:false,
 
             message:false,
@@ -180,9 +180,6 @@
             tipo_problema_id:'',
 
             horario: '',           //Id de horario
-
-
-
             tipo_terapia_id:'',
 
             consejos_pane:false,
@@ -217,6 +214,7 @@
 
             },
 
+            
             message:'',
 
             get horario_de_consulta_prop(){
@@ -236,8 +234,33 @@
                 
 
             },
-            seleccionarespecialista(){
+            get fecha_actual(){
+
+                var today = new Date();
+ 
+                // `getDate()` devuelve el día del mes (del 1 al 31)
+                var day = today.getDate();
                 
+                // `getMonth()` devuelve el mes (de 0 a 11)
+                var month = today.getMonth() + 1;
+
+                 var year = today.getFullYear();
+                
+                if(month.toString().length==1){
+                    //month = '0'+parseInt(today.getMonth() + 1);
+                    return `${year}-0${month}-${day}`; 
+                }
+                if(month.toString().length==2){
+                   //var month = today.getMonth() + 1;
+                   return `${year}-${month}-${day}`; 
+                }
+                console.log(month.toString().length)
+            },
+            get fecha_actual_mas_5(){
+                var dias_a_partir_de_hoy = 5;
+                return moment(this.fecha_actual).add(5, 'day').format('YYYY-MM-DD');
+            },
+            seleccionarespecialista(){
                 var especialistaEnTerapia= this.tipo_terapia_id;
 
                 fetch(`seleccionar_especialista/${especialistaEnTerapia}`).
@@ -370,10 +393,8 @@
                             icon: 'success',
 
                             title: 'Listo! La reserva de su sesión gratuita ha sido creada con éxito',
-
+                            html: '<h4>En breves momentos le enviaremos a su correo un email que contiene el link a la reunión de meet con el terapeuta que usted seleccionó</h4>'
                             })
-
-                            
 
                             this.disableButton=true
 
@@ -395,7 +416,7 @@
 
                         text: 'Algo salió mal',
 
-                        footer: 'Asegurate de que completaste todo el formulario.'
+                        html: '<h4>Asegurate de que completaste todo el formulario.</h4>'
 
                         })
 
@@ -566,11 +587,6 @@
   
 
 <div class="container" x-data="cita()" x-init="reserva_gratuita({{auth()->user()->id}})">
-
-
-
-
-
 <div class="text-body bg-body p-3  rounded-3" x-show="reserved_pane">
 
    
@@ -579,7 +595,7 @@
 
     <div class="callout"><h1 x-show="message" class="text-danger"> <i class="fa fa-exclamation-circle" aria-hidden="true"></i>  Usted ya tiene una reservación gratuita con nosotros</h1></div>
 
-    </center>
+</center>
 
 
 
@@ -638,7 +654,10 @@
                 
 
             </table> 
+            
 
+            <h4>Necesitas más información? Escríbenos a nuestro whatsapp para cualquier duda, sugerencia o notificación</h4>
+            <a href="https://wa.link/o9fv1e"><img src="{{asset('images/whatsapp.png')}}" alt="Escríbenos a nuestro whatsapp"  x-show="message" width="120"></a>
         </div>
 
     </div>
@@ -700,31 +719,30 @@
                             <option value="#">Seleccione una opcion</option>    
 
                             @foreach($terapias as $terapia) 
-
                                     <option value="{{$terapia->id}}">{{$terapia->therapy_type}}</option>
-
-                                @endforeach
+                            @endforeach
                             </select>
                         </div>
 
 
 
                         <div id="orange" x-show="activeTab=== 'tab2'" x-ref="tab2" class="tab-pane">
-                        <h1>Cuál es el problema?</h1>
+                            <h1>Cuál es el problema?</h1>
 
 
 
-                        <select name="tipo_problema" x-on:change="activeTab= 'tab3'"  @click="$nextTick(() => $refs.tab3.focus())" id="" class="form-control @error('tipo_problema') is-invalid @enderror" x-model="tipo_problema_id">
+                            <select name="tipo_problema" x-on:change="activeTab= 'tab3'"  @click="$nextTick(() => $refs.tab3.focus())" id="" class="form-control @error('tipo_problema') is-invalid @enderror" x-model="tipo_problema_id">
 
-                            <option value="#">Seleccione una opcion</option>       
+                                <option value="#">Seleccione una opcion</option>       
 
-                            <template x-for="tipo_problema in problemas_bag" :key="tipo_problema.id">
+                                <template x-for="tipo_problema in problemas_bag" :key="tipo_problema.id">
 
-                                <option :value="tipo_problema.id" x-text="tipo_problema.problem"></option>
+                                    <option :value="tipo_problema.id" x-text="tipo_problema.problem"></option>
 
-                            </template>
+                                </template>
 
-                        </select>
+                            </select>
+                        </div>
 
                     </div>
 
@@ -754,7 +772,7 @@
 
                     <div id="green" class="tab-pane" x-show="activeTab=== 'tab4'" x-ref="tab4" x-transition>
 
-                            <div class="container" >
+                            <div class="container">
 
                                 <center>
 
@@ -779,9 +797,6 @@
                                     <div class="col-lg-12 p-10"><h4 class="text-primary">Paso 1. Selecciona a tu terapeuta</h4>
 
                                     @if(count($psicologos)==0)
-
-                                    
-
                                         <center> 
 
                                             <div>
@@ -795,6 +810,7 @@
                                     @endif
 
                                 </div>
+
                                 <table>
                                     <template x-for="especialista in especialistas" :key="especialista.id">
                                         <tr>
@@ -803,12 +819,13 @@
                                             </a>
                                                 <i><h4 x-text="especialista.personal_info.name"></h4></i>
                                                 <h6>Especialista en <span x-text="especialista.therapy.therapy_type"></span></h6>
+
+                                                <h6>BIO: <span x-text="especialista.bio"></span></h6>
+                                                <h6>Días de atención ésta semana: <span x-text="especialista.dias_atencion"></span></h6>
                                             </td>
                                         </tr>
                                     </template>
                                 </table>
-
-
                                 </div>
 
                             </center>
@@ -823,16 +840,13 @@
 
                                     <label x-show="message">Fecha de consulta</label>
 
-                                    <input type="date" class="form-control" x-model="formData.appointment_date" min = "<?php echo date("Y-m-d",strtotime(date("Y-m-d")));?>">
+                                    <input type="date" class="form-control" x-model="formData.appointment_date" :min="fecha_actual" :max="fecha_actual_mas_5">
 
                                 </div>
 
                                 <div class="col-lg-6">
 
                                     <label x-show="message">Horarios disponibles</label>
-
-                            
-
                                     <select name="horario" class="form-control" id="horario" x-model="horario" @change="resume_pane= true">
 
                                         <option value="#">Seleccione una opcion</option>
@@ -862,8 +876,6 @@
                             <div id="resume_pane" x-show="resume_pane" >
 
                                 <h1>Resumen</h1>
-
-
 
                                 <div class="card">
 
@@ -961,13 +973,13 @@
 
             
 
-            <p>4 x 360</p>
+            <p>4 x S/ 360</p>
 
-            <p>6 x 450</p>
+            <p>6 x S/ 450</p>
 
-            <p>8 x 650</p>
+            <p>8 x S/ 650</p>
 
-            <p>12 x 700</p>
+            <p>12 x S/ 700</p>
 
         </swal-html>
 

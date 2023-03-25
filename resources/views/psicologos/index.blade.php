@@ -44,7 +44,8 @@
                             title: 'Listo!!',
 
                             })
-
+                            
+                            location.reload()
 
                         }).catch()
 
@@ -184,7 +185,12 @@
 
                     "infoEmpty": "...",
 
-                    "infoFiltered": "(filtrado de _MAX_ registros)"
+                    "infoFiltered": "(filtrado de _MAX_ registros)",
+
+                    "oPaginate":{
+                        "sPrevious": "Anterior",
+                        "sNext": "Siguiente"
+                    }
 
                 },
 

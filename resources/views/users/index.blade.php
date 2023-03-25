@@ -46,7 +46,8 @@
                             title: 'Listo!!',
 
                             })
-
+                            
+                            location.reload()
 
                         }).catch()
 
@@ -110,22 +111,22 @@
             </thead>
 
             @foreach($users as $user)
-
+                @if(!$user->hasRole('administrador'))
                 <tr>
 
                     <td>{{$user->name}} {{$user->lastname}}</td>
 
                     <td>
 
-                    @if($user->role==1) 
+                    @if($user->hasRole('paciente')) 
 
                             {{$user->phone}} 
 
-                        @elseif($user->role==3) 
+                        @elseif($user->hasRole('psicologo')) 
 
                             {{$user->isPsychologist->personal_phone}}
 
-                        @elseif($user->role == 2) 
+                        @elseif($user->hasRole('administrador')) 
 
                             Administrador 
 
@@ -149,7 +150,7 @@
 
                             Psicologo 
 
-                        @elseif($user->role == 2) 
+                        @elseif($user->hasRole('administrador')) 
 
                             Administrador 
 
@@ -159,7 +160,8 @@
                        Eliminar</button></td>
 
                 </tr>
-
+                
+                @endif
             @endforeach
 
         </table>
@@ -168,7 +170,7 @@
 
 </div>
 
-
+ 
 
     @section('js')
 
@@ -194,13 +196,18 @@
 
                     "info": "Mostrando pag. _PAGE_ de _PAGES_",
 
-                    "previous": "Anterior",
+                    "Previous": "Anterior",
 
                     "next": "Siguiente",
 
                     "infoEmpty": "...",
 
-                    "infoFiltered": "(filtrado de _MAX_ registros)"
+                    "infoFiltered": "(filtrado de _MAX_ registros)",
+
+                    "oPaginate":{
+                        "sPrevious": "Anterior",
+                        "sNext": "Siguiente"
+                    }
 
                 },
 

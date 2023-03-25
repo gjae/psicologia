@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('bussiness_phone');
             $table->string('specialty');
             $table->string('bio');
+            $table->string('dias_atencion')->nullable();
             $table->string('photo')->nullable();
             $table->integer('ranking')->nullable();
             $table->integer('therapy_id')->unsigned();
@@ -29,7 +30,7 @@ return new class extends Migration
             
             $table->foreign('therapy_id')->references('id')->on('therapy');
 
-            $table->foreign('id_user')->references('id')->on('users'); //nombre de la tabla, no del modelo.. El modelo se llama USER, y la tabla se llama USERS
+            $table->foreign('id_user')->references('id')->on('users');
         });
     }
 
