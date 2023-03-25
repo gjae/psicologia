@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Models\Reservations;
 
 use App\Models\Schedules;
+use Carbon\Carbon;
 
 use DB;
 
@@ -134,6 +135,8 @@ class PsychologistController extends Controller
 
         //
 
+
+
     }
 
 
@@ -196,12 +199,57 @@ class PsychologistController extends Controller
     public function problems($id_problema){
         $problemas= Problems::where('id_therapy',$id_problema)->get();
         return $problemas;
+    }
 
+    public function actualiza_dias_atencion($dias_atencion){
+
+        Psychologist::where('id',Auth::user()->Ispsychologist->id)
+        ->update(['dias_atencion' => $dias_atencion]);
     }
 
     public function registrar_horarios(){
 
-        return view('psicologos.horarios');
+        Carbon::setLocale('es');
+        $today= Carbon::today();
+        $proxima_actualizacion = 
+            Carbon::now()
+            ->next()
+            ->startOfWeek()
+            ->isoFormat('dddd, MMMM Do YYYY')
+            ;
+            
+
+        $date=  
+        Carbon::now()
+        ->startOfWeek()
+        ->isoFormat('dddd, MMMM Do YYYY').
+        ' al '. 
+    
+        Carbon::now()
+        ->endOfWeek()
+        ->isoFormat('dddd, MMMM Do YYYY');
+
+        if(Auth::user()
+        ->Ispsychologist){
+
+            $horario_psicologo = 
+        Schedules::where('id_psychologist',Auth::user()
+        ->Ispsychologist
+        ->id)
+        ->get();
+        }else{
+        $horario_psicologo='';
+        //cuando inicia el administrador, como el administrador no es psicologo aquí da error.. 
+        /**
+         * no sé porque cuando iniciamos como administrador intenta ir a la parte de psicologo y explota cuando intenta mostrar la vista de horarios.. porque el administrador no es psicologo (obvio) y como tal, no tiene id de psicologo, entonces me dice undefined property id on null.. Hay que revisar eso
+         
+         * eso pasa porque si yo estaba en la parte del psicologo y derrepente el sistema se deslogueó y entonces intento iniciar sesion como administrador
+         * el middleware va a intentar redirigirme a donde yo estaba (que era la parte del psicologo) pero si intento iniciar como administrador, obviamente el administrador no tiene ni ranking, ni dias de atencion.. por eso me da el error
+         */
+        }
+        
+
+        return view('psicologos.horarios',compact('horario_psicologo','date','proxima_actualizacion','today'));
 
     }
 
@@ -217,12 +265,14 @@ class PsychologistController extends Controller
     }
 
     public function registrar_horarios_store(Request $request){
-
-        if ($request[0]) {
-            Schedules::create(['id_psychologist'=>Auth::user()->Ispsychologist->id, 'schedule' => $request[0]]);
+        if ($request) {
+            
+            Schedules::create([
+                'id_psychologist'=>Auth::user()->Ispsychologist->id, 
+                'schedule' => $request['inicio'].' - '.$request['fin']
+            ]);
             return 1;
-
-        }elseif ($request[0] == null) {
+        }elseif ($request == null) {
 
             return 0;
 

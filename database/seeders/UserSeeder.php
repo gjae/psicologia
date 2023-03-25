@@ -46,13 +46,11 @@ class UserSeeder extends Seeder
 
             "lastname"  => "administrador",
 
-            "email"     => "yohanazaretdh2693@gmail.com",
+            "email"     => "yohanazareth2693@gmail.com",
 
             'phone'     => '51927038747',
 
             'gender'    => 'M',
-
-            'role'      => 2,
 
             'age'       => '35',
 
@@ -62,7 +60,23 @@ class UserSeeder extends Seeder
 
         
 
-        
+        User::create([
+
+            "name"      => 'Pablo',
+
+            "lastname"  => "Moya",
+
+            "email"     => "ing.pmoya@gmail.com",
+
+            'phone'     => '51927038747',
+
+            'gender'    => 'M',
+
+            'age'       => '35',
+
+            'password'  => Hash::make('sushi1234')  
+
+        ])->assignRole('administrador');
 
     }
 

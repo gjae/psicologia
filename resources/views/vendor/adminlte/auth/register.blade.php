@@ -204,7 +204,7 @@
 
                                 <input type="text" required name="lastname" class="form-control @error('lastname') is-invalid @enderror"
 
-                                    value="{{ old('lastname') }}" placeholder="{{ __('adminlte::adminlte.lastname') }}" autofocus>
+                                    value="{{ old('lastname') }}" placeholder="Apellido" autofocus>
 
 
 
@@ -276,7 +276,7 @@
 
                             <div class="input-group mb-3">
 
-                                <input type="text" required name="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" placeholder="{{ __('adminlte::adminlte.phone') }}">
+                                <input type="text" required name="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" placeholder="Teléfono">
 
 
 
@@ -352,7 +352,7 @@
 
                             <div class="input-group mb-3">
 
-                                <input type="text" required name="age" class="form-control @error('age') is-invalid @enderror" value="{{ old('age') }}" placeholder="{{ __('adminlte::adminlte.age') }}" >
+                                <input type="text" required name="age" class="form-control @error('age') is-invalid @enderror" value="{{ old('age') }}" placeholder="Edad" >
 
 
 
@@ -544,7 +544,7 @@
 
                                     <input  required type="text"  name="lastname" class="form-control @error('lastname') is-invalid @enderror"
 
-                                        value="{{ old('lastname') }}" placeholder="{{ __('adminlte::adminlte.lastname') }}" autofocus>
+                                        value="{{ old('lastname') }}" placeholder="Apellido" autofocus>
 
 
 
@@ -860,7 +860,7 @@
 
 
 
-                                    @error('specialty')
+                                    @error('bio')
 
                                         <span class="invalid-feedback" role="alert">
 

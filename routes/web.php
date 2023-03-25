@@ -10,6 +10,7 @@ use App\Models\Reservations;
 
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Http\Request;
 
 
 /*
@@ -32,9 +33,9 @@ use Illuminate\Support\Facades\Route;
 
 */
 
+Route::middleware(["web","auth"])->group(function () {
 
-
-Route::middleware(["web","auth","verified"])->group(function () {
+//Route::middleware(["web","auth","verified"])->group(function () {
 
     
 
@@ -67,6 +68,7 @@ Route::middleware(["web","auth","verified"])->group(function () {
     })->name('horarios_psicologos');
 
 
+    Route::get('registrar_dias_atencion/{dias_atencion}',[App\Http\Controllers\PsychologistController::class,'actualiza_dias_atencion'])->name('registrar_dias_atencion');
 
     Route::resource('reservas',App\Http\Controllers\ReservasController::class);
 
@@ -97,10 +99,7 @@ Route::middleware(["web","auth","verified"])->group(function () {
     Route::post('registrar_horarios',[App\Http\Controllers\PsychologistController::class,'registrar_horarios_store'])->name('registrar_horarios_post');
 
 
-
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-
 
     Route::post('/consulta_problemas/{id_problema}',[App\Http\Controllers\PsychologistController::class,'problems'])->name('consulta_problemas');
 
@@ -116,7 +115,8 @@ Route::get('/', function () {
 
 
 
-Auth::routes(['verify' => true]);
+Auth::routes();
+//Auth::routes(['verify' => true]);
 
 
 

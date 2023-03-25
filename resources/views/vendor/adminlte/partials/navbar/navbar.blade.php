@@ -47,7 +47,7 @@
             @elseif(Auth::user()->hasRole('psicologo')) 
             
                 Psicologo 
-            @elseif(Auth::user()->role==2) 
+            @elseif(Auth::user()->hasRole('administrador')) 
                 Administrador 
             @endif </h5> </i>
 

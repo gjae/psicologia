@@ -120,13 +120,14 @@ class RegisterController extends Controller
 
             'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
 
+
             'password'  => ['required', 'string', 'min:8', 'confirmed'],
 
             'gender'  => ['required', 'string'],
 
             'age'       => ['required','digits:2'],
 
-            'phone'     => ['required','numeric:7']
+            'phone'     => ['required','size:7']
 
         ],$messages = 
 
@@ -198,7 +199,6 @@ class RegisterController extends Controller
 
             'age'       => $data['age'],
 
-            'role'      => 1, //Paciente
 
             'password'  => Hash::make($data['password']),
 
@@ -224,34 +224,23 @@ class RegisterController extends Controller
 
             'name'      => 'required|max:30',
 
-            
-
             'lastname'  => 'required|max:30',
 
-            
-
             'gender'    => 'required|max:1',
-
-            
 
             'phone'     => ['required','numeric:7'],
 
             'age'       => 'required|digits:2',
 
             'email'     => 'required|max:50|unique:users,email',
-            'bio'     => 'required|max:250|alpha',
-            'specialty'     => 'required|max:250|alpha',
 
-             
+            'bio'     => 'required|max:250',
+
+            'specialty'     => 'required|max:250',
 
             'password'  => 'required|max:30|confirmed',
 
-            
-
             'photo'     => 'required|image',
-
-            
-
         ],$messages = 
 
         [
@@ -295,7 +284,7 @@ class RegisterController extends Controller
 
 
 
-            if(!User::where('email',$request['email'])->exists())
+        if(!User::where('email',$request['email'])->exists())
 
         {
 
@@ -310,8 +299,6 @@ class RegisterController extends Controller
                 'age'       => $request['age'],
 
                 'gender'    => $request['gender'],
-
-                'role'      => 3, //Psicologo
 
                 'password'  => Hash::make($request['password']),
 
@@ -366,8 +353,6 @@ class RegisterController extends Controller
             return back()->with('error', 'El psicologo ya está registrado');
 
         }
-
-        
 
     }
 
