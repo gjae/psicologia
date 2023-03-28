@@ -1,11 +1,10 @@
-center a img {
-<<<<<<< HEAD
-
-    margin: 30px 0;
-
+body {
+    font-size: 14px;
 }
 
-
+center a img {
+    margin: 30px 0;
+}
 
 /* login */
 
@@ -15,14 +14,11 @@ center a img {
 
 }
 
-
-
 .remember-login {
 
     font-size: 16px;
 
 }
-
 
 
 .login-page, 
@@ -38,8 +34,6 @@ center a img {
     background-repeat: no-repeat;
 
 }
-
-
 
 .card-header .card-title {
 
@@ -140,10 +134,6 @@ i h5.text-primary {
     padding: 10px;
 
  }
-
-
-
-
 
 
 
@@ -269,7 +259,6 @@ input[type="time"].form-control {
 
     height:35px;
 
-=======
     margin: 30px 0;
 }
 
@@ -399,16 +388,13 @@ input[type="date"].form-control,
 input[type="time"].form-control {
     font-size: 20px;
     height: 35px;
->>>>>>> f9bea73d007fcb4372dbb5b59126b60ed35c6935
+
 }
 
 /* estlos pendientes registro */
 
-<<<<<<< HEAD
 .login-page .card-body.login-card-body, 
-=======
 .login-page .card-body.login-card-body,
->>>>>>> f9bea73d007fcb4372dbb5b59126b60ed35c6935
 .login-page .card-body.login-card-body button.align-baseline {
     font-size: 14px;
 }
@@ -416,14 +402,36 @@ input[type="time"].form-control {
 img.hover-img.img-circle {
     margin: 10px 10px 10px 20px;
 }
-<<<<<<< HEAD
 table i h4, 
 table h6 {
     margin-left: 20px;
 }
-=======
 table i h4,
 table h6 {
     margin-left: 20px;
 }
->>>>>>> f9bea73d007fcb4372dbb5b59126b60ed35c6935
+
+
+/* nuevos cambios  */
+
+input.form-control.input-sm {
+    font-size: 14px;
+}
+
+span.brand-text {
+    text-transform: capitalize;
+}
+
+.bg-horarios {
+    background-color: #b6b5b5;
+    padding: 20px;
+    text-align: center;
+}
+
+table h6 {
+    font-size: 14px;
+}
+
+table i h4 {
+    text-transform: capitalize;
+}

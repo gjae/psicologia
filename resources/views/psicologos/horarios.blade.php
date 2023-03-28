@@ -310,15 +310,17 @@
                 <div class="row">
 
                     <form @submit.prevent="registrarDiasDeAtencion">
-                            <div>
+                            <div class="container">
                                 
                                 <h4>Días de atención pautados para ésta semana desde el {{$date}}: {{Auth::user()->IsPsychologist->dias_atencion}}</h4>
-                            </div>
 
                                 <h4>Podrás volver a actualizar ésta información el día {{$proxima_actualizacion}}</h4>
 
-                                
-                                @if($today->isMonday())
+                               
+                            </div>
+
+                            <div class="container">
+                                 @if($today->isMonday())
 
                                     <div class="row">
                         
@@ -361,7 +363,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        <div class="col-12">
                                             
                                             {{-- Register button --}}
 
@@ -377,24 +379,29 @@
                                     </div>
                                 @endif
                             </div>
+
                     </form>
+
+                    
                 </div>
-                <div class="row">
-                        <div class="col-sm-5">
-                            <span><b>HORARIO</b></span>
-                        </div>
-                        
-                </div>
-                @foreach($horario_psicologo as $info)
+                <div class="bg-horarios">
                     <div class="row">
-                        <div class="col-sm-5">
-                            </span>{{$info->schedule}}
-                        </div>
-                        <div class="col-sm-5">
-                            </span>{{$info->dias_atencion}}
-                        </div>
+                            <div class="col-12">
+                                <h3>Horario de Atención</h3>
+                            </div>
+                    
                     </div>
-                @endforeach
+                    @foreach($horario_psicologo as $info)
+                        <div class="row">
+                            <div class="col-12">
+                                </span>{{$info->schedule}}
+                            </div>
+                            <div class="col-12">
+                                </span>{{$info->dias_atencion}}
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
 
