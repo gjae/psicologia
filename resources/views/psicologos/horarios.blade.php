@@ -239,55 +239,12 @@
                                     <option value="8">8</option>
                                     <option value="9">9</option>
                                 </select>
-                                <!--select name="hora_min_inicio" class="form-control" id="" x-model="hora_inicio.min">
-                                    <option value="mins_de_inicio">- Min -</option>
-                                    <option value="00">00</option>
-                                    <option value="10">10</option>
-                                    <option value="20">20</option>
-                                    <option value="30">30</option>
-                                    <option value="40">40</option>
-                                    <option value="50">50</option>
-                                </select-->
                                 <select name="hora_meridiem_inicio" class="form-control" id="" x-model="hora_inicio.meridiem" >
-                                    <option value="meridiem_de_inicio">- Meridiem -</option>
+                                    <option value="meridiem_de_inicio">- AM - PM -</option>
                                     <option value="AM">AM</option>
                                     <option value="PM">PM</option>
                                 </select>
                             </div>
-
-                            <!--div class="col-sm-6">
-                                <label for="fin">Fin</label>
-
-                                <select name="hora_fin" class="form-control" id="" x-model="hora_fin.hora" value="10">
-                                    <option value="hora_de_inicio">- Hora -</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                </select>
-                                <select name="hora_min_fin" class="form-control" id="" x-model="hora_fin.min">
-                                    <option value="mins_de_inicio">- Min -</option>
-                                    <option value="00">00</option>
-                                    <option value="10">10</option>
-                                    <option value="20">20</option>
-                                    <option value="30">30</option>
-                                    <option value="40">40</option>
-                                    <option value="50">50</option>
-                                </select>
-                                <select name="hora_meridiem_fin" class="form-control" id="" x-model="hora_fin.meridiem" >
-                                    <option value="meridiem_de_inicio">- Meridiem -</option>
-                                    <option value="AM">AM</option>
-                                    <option value="PM">PM</option>
-                                </select>
-                            </div-->
                         </div>
                     </div>
                     <div class="row">
@@ -306,102 +263,104 @@
                         </div>
                     </div>
                 </form>
-
-                <div class="row">
-
-                    <form @submit.prevent="registrarDiasDeAtencion">
-                            <div class="container">
-                                
-                                <h4>Días de atención pautados para ésta semana desde el {{$date}}: {{Auth::user()->IsPsychologist->dias_atencion}}</h4>
-
-                                <h4>Podrás volver a actualizar ésta información el día {{$proxima_actualizacion}}</h4>
-
-                               
-                            </div>
-
-                            <div class="container">
-                                 @if($today->isMonday())
-
-                                    <div class="row">
-                        
-                                        <div class="col-sm-2">
-                                            
-                                            <label for="lunes"> Lunes </label>
-                                            <input type="checkbox" x-model="horario.diasDeAtencion" value="lunes">
-                                        </div>
-
-                                    
-                                        <div class="col-sm-2">
-                                            
-                                            <label for="martes"> Martes </label>
-                                            <input type="checkbox" x-model="horario.diasDeAtencion" value="martes">
-                                        </div>
-
-                                
-                                        <div class="col-sm-2">
-                                            <label for="miercoles"> Miércoles </label>
-                                            <input type="checkbox" x-model="horario.diasDeAtencion" value="miercoles">
-                                        </div>
-
-                                    
-                                        <div class="col-sm-2">
-                                            <label for="jueves"> Jueves </label>
-                                            <input type="checkbox" x-model="horario.diasDeAtencion" value="jueves">
-                                        </div>
-
-                                
-                                        <div class="col-sm-2">
-                                            <label for="viernes"> Viernes </label>
-                                            <input type="checkbox" x-model="horario.diasDeAtencion" value="viernes">
-                                        </div>
-
-                                    
-                                        <div class="col-sm-2">
-                                            <label for="sabado"> Sábado </label>
-                                            <input type="checkbox" x-model="horario.diasDeAtencion" value="sábado">
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-12">
-                                            
-                                            {{-- Register button --}}
-
-                                            <button type="submit" class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}" >
-
-                                                <span class="fas fa-user-plus"></span>
-
-                                                Actualizar días de atención para ésta semana
-
-                                            </button>
-
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
-
-                    </form>
-
-                    
-                </div>
-                <div class="bg-horarios">
+                <div class="container">
                     <div class="row">
-                            <div class="col-12">
-                                <h3>Horario de Atención</h3>
-                            </div>
+
+                        <form @submit.prevent="registrarDiasDeAtencion">
+                        <div>
+                            
+                            <h4>Días de atención pautados para ésta semana desde el {{$date}}: {{Auth::user()->IsPsychologist->dias_atencion}}</h4>
+                        </div>
+
+                            <h4>Podrás volver a actualizar ésta información el día {{$proxima_actualizacion}}</h4>
+
+                            
+                            @if($today->isMonday())
+
+                                <div class="row">
                     
+                                    <div class="col-sm-2">
+                                        
+                                        <label for="lunes"> Lunes </label>
+                                        <input type="checkbox" x-model="horario.diasDeAtencion" value="lunes">
+                                    </div>
+
+                                
+                                    <div class="col-sm-2">
+                                        
+                                        <label for="martes"> Martes </label>
+                                        <input type="checkbox" x-model="horario.diasDeAtencion" value="martes">
+                                    </div>
+
+                            
+                                    <div class="col-sm-2">
+                                        <label for="miercoles"> Miércoles </label>
+                                        <input type="checkbox" x-model="horario.diasDeAtencion" value="miercoles">
+                                    </div>
+
+                                
+                                    <div class="col-sm-2">
+                                        <label for="jueves"> Jueves </label>
+                                        <input type="checkbox" x-model="horario.diasDeAtencion" value="jueves">
+                                    </div>
+
+                            
+                                    <div class="col-sm-2">
+                                        <label for="viernes"> Viernes </label>
+                                        <input type="checkbox" x-model="horario.diasDeAtencion" value="viernes">
+                                    </div>
+
+                                
+                                    <div class="col-sm-2">
+                                        <label for="sabado"> Sábado </label>
+                                        <input type="checkbox" x-model="horario.diasDeAtencion" value="sábado">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        
+                                        {{-- Register button --}}
+
+                                        <button type="submit" class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}" >
+
+                                            <span class="fas fa-user-plus"></span>
+
+                                            Actualizar días de atención para ésta semana
+
+                                        </button>
+
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                        </form>
+                    </div>
+
+                </div>
+               <div class="bg-horarios">
+                    <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3>Horario de Atención</h3>
+                                </div>
+                            </div>
                     </div>
                     @foreach($horario_psicologo as $info)
                         <div class="row">
-                            <div class="col-12">
-                                </span>{{$info->schedule}}
+                            <div class="col-sm-5">
+                                {{$info->schedule}}
                             </div>
-                            <div class="col-12">
-                                </span>{{$info->dias_atencion}}
+                            <div class="col-sm-5">
+                                {{$info->dias_atencion}}
                             </div>
                         </div>
                     @endforeach
-                </div>
+
+               </div>
+               
+              
+              
             </div>
         </div>
 
