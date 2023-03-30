@@ -639,29 +639,31 @@
 
                             <td x-text="reservacion.schedule.schedule"></td>
 
-                            <td x-text="reservacion.schedule.at_this_hour_psyc.personal_info.name"></td>
+                            <td >
+
+                                <span x-text="reservacion.schedule.at_this_hour_psyc.personal_info.name"></span>
+                                
+                                <span x-text="reservacion.schedule.at_this_hour_psyc.personal_info.lastname"></span>
+                            </td>
 
                             <td x-text="reservacion.cause"></td>
 
                         </tr>
-
                         <option :value="tipo_problema.id" x-text="tipo_problema.problem"></option>
-
                     </template>
-
                 </tbody>
-
-                
-
             </table> 
-            
 
-            <h4>Necesitas más información? Escríbenos a nuestro whatsapp para cualquier duda, sugerencia o notificación</h4>
-            <a href="https://wa.link/o9fv1e"><img src="{{asset('images/whatsapp.png')}}" alt="Escríbenos a nuestro whatsapp"  x-show="message" width="120"></a>
+            <div class="row justify-content-center">
+                <div class="col-8 mt-3">
+                    <h4 class="text-center">Necesitas más información? Escríbenos a nuestro whatsapp para cualquier duda, sugerencia o notificación</h4>
+                
+                    <a href="https://wa.link/o9fv1e">
+                    <img src="{{asset('images/whatsapp.png')}}" class="d-block mx-auto" alt="Escríbenos a nuestro whatsapp"  x-show="message" width="120"></a>
+                </div>
+            </div>
         </div>
-
     </div>
-
 </div>
 
 
@@ -752,20 +754,29 @@
 
                         <h1>Que busca con ésta sesión?</h1>
 
-                        <select name="motivo_consulta" class="form-control" id="motivo_consulta" x-model="motivo_consulta" @change="sugerencia()">
+                        
+                        
 
-                            <option> Seleccione una opción</option>    
 
-                            <option value="consejo">Consejo</option>
+                        <div class="input-group ">
+                            <select name="motivo_consulta" class="form-control" id="motivo_consulta" x-model="motivo_consulta" style="    margin-top: 19px;">
 
-                            <option value="proceso psicológico">Proceso psicológico</option>
+                                <option> Seleccione una opción</option>    
 
-                            <option value="cuestionamientos">Resolver cuestionamientos</option>
+                                <option value="consejo">Consejo</option>
 
-                            <option value="gratuita">Ayuda gratuita</option>
+                                <option value="proceso psicológico">Proceso psicológico</option>
 
-                        </select>
+                                <option value="cuestionamientos">Resolver cuestionamientos</option>
 
+                                <option value="gratuita">Ayuda gratuita</option>
+
+                            </select>
+                            
+                            <div class="input-group-append">
+                                <button @click="sugerencia()" class="btn btn-primary"> Siguiente </button>
+                            </div>
+                        </div>
                     </div>
 
 
@@ -792,49 +803,46 @@
 
                             <hr>
 
-                                <div class="row p10">
+                                <div class="row p-2 justify-content-center">
 
-                                    <div class="col-lg-12 p-10"><h4 class="text-primary">Paso 1. Selecciona a tu terapeuta</h4>
+                                    <div class="col-12 p-2">
+                                        <h4 class="text-primary">Paso 1. Selecciona a tu terapeuta</h4>
 
-                                    @if(count($psicologos)==0)
-                                        <center> 
-
+                                        @if(count($psicologos)==0)
                                             <div>
-
-                                                    <h5> Todavía no hay terapeutas registrados en el sistema. Espera que alguien se registre </h5>
-
+                                                <h5> Todavía no hay terapeutas registrados en el sistema. Espera que alguien se registre </h5>
                                             </div>
+                                        @endif
 
-                                        </center>
+                                    </div>
+                                    <div class="container">
+                                        <div class="row">
+                                            <template x-for="especialista in especialistas" :key="especialista.id">
+                                                <div class="p-5">
+                                                        <a href="#" @click="formData.especialista=`${especialista.personal_info.name} ${especialista.personal_info.lastname}`"><img :src="`${especialista.photo.substring(1)}`" class="mx-auto d-block hover-img img-circle" alt="" height="52" width="52" x-on:click="psicologos(especialista.id),message= true">
+                                                        <h4 class="text-center"><span x-text="especialista.personal_info.name"></span>  <span x-text="especialista.personal_info.lastname"></span></h4>
+                                                        
 
-                                    @endif
+                                                        <h5>Especialista en <span x-text="especialista.therapy.therapy_type"></span></h5>
 
+                                                    <h5>BIO: <span x-text="especialista.bio"></span></h5>
+                                                    <h5>Días de atención ésta semana: </h5>
+                                                    <h5>
+                                                        <b><span x-text="especialista.dias_atencion"></span></b>
+                                                    </h5>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <table>
-                                    <template x-for="especialista in especialistas" :key="especialista.id">
-                                        <tr>
-                                            <td>
-                                                <a href="#" @click="formData.especialista=`${especialista.personal_info.name}`"><img :src="`${especialista.photo.substring(1)}`" class="hover-img img-circle" alt="" height="52" width="52" x-on:click="psicologos(especialista.id),message= true">
-                                            </a>
-                                                <i><h4 x-text="especialista.personal_info.name"></h4></i>
-                                                <h6>Especialista en <span x-text="especialista.therapy.therapy_type"></span></h6>
-
-                                                <h6>BIO: <span x-text="especialista.bio"></span></h6>
-                                                <h6>Días de atención ésta semana: <span x-text="especialista.dias_atencion"></span></h6>
-                                            </td>
-                                        </tr>
-                                    </template>
-                                </table>
-                                </div>
-
-                            </center>
 
                                 <hr>
 
-                            <div class="row p10">
-
+                                
                                 <h4 class="text-primary">Paso 2. Que día y en que horario desea tener su consulta?</h4>
+                                
+                            <div class="row p10">
 
                                 <div class="container col-lg-6">
 
@@ -869,8 +877,6 @@
 
                             </div>
 
-                            
-
                             <hr>
 
                             <div id="resume_pane" x-show="resume_pane" >
@@ -891,7 +897,7 @@
 
                                         <h4>Motivo de consulta: <span x-text="motivo_consulta"></span></h4>
 
-                                        <h4>Especialista: <span x-text="formData.especialista"></span></h4>
+                                        <h4>Especialista: <span x-text="formData.especialista"></span> </h4>
 
                                     </div>
 
@@ -933,10 +939,6 @@
 
                         <center><a href="https://wa.link/o9fv1e"><img src="{{asset('images/whatsapp.png')}}" alt="Escríbenos a nuestro whatsapp" srcset="" x-show="whatsapp" width="120"></a>
 
-
-
-
-
                         <blockquote class="blockquote" x-show="whatsapp_helpgroup">
 
                         <h1 class="h2" >Escríbenos a nuestro grupo de ayuda de Whatsapp</h1>    
@@ -969,9 +971,8 @@
 
         </swal-title>
 
-        <swal-html> <h4>Está de acuerdo?</h4>
-
-            
+        <swal-html> 
+            <h4>Está de acuerdo?</h4>
 
             <p>4 x S/ 360</p>
 
@@ -1023,17 +1024,11 @@
 
 @elseif(auth()->user()->hasRole('administrador') )
 
-
-
-
-
 <div class="row">
 
     <div class="card col-lg-12">
 
         <div class="card-header">
-
-            
 
             <h2>Estadísticas generales</h2>
 
@@ -1199,15 +1194,8 @@
 
 </div>
 
-    
-
-
-
-    
 
 @endif
-
-
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

@@ -139,7 +139,11 @@ class PsychologistController extends Controller
 
     }
 
+    public function eliminar_horarios($id){
+        
 
+        return Schedules::where('id',$id)->delete();
+    }
 
     /**
 
@@ -239,13 +243,6 @@ class PsychologistController extends Controller
         ->get();
         }else{
         $horario_psicologo='';
-        //cuando inicia el administrador, como el administrador no es psicologo aquí da error.. 
-        /**
-         * no sé porque cuando iniciamos como administrador intenta ir a la parte de psicologo y explota cuando intenta mostrar la vista de horarios.. porque el administrador no es psicologo (obvio) y como tal, no tiene id de psicologo, entonces me dice undefined property id on null.. Hay que revisar eso
-         
-         * eso pasa porque si yo estaba en la parte del psicologo y derrepente el sistema se deslogueó y entonces intento iniciar sesion como administrador
-         * el middleware va a intentar redirigirme a donde yo estaba (que era la parte del psicologo) pero si intento iniciar como administrador, obviamente el administrador no tiene ni ranking, ni dias de atencion.. por eso me da el error
-         */
         }
         
 
@@ -273,14 +270,8 @@ class PsychologistController extends Controller
             ]);
             return 1;
         }elseif ($request == null) {
-
             return 0;
-
         }
-
-        
-
     }
-
 }
 

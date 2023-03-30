@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
 
             "lastname"  => "administrador",
 
-            "email"     => "yohanazareth2693@gmail.com",
+            "email"     => "tupsicologoenlima@gmail.com",
 
             'phone'     => '51927038747',
 

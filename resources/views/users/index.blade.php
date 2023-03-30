@@ -47,7 +47,7 @@
 
                             })
                             
-                            location.reload()
+                           // location.reload()
 
                         }).catch()
 
@@ -124,7 +124,7 @@
 
                         @elseif($user->hasRole('psicologo')) 
 
-                            {{$user->isPsychologist->personal_phone}}
+                            {{$user->IsPsychologist->personal_phone}}
 
                         @elseif($user->hasRole('administrador')) 
 

@@ -22,11 +22,9 @@
                 }).then((opt)=>{
                     if (opt.isConfirmed){
                             fetch(`psicologos/${id}`,
-
                         {
                             method: 'DELETE',
                                 headers: {
-
                                     'Content-Type': 'application/json',
 
                                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')

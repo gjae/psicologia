@@ -698,7 +698,7 @@
 
                                 <div class="input-group mb-3">
 
-                                    <input  required type="text"  name="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" placeholder="Teléfono personal">
+                                    <input  required type="text" name="personal_phone" class="form-control @error('personal_phone') is-invalid @enderror" value="{{ old('personal_phone') }}" placeholder="Teléfono personal">
 
 
 
@@ -840,9 +840,7 @@
 
                                 <div class="input-group mb-3">
 
-                                    <input type="textarea"  name="bio" class="form-control @error('bio') is-invalid @enderror" value="{{ old('bio') }}" placeholder="BIO" >
-
-
+                                    <textarea name="bio" class="form-control @error('bio') is-invalid @enderror" value="{{ old('bio') }}" placeholder="BIO" ></textarea>
 
                                     <div class="input-group-append">
 

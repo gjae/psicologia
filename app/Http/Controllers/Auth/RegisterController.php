@@ -127,7 +127,7 @@ class RegisterController extends Controller
 
             'age'       => ['required','digits:2'],
 
-            'phone'     => ['required','size:7']
+            'phone'     => ['required','min:9','max:13']
 
         ],$messages = 
 
@@ -227,8 +227,9 @@ class RegisterController extends Controller
             'lastname'  => 'required|max:30',
 
             'gender'    => 'required|max:1',
-
-            'phone'     => ['required','numeric:7'],
+            'personal_phone'     => ['required','min:9','max:13'],
+            
+            'bussiness_phone'     => ['required','max:13','min:9'],
 
             'age'       => 'required|digits:2',
 
@@ -249,9 +250,11 @@ class RegisterController extends Controller
 
             
             'digits'  => 'Este campo debe tener solo :digits caracteres.',
+            
+            'size'  => 'Este campo debe tener :size caracteres.',
 
             
-
+            'min'      =>'El campo :attribute debe tener mínimo :min caracteres',
             'max'       => 'El campo :attribute debe contener :max caracteres.',
 
             
@@ -336,7 +339,7 @@ class RegisterController extends Controller
 
                 'ranking'           => 0,
 
-                'personal_phone'    => $request['phone'],
+                'personal_phone'    => $request['personal_phone'],
 
                 'bussiness_phone'   => $request['bussiness_phone'],
 
@@ -345,15 +348,10 @@ class RegisterController extends Controller
             ]
 
             );
-
             return redirect()->route('inicio')->with('success', 'El psicologo ha sido creado con éxito! Inicie sesión');
-
         }else{
-
             return back()->with('error', 'El psicologo ya está registrado');
-
         }
-
     }
 
 }

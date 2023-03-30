@@ -23,6 +23,14 @@
 
 
 @section('auth_body')
+
+
+@if (session('session_expired'))
+    <div class="alert alert-danger">
+        <i class="fa fa-exclamation-circle" aria-hidden="true"></i>  {{ session('session_expired') }}
+    </div>
+@endif
+
     <form action="{{ $login_url }}" method="post">
         @csrf
 

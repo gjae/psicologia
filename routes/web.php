@@ -33,11 +33,9 @@ use Illuminate\Http\Request;
 
 */
 
-Route::middleware(["web","auth"])->group(function () {
+//Route::middleware(["web","auth","auth.session.timeout"])->group(function () {
 
-//Route::middleware(["web","auth","verified"])->group(function () {
-
-    
+Route::middleware(["web","auth","verified","auth.session.timeout"])->group(function () {
 
     Route::resource('usuarios',App\Http\Controllers\UserController::class);
 
@@ -58,9 +56,6 @@ Route::middleware(["web","auth"])->group(function () {
     });
 
 
-
-
-
     Route::get('horarios_psicologos/{id_especialista}', function($id) {
 
         return Schedules::where('id_psychologist',$id)->get();
@@ -73,10 +68,7 @@ Route::middleware(["web","auth"])->group(function () {
     Route::resource('reservas',App\Http\Controllers\ReservasController::class);
 
 
-
     Route::get('reserva_gratuita/{id_usuario}',[App\Http\Controllers\ReservasController::class,'reserva_gratuita'])->name('reserva_gratuita');
-
-
 
     
 
@@ -91,6 +83,7 @@ Route::middleware(["web","auth"])->group(function () {
     Route::resource('psicologos',App\Http\Controllers\PsychologistController::class);
 
 
+    Route::delete('eliminar_horarios/{id}',[App\Http\Controllers\PsychologistController::class, 'eliminar_horarios'])->name('eliminar_horarios');
 
     Route::get('registrar_horarios',[App\Http\Controllers\PsychologistController::class,'registrar_horarios'])->name('registrar_horarios_index');
 
@@ -111,12 +104,12 @@ Route::get('/', function () {
 
     return view('auth.login');
 
-})->name('inicio');
+})->middleware('guest')->name('inicio');
 
 
 
-Auth::routes();
-//Auth::routes(['verify' => true]);
+//Auth::routes();
+Auth::routes(['verify' => true]);
 
 
 

@@ -100,7 +100,7 @@ class HomeController extends Controller
 
         
 
-        $usuarios        = count(user::all());
+        $usuarios        = count(user::all())-User::role('administrador')->count();
 
         $terapias        = Therapy::all();
 

@@ -85,9 +85,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $tipo_usuario= User::where('id',$id)->first()->role;
-        if($tipo_usuario == '3'){
+        $tipo_usuario= User::where('id',$id)->first();
+        if($tipo_usuario->hasRole('psicologo')){
 
             $id_psicologo= User::where('id',$id)->first()->isPsychologist->id;
 
@@ -99,7 +98,7 @@ class UserController extends Controller
             Psychologist::where('id',$id_psicologo)->delete();
             User::where('id',$id)->delete();
         }
-        if($tipo_usuario=='1'){
+        if($tipo_usuario->hasRole('paciente')){
             Reservations::where('id_user',$id)->delete();
             User::where('id',$id)->delete();
             return redirect('/usuarios');
