@@ -31,4 +31,8 @@ class Psychologist extends Model
     public function personalInfo(){
         return $this->belongsTo(User::class,'id_user','id');
     }
+
+    /*public function DiasDeAtencion(){
+        return $this->belongsTo(hora_dias_atencion::class,'id','id_psycho');
+    }*/
 }

@@ -318,12 +318,53 @@ class PsychologistController extends Controller
             ->get();
     }
 
+    public function registro_horas_y_dias_atencion(Request $request){
+        /*
+        consulta a ejecutar: 
+        
+        Schedules::create(['id_psychologist'=>3,'schedule'=>'4:00 PM - 5:00 PM','id_dia'=>2])
+
+
+
+        se puede hacer algo como esto:
+
+        Reading::insert([
+            ['email' => 'picard@example.com', 'votes' => 0],
+            ['email' => 'janeway@example.com', 'votes' => 0],
+        ]);
+
+
+
+        o
+
+        public function store(Request $request)
+{
+    .
+    .
+    .
+    $chunks = $insert_data->chunk(600);
+    foreach ($chunks as $chunk)
+    {
+        \DB::table('readings')->insert($chunk->toArray());
+    }
+}
+        */
+        
+    }
     public function registrar_horarios_store(Request $request){
+        dd($request);
         if ($request) {
             
-            Schedules::create([
+            /*Schedules::create([
                 'id_psychologist'=>Auth::user()->Ispsychologist->id, 
                 'schedule' => $request['inicio'].' - '.$request['fin']
+            ]);*/
+
+            /** ESTO VA A IR EN UN FOR.. porque debe llegar un array con horarios por cada dia, y se debe hacer una insercion en cada iteracion*/
+            Schedules::create([
+                'id_psychologist'=>Auth::user()->Ispsychologist->id, 
+                'schedule' => $request['inicio'].' - '.$request['fin'],
+                'id_dia' => $request['dia']
             ]);
             return 1;
         }elseif ($request == null) {

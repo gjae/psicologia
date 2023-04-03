@@ -28,11 +28,7 @@
 
             horarios_fin:[],
             dias_atencion_db:'{{Auth::user()->IsPsychologist->dias_atencion}}',
-            horario:{
-                inicio:'',
-                fin:'',
-                diasDeAtencion:[]
-            },
+            
             hora_inicio:{
                 hora:'',
                 min:'',
@@ -42,6 +38,43 @@
                 hora:'',
                 min:'',
                 meridiem:''
+            },
+            horario:{
+                inicio:'',
+                fin:'',
+                diasDeAtencion:[]
+            },
+            horariosPorDia:{
+                Lunes: {
+                    inicio: '',
+                    meridiem: '',
+                    hora: ''
+                },
+                Martes: {
+                    inicio: '',
+                    meridiem: '',
+                    hora: ''
+                },
+                Miercoles: {
+                    inicio: '',
+                    meridiem: '',
+                    hora: ''
+                },
+                Jueves: {
+                    inicio: '',
+                    meridiem: '',
+                    hora: ''
+                },
+                Viernes: {
+                    inicio: '',
+                    meridiem: '',
+                    hora: ''
+                },
+                Sábado: {
+                    inicio: '',
+                    meridiem: '',
+                    hora: ''
+                },
             },
             buttonDisabled:false,
             eliminardias_atencion(dia){
@@ -187,6 +220,15 @@
             });
 
             },
+            asignaHorasaDiasdeAtencion(){
+                diasAtencionConHorario= this.horario.diasDeAtencion.map((dia)=>{
+                    return {
+                        dia:dia,
+                        horario: `${this.horario.inicio}`
+                    }
+                })
+                
+            },
             registrarHorario(){
 
                 this.horario.inicio = this.hora_inicio.hora+':00'+' '+this.hora_inicio.meridiem;
@@ -208,9 +250,15 @@
                     this.horario.fin = parseInt(this.hora_inicio.hora)+1+':00 '+this.hora_inicio.meridiem;
                     }
 
-                    
                 }
-
+                this.horario.diasDeAtencion= this.horario.diasDeAtencion.map((dia)=>{
+                    //Introduce cada dia seleccionado con su //horario en el array de diasDeAtencion
+                    return {
+                        dia:dia,
+                        /*horario: `${this.horario.inicio}`*/
+                    }
+                })
+            
             Swal.fire({
 
                 title: 'Está seguro??',
@@ -263,7 +311,7 @@
                         })
 
                         this.buttonDisabled= true;
-                        location.reload()
+                        //location.reload()
                     }
 
                     if(data==0){
@@ -313,42 +361,8 @@
             </div>
 
             <div class="card-body">
-                <form @submit.prevent="registrarHorario">
-                    <div>
-                        @csrf
-                        <h4>Hoy es {{$today->isoFormat('dddd, MMMM Do YYYY')}}</h4>
-                        <h3>En que horario prestarás servicio?</h3>
+                <!--form @submit.prevent="registrarHorario">
                     
-                        <small>Horarios de atención entre 10 de la mañana y 10 de la noche</small>
-                        <div class="row">
-                            <div class="col-sm-3">
-
-                                <select name="hora_inicio" class="form-control" id="" x-model="hora_inicio.hora">
-                                    <option value="hora_de_inicio">- Hora -</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                </select>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <select name="hora_meridiem_inicio" class="form-control" id="" x-model="hora_inicio.meridiem" >
-                                    <option value="meridiem_de_inicio">- AM - PM -</option>
-                                    <option value="AM">AM</option>
-                                    <option value="PM">PM</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-lg-6">
 
@@ -364,57 +378,212 @@
 
                         </div>
                     </div>
-                </form>
+                </form-->
 
                 <div class="container">
 
-                    <form @submit.prevent="registrarDiasDeAtencion">
+                    <form @submit.prevent="registrarHorario">
+                        
+
                         <div>
-                            @php 
-                                $dias_atencion= Auth::user()->IsPsychologist->dias_atencion;
-                                $formato_dias= str_replace(",",", ", $dias_atencion);
-
-                                $array_dias= explode(',',$dias_atencion);
-                            @endphp
-
-                            <h4>Días de atención pautados para ésta semana desde el {{$date}}: {{$formato_dias}}</h4>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-2">
+                            <div class="row">
                                 <label for="lunes"> Lunes </label>
-                                <input type="checkbox" x-model="horario.diasDeAtencion" value="Lunes">
+                                <input type="checkbox" x-model="horario.diasDeAtencion"  value="Lunes">
+
+
+                                        <div class="col">
+
+                                            <select name="hora_inicio" class="form-control" id="" x-model="horariosPorDia.Lunes.inicio">
+                                                <option value="hora_de_inicio">- Hora -</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col">
+                                            <select name="hora_meridiem_inicio" class="form-control" id="" x-model="horariosPorDia.Lunes.meridiem">
+                                                <option value="meridiem_de_inicio">- AM - PM -</option>
+                                                <option value="AM">AM</option>
+                                                <option value="PM">PM</option>
+                                            </select>
+                                        </div>
                             </div>
 
                         
-                            <div class="col-sm-2">
+                            <div class="row">
                                 
                                 <label for="martes"> Martes </label>
-                                <input type="checkbox" x-model="horario.diasDeAtencion" value="Martes">
+                                <input type="checkbox" x-model="horario.diasDeAtencion"  value="Martes">
+
+                                
+                                    <div class="col">
+                                        <select name="hora_inicio" class="form-control" id="" >
+                                            <option value="hora_de_inicio">- Hora -</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <select name="hora_meridiem_inicio" class="form-control" id="" >
+                                            <option value="meridiem_de_inicio">- AM - PM -</option>
+                                            <option value="AM">AM</option>
+                                            <option value="PM">PM</option>
+                                        </select>
+                                    </div>
+
                             </div>
 
                     
-                            <div class="col-sm-2">
+                            <div class="row">
                                 <label for="miercoles"> Miércoles </label>
-                                <input type="checkbox" x-model="horario.diasDeAtencion" value="Miercoles">
+                                <input type="checkbox" x-model="horario.diasDeAtencion"  value="Miercoles">
+                                
+                                        <div class="col">
+
+                                            <select name="hora_inicio" class="form-control" id="" >
+                                                <option value="hora_de_inicio">- Hora -</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col">
+                                            <select name="hora_meridiem_inicio" class="form-control" id="" >
+                                                <option value="meridiem_de_inicio">- AM - PM -</option>
+                                                <option value="AM">AM</option>
+                                                <option value="PM">PM</option>
+                                            </select>
+                                        </div>
                             </div>
 
                         
-                            <div class="col-sm-2">
+                            <div class="row">
                                 <label for="jueves"> Jueves </label>
-                                <input type="checkbox" x-model="horario.diasDeAtencion" value="Jueves">
+                                <input type="checkbox" x-model="horario.diasDeAtencion"  value="Jueves">
+                                
+                                        <div class="col">
+
+                                            <select name="hora_inicio" class="form-control" id="" >
+                                                <option value="hora_de_inicio">- Hora -</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col">
+                                            <select name="hora_meridiem_inicio" class="form-control" id="" >
+                                                <option value="meridiem_de_inicio">- AM - PM -</option>
+                                                <option value="AM">AM</option>
+                                                <option value="PM">PM</option>
+                                            </select>
+                                        </div>
                             </div>
 
                     
-                            <div class="col-sm-2">
+                            <div class="row">
                                 <label for="viernes"> Viernes </label>
-                                <input type="checkbox" x-model="horario.diasDeAtencion" value="Viernes">
+                                <input type="checkbox" x-model="horario.diasDeAtencion"  value="Viernes">
+                                
+                                        <div class="col">
+
+                                            <select name="hora_inicio" class="form-control" id="" >
+                                                <option value="hora_de_inicio">- Hora -</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col">
+                                            <select name="hora_meridiem_inicio" class="form-control" id="" >
+                                                <option value="meridiem_de_inicio">- AM - PM -</option>
+                                                <option value="AM">AM</option>
+                                                <option value="PM">PM</option>
+                                            </select>
+                                        </div>
                             </div>
 
                         
-                            <div class="col-sm-2">
+                            <div class="row">
                                 <label for="sabado"> Sábado </label>
-                                <input type="checkbox" x-model="horario.diasDeAtencion" value="Sábado">
+                                <input type="checkbox" x-model="horario.diasDeAtencion"  value="Sábado">
+                                
+                                        <div class="col">
+
+                                            <select name="hora_inicio" class="form-control" id="" >
+                                                <option value="hora_de_inicio">- Hora -</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col">
+                                            <select name="hora_meridiem_inicio" class="form-control" id="">
+                                                <option value="meridiem_de_inicio">- AM - PM -</option>
+                                                <option value="AM">AM</option>
+                                                <option value="PM">PM</option>
+                                            </select>
+                                        </div>
                             </div>
                         </div>
 
@@ -427,7 +596,7 @@
 
                                     <span class="fas fa-calendar"></span>
 
-                                    Actualizar días de atención para ésta semana
+                                    Actualizar días y horarios de atención
 
                                 </button>
 
@@ -460,23 +629,6 @@
                                     </div>
                                 </div>
                             @endforeach
-                        </div>
-                        
-                        <div class="col-5">
-                            <div class="dias">
-                                @foreach($array_dias as $dia)
-                                    <div class="row">
-                                        <div class="col">
-                                            {{$dia}}
-                                        </div>
-                                        <div class="col">
-                                            <div>
-                                                <button class="btn btn-danger mb-3" x-on:click="eliminardias_atencion('{{$dia}}')"> ELIMINAR</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
                         </div>
                     </div>
                     
