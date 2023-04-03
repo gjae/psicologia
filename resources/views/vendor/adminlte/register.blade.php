@@ -650,12 +650,6 @@
 
                                 <div class="input-group mb-3">
 
-
-
-
-
-
-
                                     <select name="therapy_id" id="" class="form-control @error('therapy_id') is-invalid @enderror" value="{{ old('therapy_id') }}">
 
                                         <template x-for="terapia in tipo_terapias" :key="terapia.id">

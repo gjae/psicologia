@@ -129,8 +129,8 @@ input[type="time"].form-control {
     font-size: 20px;
     height: 35px;
 }
-
-* nuevos cambios */ input.form-control.input-sm {
+/* NUEVOS CAMBIOS*/
+input.form-control.input-sm {
     font-size: 14px;
 }
 
@@ -152,6 +152,9 @@ table i h4 {
     text-transform: capitalize;
 }
 
+.input-group > textarea {
+    font-size: 18px;
+}
 /* estlos pendientes registro */
 
 .login-page .card-body.login-card-body,

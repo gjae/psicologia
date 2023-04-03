@@ -45,10 +45,10 @@ class TerminateInactiveSession
         //get the last activity time from the session
             $lastActivityTime= session('lastActivityTime');
 
-            if($lastActivityTime && (time() - $lastActivityTime> 300)){
+            if($lastActivityTime && (time() - $lastActivityTime> 600)){
                 Auth::guard("web")->logout();
                 session()->forget('lastActivityTime');
-                return redirect('/')->with('session_expired','Tu sesion ha expirado debido a 5 minutos de inactividad');
+                return redirect('/')->with('session_expired','Tu sesion ha expirado debido a 10 minutos de inactividad');
 
             }
         return $next($request);

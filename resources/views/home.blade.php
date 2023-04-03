@@ -256,9 +256,9 @@
                 }
                 console.log(month.toString().length)
             },
-            get fecha_actual_mas_5(){
-                var dias_a_partir_de_hoy = 5;
-                return moment(this.fecha_actual).add(5, 'day').format('YYYY-MM-DD');
+            get fecha_actual_mas_2(){
+                var dias_a_partir_de_hoy = 2;
+                return moment(this.fecha_actual).add(2, 'day').format('YYYY-MM-DD');
             },
             seleccionarespecialista(){
                 var especialistaEnTerapia= this.tipo_terapia_id;
@@ -825,7 +825,7 @@
 
                                                         <h5>Especialista en <span x-text="especialista.therapy.therapy_type"></span></h5>
 
-                                                    <h5>BIO: <span x-text="especialista.bio"></span></h5>
+                                                    <h5><span x-text="especialista.bio"></span></h5>
                                                     <h5>Días de atención ésta semana: </h5>
                                                     <h5>
                                                         <b><span x-text="especialista.dias_atencion"></span></b>
@@ -848,7 +848,7 @@
 
                                     <label x-show="message">Fecha de consulta</label>
 
-                                    <input type="date" class="form-control" x-model="formData.appointment_date" :min="fecha_actual" :max="fecha_actual_mas_5">
+                                    <input type="date" class="form-control" x-model="formData.appointment_date" :min="fecha_actual" :max="fecha_actual_mas_2">
 
                                 </div>
 

@@ -1,7 +1,6 @@
 <?php
 
 
-
 namespace App\Http\Controllers;
 
 
@@ -180,7 +179,35 @@ class PsychologistController extends Controller
      * @return \Illuminate\Http\Response
 
      */
+    public function eliminar_dias_atencion(Request $request){
 
+        $dias_atencion_establecidos = 
+        
+        Psychologist::where('id',Auth::user()->Ispsychologist->id)
+        ->first()
+        ->dias_atencion;
+        
+        $dias_atencion_menos_dia_eliminado = str_replace($request[0],"",$dias_atencion_establecidos);
+
+        $dias_atencion_menos_dia_eliminado = str_replace(",,",",",$dias_atencion_menos_dia_eliminado);
+
+        if(($dias_atencion_menos_dia_eliminado[strlen($dias_atencion_menos_dia_eliminado)-1]) == ',') 
+        {
+            $dias_atencion_menos_dia_eliminado = substr($dias_atencion_menos_dia_eliminado,0,strlen($dias_atencion_menos_dia_eliminado)-1);
+
+        }
+
+        if($dias_atencion_menos_dia_eliminado[0] == ',') {
+            $dias_atencion_menos_dia_eliminado = substr($dias_atencion_menos_dia_eliminado,1);
+        }
+        
+
+        //dd($dias_atencion_menos_dia_eliminado);
+
+        Psychologist::where('id',Auth::user()->Ispsychologist->id)
+        ->update(['dias_atencion' => $dias_atencion_menos_dia_eliminado]);
+
+    }
     public function destroy($id)
 
     {
@@ -200,15 +227,45 @@ class PsychologistController extends Controller
 
     }
 
+    
     public function problems($id_problema){
         $problemas= Problems::where('id_therapy',$id_problema)->get();
         return $problemas;
     }
+    //Ordena los días de atención
+    public function comparar_dias($a,$b){
+        
+        $dias_ordenados = array("Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
+        $pos_a= array_search($a, $dias_ordenados);
+        $pos_b= array_search($b, $dias_ordenados); 
+
+        return $pos_a - $pos_b;
+    }
 
     public function actualiza_dias_atencion($dias_atencion){
+        
+        $dias_atencion= explode(',',$dias_atencion);
+        $dias_atencion_establecidos = Psychologist::where('id',Auth::user()->Ispsychologist->id)
+        ->first()
+        ->dias_atencion;
+        
+        $dias_atencion_establecidos = explode(',', $dias_atencion_establecidos); 
+        $dias_atencion_establecidos = array_filter($dias_atencion_establecidos);
+
+        foreach($dias_atencion as $dia_seleccionado){
+            if(in_array($dia_seleccionado, $dias_atencion_establecidos)){
+                return false;
+            }else{
+                $dias_atencion_establecidos[]= $dia_seleccionado;
+            }
+        }
+        usort($dias_atencion_establecidos, array($this, 'comparar_dias'));
+
+        $dias_atencion_establecidos= implode(',',$dias_atencion_establecidos);
+        $dias_atencion_establecidos= ltrim($dias_atencion_establecidos,',');
 
         Psychologist::where('id',Auth::user()->Ispsychologist->id)
-        ->update(['dias_atencion' => $dias_atencion]);
+        ->update(['dias_atencion' => $dias_atencion_establecidos]);
     }
 
     public function registrar_horarios(){

@@ -127,7 +127,7 @@ class RegisterController extends Controller
 
             'age'       => ['required','digits:2'],
 
-            'phone'     => ['required','min:9','max:13']
+            'phone'     => ['required','min:6','max:13']
 
         ],$messages = 
 
@@ -227,9 +227,9 @@ class RegisterController extends Controller
             'lastname'  => 'required|max:30',
 
             'gender'    => 'required|max:1',
-            'personal_phone'     => ['required','min:9','max:13'],
+            'personal_phone'     => ['required','min:6','max:13'],
             
-            'bussiness_phone'     => ['required','max:13','min:9'],
+            'bussiness_phone'     => ['required','max:13','min:6'],
 
             'age'       => 'required|digits:2',
 
@@ -255,7 +255,7 @@ class RegisterController extends Controller
 
             
             'min'      =>'El campo :attribute debe tener mínimo :min caracteres',
-            'max'       => 'El campo :attribute debe contener :max caracteres.',
+            'max'       => 'El campo :attribute debe contener máximo :max caracteres.',
 
             
 

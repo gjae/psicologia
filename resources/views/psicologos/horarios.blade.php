@@ -27,6 +27,7 @@
             //horario:'',
 
             horarios_fin:[],
+            dias_atencion_db:'{{Auth::user()->IsPsychologist->dias_atencion}}',
             horario:{
                 inicio:'',
                 fin:'',
@@ -43,43 +44,96 @@
                 meridiem:''
             },
             buttonDisabled:false,
+            eliminardias_atencion(dia){
+                Swal.fire({
+
+                        title: 'Está seguro??',
+
+                        icon: 'warning',
+
+                        showCancelButton: true,
+
+                        confirmButtonColor: '#3085d6',
+
+                        cancelButtonColor: '#d33',
+
+                        confirmButtonText: 'Si'
+
+                        })
+
+                .then((opt)=> {
+
+                    if (opt.isConfirmed) {
+
+                    fetch("{{route('eliminar_dias_atencion')}}", 
+
+                {
+
+			        method: 'POST',
+
+			        headers: {
+
+				        'Content-Type': 'application/json',
+
+				        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+
+			        },
+
+                    body: JSON.stringify(dia)
+			    })
+
+                    .then((data) => {
+
+                        Swal.fire({
+
+                            icon: 'success',
+                            title: 'Listo!'
+                            })
+                            location.reload()
+                        })
+                    .catch((data)=> console.log('Error'))
+
+                    }
+
+                }).catch();
+            },
             registrarDiasDeAtencion(){
                 Swal.fire({
 
-                    title: 'Está seguro??',
+                        title: 'Está seguro??',
 
-                    icon: 'warning',
+                        icon: 'warning',
 
-                    showCancelButton: true,
+                        showCancelButton: true,
 
-                    confirmButtonColor: '#3085d6',
+                        confirmButtonColor: '#3085d6',
 
-                    cancelButtonColor: '#d33',
+                        cancelButtonColor: '#d33',
 
-                    confirmButtonText: 'Si'
+                        confirmButtonText: 'Si'
 
-                    })
-
-            .then((opt)=> {
-
-                if (opt.isConfirmed) {
-
-                fetch(`registrar_dias_atencion/${this.horario.diasDeAtencion}`)
-
-			    .then((data) => {
-
-                    Swal.fire({
-
-                        icon: 'success',
-                        title: 'Listo!'
                         })
-                        location.reload()
-                    })
-                .catch((data)=> console.log('Error'))
 
-                }
+                .then((opt)=> {
 
-            });
+                    if (opt.isConfirmed) {
+
+                    fetch(`registrar_dias_atencion/${this.horario.diasDeAtencion}`)
+
+                    .then((data) => {
+
+                        Swal.fire({
+
+                            icon: 'success',
+                            title: 'Listo!'
+                            })
+                            location.reload()
+                        })
+                    .catch((data)=> console.log('Error'))
+
+                    }
+
+                });
             },
             eliminarhorarios(id){
                 Swal.fire({
@@ -316,47 +370,51 @@
 
                     <form @submit.prevent="registrarDiasDeAtencion">
                         <div>
-                            
-                            <h4>Días de atención pautados para ésta semana desde el {{$date}}: {{Auth::user()->IsPsychologist->dias_atencion}}</h4>
+                            @php 
+                                $dias_atencion= Auth::user()->IsPsychologist->dias_atencion;
+                                $formato_dias= str_replace(",",", ", $dias_atencion);
+
+                                $array_dias= explode(',',$dias_atencion);
+                            @endphp
+
+                            <h4>Días de atención pautados para ésta semana desde el {{$date}}: {{$formato_dias}}</h4>
                         </div>
 
                         <div class="row">
-            
                             <div class="col-sm-2">
-                                
                                 <label for="lunes"> Lunes </label>
-                                <input type="checkbox" x-model="horario.diasDeAtencion" value=" Lunes">
+                                <input type="checkbox" x-model="horario.diasDeAtencion" value="Lunes">
                             </div>
 
                         
                             <div class="col-sm-2">
                                 
                                 <label for="martes"> Martes </label>
-                                <input type="checkbox" x-model="horario.diasDeAtencion" value=" Martes">
+                                <input type="checkbox" x-model="horario.diasDeAtencion" value="Martes">
                             </div>
 
                     
                             <div class="col-sm-2">
                                 <label for="miercoles"> Miércoles </label>
-                                <input type="checkbox" x-model="horario.diasDeAtencion" value=" Miercoles">
+                                <input type="checkbox" x-model="horario.diasDeAtencion" value="Miercoles">
                             </div>
 
                         
                             <div class="col-sm-2">
                                 <label for="jueves"> Jueves </label>
-                                <input type="checkbox" x-model="horario.diasDeAtencion" value=" Jueves">
+                                <input type="checkbox" x-model="horario.diasDeAtencion" value="Jueves">
                             </div>
 
                     
                             <div class="col-sm-2">
                                 <label for="viernes"> Viernes </label>
-                                <input type="checkbox" x-model="horario.diasDeAtencion" value=" Viernes">
+                                <input type="checkbox" x-model="horario.diasDeAtencion" value="Viernes">
                             </div>
 
                         
                             <div class="col-sm-2">
                                 <label for="sabado"> Sábado </label>
-                                <input type="checkbox" x-model="horario.diasDeAtencion" value=" Sábado">
+                                <input type="checkbox" x-model="horario.diasDeAtencion" value="Sábado">
                             </div>
                         </div>
 
@@ -380,21 +438,48 @@
                 
                 <div class="bg-horarios">
                     <div class="row">
-                            <div class="col-12  mb-3">
+                            <div class="col-7  mb-3">
                                 <h3>HORARIO DE ATENCIÓN</h3>
                             </div>
-                    </div>
-                    @foreach($horario_psicologo as $info)
-                        <div class="row justify-content-center mt-3">
-                            <div class="col-5 col-md-3">
-                                </span>{{$info->schedule}}
-                            </div>
                             
-                            <div class="col-5 col-md-3">
-                                <button class="btn btn-danger mb-3" x-on:click="eliminarhorarios({{$info->id}})"> ELIMINAR</button>
+                            <div class="col-5  mb-3">
+                                <h3>DIAS DE ATENCIÓN</h3>
+                            </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-7">
+                            @foreach($horario_psicologo as $info)
+                                <div class="row justify-content-center mt-3">
+                                    <div class="col-5 col-md-3">
+                                        </span>{{$info->schedule}}
+                                    </div>
+                                    
+                                    <div class="col-5 col-md-3">
+                                        <button class="btn btn-danger mb-3" x-on:click="eliminarhorarios({{$info->id}})"> ELIMINAR</button>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        
+                        <div class="col-5">
+                            <div class="dias">
+                                @foreach($array_dias as $dia)
+                                    <div class="row">
+                                        <div class="col">
+                                            {{$dia}}
+                                        </div>
+                                        <div class="col">
+                                            <div>
+                                                <button class="btn btn-danger mb-3" x-on:click="eliminardias_atencion('{{$dia}}')"> ELIMINAR</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
-                    @endforeach
+                    </div>
+                    
                 </div>
             </div>
         </div>

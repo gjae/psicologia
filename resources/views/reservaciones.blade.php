@@ -72,7 +72,7 @@
 
                 <td>{{$reservation->schedule->schedule}}</td>
 
-                <td>{{$reservation->schedule->AtThisHourPsyc->personalInfo->name}} {{$reservation->schedule->AtThisHourPsyc->personalInfo->lastname}}</td>
+                <td class="text-capitalize">{{$reservation->schedule->AtThisHourPsyc->personalInfo->name}} {{$reservation->schedule->AtThisHourPsyc->personalInfo->lastname}}</td>
                 <td>{{$reservation->cause}}</td>
 
             </tbody>
