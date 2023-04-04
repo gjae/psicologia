@@ -1,30 +1,5 @@
 @extends('adminlte::auth.auth-page', ['auth_type' => 'register'])
 
-<style>
-
-    /* .nav li{
-
-        padding:10px;
-
-    }
-
-    .register-page{
-
-        
-
-        background-image: url("/images/terapista.jpg");
-
-        background-repeat: no-repeat;
-
-            background-size: cover;
-
-        background-position: center ;
-
-        justify-content: flex-start !important;
-
-    } */
-
-</style>
 
 <script>
 
@@ -844,7 +819,7 @@
 
                                 <div class="input-group mb-3">
 
-                                    <textarea class="form-control" name="bio" class="form-control @error('bio') is-invalid @enderror" value="{{ old('bio') }}" placeholder="BIO" ></textarea>
+                                    <textarea class="form-control bio" name="bio" class="form-control @error('bio') is-invalid @enderror" value="{{ old('bio') }}" placeholder="BIO" ></textarea>
 
 
 

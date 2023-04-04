@@ -834,7 +834,7 @@
 
                                 <div class="input-group mb-3">
 
-                                    <textarea name="bio" class="form-control @error('bio') is-invalid @enderror" value="{{ old('bio') }}" placeholder="BIO" ></textarea>
+                                    <textarea name="bio" class="form-control bio @error('bio') is-invalid @enderror" value="{{ old('bio') }}" placeholder="BIO" ></textarea>
 
                                     <div class="input-group-append">
 

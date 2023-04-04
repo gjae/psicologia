@@ -155,6 +155,10 @@ table i h4 {
 .input-group > textarea {
     font-size: 18px;
 }
+
+.bio {
+    font-size: 18px;
+}
 /* estlos pendientes registro */
 
 .login-page .card-body.login-card-body,

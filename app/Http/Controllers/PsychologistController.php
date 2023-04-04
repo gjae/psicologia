@@ -140,8 +140,12 @@ class PsychologistController extends Controller
 
     public function eliminar_horarios($id){
         
-
-        return Schedules::where('id',$id)->delete();
+        if(Reservations::where('id_schedule',$id)->exists()==true){
+            return 0;
+        }else{
+           Schedules::where('id',$id)->delete();
+           return 1;
+        }
     }
 
     /**
@@ -179,35 +183,6 @@ class PsychologistController extends Controller
      * @return \Illuminate\Http\Response
 
      */
-    public function eliminar_dias_atencion(Request $request){
-
-        $dias_atencion_establecidos = 
-        
-        Psychologist::where('id',Auth::user()->Ispsychologist->id)
-        ->first()
-        ->dias_atencion;
-        
-        $dias_atencion_menos_dia_eliminado = str_replace($request[0],"",$dias_atencion_establecidos);
-
-        $dias_atencion_menos_dia_eliminado = str_replace(",,",",",$dias_atencion_menos_dia_eliminado);
-
-        if(($dias_atencion_menos_dia_eliminado[strlen($dias_atencion_menos_dia_eliminado)-1]) == ',') 
-        {
-            $dias_atencion_menos_dia_eliminado = substr($dias_atencion_menos_dia_eliminado,0,strlen($dias_atencion_menos_dia_eliminado)-1);
-
-        }
-
-        if($dias_atencion_menos_dia_eliminado[0] == ',') {
-            $dias_atencion_menos_dia_eliminado = substr($dias_atencion_menos_dia_eliminado,1);
-        }
-        
-
-        //dd($dias_atencion_menos_dia_eliminado);
-
-        Psychologist::where('id',Auth::user()->Ispsychologist->id)
-        ->update(['dias_atencion' => $dias_atencion_menos_dia_eliminado]);
-
-    }
     public function destroy($id)
 
     {
@@ -232,68 +207,14 @@ class PsychologistController extends Controller
         $problemas= Problems::where('id_therapy',$id_problema)->get();
         return $problemas;
     }
-    //Ordena los días de atención
-    public function comparar_dias($a,$b){
-        
-        $dias_ordenados = array("Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
-        $pos_a= array_search($a, $dias_ordenados);
-        $pos_b= array_search($b, $dias_ordenados); 
-
-        return $pos_a - $pos_b;
-    }
-
-    public function actualiza_dias_atencion($dias_atencion){
-        
-        $dias_atencion= explode(',',$dias_atencion);
-        $dias_atencion_establecidos = Psychologist::where('id',Auth::user()->Ispsychologist->id)
-        ->first()
-        ->dias_atencion;
-        
-        $dias_atencion_establecidos = explode(',', $dias_atencion_establecidos); 
-        $dias_atencion_establecidos = array_filter($dias_atencion_establecidos);
-
-        foreach($dias_atencion as $dia_seleccionado){
-            if(in_array($dia_seleccionado, $dias_atencion_establecidos)){
-                return false;
-            }else{
-                $dias_atencion_establecidos[]= $dia_seleccionado;
-            }
-        }
-        usort($dias_atencion_establecidos, array($this, 'comparar_dias'));
-
-        $dias_atencion_establecidos= implode(',',$dias_atencion_establecidos);
-        $dias_atencion_establecidos= ltrim($dias_atencion_establecidos,',');
-
-        Psychologist::where('id',Auth::user()->Ispsychologist->id)
-        ->update(['dias_atencion' => $dias_atencion_establecidos]);
-    }
 
     public function registrar_horarios(){
 
-        Carbon::setLocale('es');
-        $today= Carbon::today();
-        $proxima_actualizacion = 
-            Carbon::now()
-            ->next()
-            ->startOfWeek()
-            ->isoFormat('dddd, MMMM Do YYYY')
-            ;
-            
-
-        $date=  
-        Carbon::now()
-        ->startOfWeek()
-        ->isoFormat('dddd, MMMM Do YYYY').
-        ' al '. 
-    
-        Carbon::now()
-        ->endOfWeek()
-        ->isoFormat('dddd, MMMM Do YYYY');
 
         if(Auth::user()
         ->Ispsychologist){
 
-            $horario_psicologo = 
+        $horario_psicologo = 
         Schedules::where('id_psychologist',Auth::user()
         ->Ispsychologist
         ->id)
@@ -301,15 +222,14 @@ class PsychologistController extends Controller
         }else{
         $horario_psicologo='';
         }
-        
 
-        return view('psicologos.horarios',compact('horario_psicologo','date','proxima_actualizacion','today'));
-
+        return view('psicologos.horarios',compact('horario_psicologo'));
     }
 
     public function seleccionarEspecialista($idTerapia){
         return Psychologist::with('personalInfo')
             ->with('therapy')
+            ->with('WorksAtHours')
             ->whereHas('therapy',
             function($q) use ($idTerapia){ 
                 $q->where('id',$idTerapia);
@@ -317,55 +237,35 @@ class PsychologistController extends Controller
             ->take(3)
             ->get();
     }
-
-    public function registro_horas_y_dias_atencion(Request $request){
-        /*
-        consulta a ejecutar: 
-        
-        Schedules::create(['id_psychologist'=>3,'schedule'=>'4:00 PM - 5:00 PM','id_dia'=>2])
-
-
-
-        se puede hacer algo como esto:
-
-        Reading::insert([
-            ['email' => 'picard@example.com', 'votes' => 0],
-            ['email' => 'janeway@example.com', 'votes' => 0],
-        ]);
-
-
-
-        o
-
-        public function store(Request $request)
-{
-    .
-    .
-    .
-    $chunks = $insert_data->chunk(600);
-    foreach ($chunks as $chunk)
-    {
-        \DB::table('readings')->insert($chunk->toArray());
-    }
-}
-        */
-        
-    }
     public function registrar_horarios_store(Request $request){
-        dd($request);
-        if ($request) {
-            
-            /*Schedules::create([
-                'id_psychologist'=>Auth::user()->Ispsychologist->id, 
-                'schedule' => $request['inicio'].' - '.$request['fin']
-            ]);*/
+        $horariosPorDias= $request['diasDeAtencion'][0];
 
-            /** ESTO VA A IR EN UN FOR.. porque debe llegar un array con horarios por cada dia, y se debe hacer una insercion en cada iteracion*/
-            Schedules::create([
-                'id_psychologist'=>Auth::user()->Ispsychologist->id, 
-                'schedule' => $request['inicio'].' - '.$request['fin'],
-                'id_dia' => $request['dia']
-            ]);
+        foreach($horariosPorDias as $horario){
+            if($horario['inicio']!=NULL){
+                    
+                    if($horario['inicio']==12){
+                            $hora_fin = '1:00 PM';
+                        }
+
+                    if($horario['inicio']>12 || $horario['inicio']<12){
+                        
+                        if($horario['inicio']+1==12){
+                            $hora_fin = ($horario['inicio']+1).':00 PM';
+                        }else{
+                        $hora_fin = ($horario['inicio']+1).':00 '.$horario['meridiem'];
+                        }
+
+                    }
+                $hora= $horario['inicio'].':00 '.$horario['meridiem'].' - '.$hora_fin;
+                Schedules::create([
+                    'id_psychologist'=>Auth::user()->Ispsychologist->id, 
+                    'schedule' => $hora,
+                    'dia' => $horario['dia']
+                ]);
+            }
+
+        }
+        if ($request) {
             return 1;
         }elseif ($request == null) {
             return 0;

@@ -6,12 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
-        Schema::create('dias_atencion', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nombre'); //
-            $table->timestamps();
+        Schema::table('schedules', function (Blueprint $table) {
+            //
+            
+            $table->string('dia')->after('id_psychologist');
         });
     }
 
@@ -22,6 +27,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dias_atencion');
+        Schema::table('schedules', function (Blueprint $table) {
+            //
+        });
     }
 };

@@ -268,7 +268,7 @@
                 then((data) => {
                     this.especialistas= data
                     
-                    console.log(this.especialistas[0])
+                    this.dias_atencion= this.especialistas.works_at_hours
                 }).catch()
             },
             reserva_gratuita(param){
@@ -826,10 +826,14 @@
                                                         <h5>Especialista en <span x-text="especialista.therapy.therapy_type"></span></h5>
 
                                                     <h5><span x-text="especialista.bio"></span></h5>
-                                                    <h5>Días de atención ésta semana: </h5>
-                                                    <h5>
-                                                        <b><span x-text="especialista.dias_atencion"></span></b>
-                                                    </h5>
+                                                    <h5 class="font-weight-bold">Días y horarios de atención: </h5>
+                                                    
+
+                                                    <template x-for="schedule in especialista.works_at_hours">
+                                                        <p>
+                                                            <span x-text="schedule.dia"></span>: <span x-text="schedule.schedule"></span>
+                                                        </p>
+                                                    </template>
                                                 </div>
                                             </template>
                                         </div>

@@ -9,7 +9,7 @@ class Schedules extends Model
 {
     use HasFactory;
     protected $table    = 'schedules';
-    protected $fillable = ['id_psychologist','schedule','id_dia'];
+    protected $fillable = ['id_psychologist','schedule','dia'];
 
     public function AtThisHourPsyc() {
     	return $this->hasOne(Psychologist::class,'id','id_psychologist');

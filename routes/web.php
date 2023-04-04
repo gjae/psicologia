@@ -33,9 +33,9 @@ use Illuminate\Http\Request;
 
 */
 
-Route::middleware(["web","auth","auth.session.timeout"])->group(function () {
+//Route::middleware(["web","auth","auth.session.timeout"])->group(function () {
 
-//Route::middleware(["web","auth","verified","auth.session.timeout"])->group(function () {
+Route::middleware(["web","auth","verified","auth.session.timeout"])->group(function () {
 
     Route::resource('usuarios',App\Http\Controllers\UserController::class);
 
@@ -63,8 +63,6 @@ Route::middleware(["web","auth","auth.session.timeout"])->group(function () {
     })->name('horarios_psicologos');
 
 
-    Route::get('registrar_dias_atencion/{dias_atencion}',[App\Http\Controllers\PsychologistController::class,'actualiza_dias_atencion'])->name('registrar_dias_atencion');
-
     Route::resource('reservas',App\Http\Controllers\ReservasController::class);
 
 
@@ -78,10 +76,7 @@ Route::middleware(["web","auth","auth.session.timeout"])->group(function () {
 
     Route::post('evaluar/{id}',[App\Http\Controllers\AdminController::class,'evaluar'])->name('evaluar');
 
-    
-    Route::post('eliminar_dias_atencion',[App\Http\Controllers\PsychologistController::class,'eliminar_dias_atencion'])->name('eliminar_dias_atencion');
-
-    Route::resource('psicologos',App\Http\Controllers\PsychologistController::class);
+     Route::resource('psicologos',App\Http\Controllers\PsychologistController::class);
 
 
     Route::delete('eliminar_horarios/{id}',[App\Http\Controllers\PsychologistController::class, 'eliminar_horarios'])->name('eliminar_horarios');
@@ -109,8 +104,8 @@ Route::get('/', function () {
 
 
 
-Auth::routes();
-//Auth::routes(['verify' => true]);
+//Auth::routes();
+Auth::routes(['verify' => true]);
 
 
 
