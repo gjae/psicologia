@@ -133,7 +133,7 @@
         <li >
             <a class="texto-registro" href="#pacientes" data-toggle="tab">
                 <div class="card-registro-new">
-                    
+
                 </div>
             </a>
         </li>
@@ -166,7 +166,7 @@
 
                 <div class="card-body ">
 
-                    <h4>Registro de pacientes</h4>
+                    <h4>Registro de pacies</h4>
 
                         <form action="{{ $register_url }}" method="post" >
 
