@@ -99,19 +99,57 @@ i h5.text-primary {
  }
 
 /* crear cuenta register-blade */
-.flex-container {
+.nav.nav-tabs.m-0.p-0.flex-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-registro {
+    padding: 10px;
+}
+.texto-registro {
+    display: block;
+    transition: all 0.3s ease-in;
+}
+
+
+.texto-registro:hover, .texto-registro:focus {
+    border: none;
+    border-radius: unset;
+    width: 100%;
+    background-color: rgba(255,255,255,.5) !important;
+
+}
+
+.card-registro-new {
     display: flex;
     justify-content: center;
+    gap: 20px;
 }
+.card-registro-new img {
+    width: 50px;
+}
+
+
 .registro-btn {
     font-size: 16px;
     text-transform: uppercase;
     font-weight: bold;
     text-align: center;
 }
+
+
 .card-footer p {
     font-size: 16px;
 }
+.card-footer p a {
+    text-align: center;
+    display: block;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-size: bold;
+}
+
 .card-body h4 {
     padding: 10px 0;
 }
@@ -195,8 +233,5 @@ table i h4 {
     text-transform: capitalize;
 }
 
-/* estilos a los registros de paciente y psicologo */
 
-.card-registro-new {
-    background-image: url(doctor-svgrepo-com.svg);
-}
+

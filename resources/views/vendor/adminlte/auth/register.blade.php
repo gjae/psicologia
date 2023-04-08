@@ -128,17 +128,30 @@
 
     @section('auth_body')
 
-    <ul class="nav nav-tabs flex-container" data-tabs="tabs">
 
-        <li ><a class="registro-btn" href="#pacientes" data-toggle="tab">Registro de Pacientes</a></li>
-
-        <li ><a class="registro-btn" href="#psicologo" data-toggle="tab">Registro de Psicólogos</a></li>
-
+    <ul class="nav nav-tabs m-0 p-0 flex-container">
+        <li class="bg-primary lista-registro">
+            <a class="texto-registro" data-toggle="tab" href="#pacientes">
+                <div class="card-registro-new">
+                    <img class="img-responsive d-block" src="vendor/adminlte/dist/img/businessman.png" alt="" srcset="">
+                    <img class="img-responsive d-block" src="vendor/adminlte/dist/img/businesswoman.png" alt="" srcset="">
+                </div>
+                <h3 class="text-center text-uppercase my-3">Registro de Pacientes</h3>
+            </a>
+        </li>
+        <li class="bg-success lista-registro">
+            <a class="texto-registro" data-toggle="tab" href="#psicologo">
+                <div class="card-registro-new">
+                    <img src="vendor/adminlte/dist/img/doctor.png" alt="" srcset="">
+                    <img src="vendor/adminlte/dist/img/doctora.png" alt="" srcset="">
+                </div>
+                <h3 class="text-center text-uppercase my-3">Registro de Psicólogos</h3>
+            </a>
+        </li>
+        
     </ul>
 
     <div class="tab-content" x-data="registro()" x-init="terapias()">
-
-           
 
     @if(session()->has('psicologo'))
 
@@ -154,7 +167,7 @@
 
                 <div class="card-body ">
 
-                    <h4>Registro de pacientes</h4>
+                    <h4 class="bg-primary text-center text-uppercase">Registro de pacientes</h4>
 
                         <form class="formulario-ayuda" action="{{ $register_url }}" method="post" >
 
@@ -176,7 +189,7 @@
 
                                     <div class="input-group-text">
 
-                                        <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                        <span class="fas fa-user-circle {{ config('adminlte.classes_auth_icon', '') }}"></span>
 
                                     </div>
 
@@ -212,7 +225,7 @@
 
                                     <div class="input-group-text">
 
-                                        <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                        <span class="fas fa-user-circle {{ config('adminlte.classes_auth_icon', '') }}"></span>
 
                                     </div>
 
@@ -326,7 +339,7 @@
 
                                     <div class="input-group-text">
 
-                                        <span class="fas fa-genderless {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                        <span class="fas fa-venus-mars {{ config('adminlte.classes_auth_icon', '') }}"></span>
 
                                     </div>
 
@@ -498,7 +511,7 @@
 
                     <div class="card-body">
 
-                        <h4>Registro de psicólogos</h4>
+                        <h4 class="bg-success text-center text-uppercase">Registro de psicólogos</h4>
 
                         
 
@@ -516,7 +529,7 @@
 
                                         <div class="input-group-text">
 
-                                            <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                            <span class="fas fa-user-circle {{ config('adminlte.classes_auth_icon', '') }}"></span>
 
                                         </div>
 
@@ -552,7 +565,7 @@
 
                                         <div class="input-group-text">
 
-                                            <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                            <span class="fas fa-user-circle {{ config('adminlte.classes_auth_icon', '') }}"></span>
 
                                         </div>
 
@@ -784,7 +797,7 @@
 
                                         <div class="input-group-text">
 
-                                            <span class="fas fa-genderless {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                            <span class="fas fa-venus-mars {{ config('adminlte.classes_auth_icon', '') }}"></span>
 
                                         </div>
 
@@ -818,7 +831,7 @@
 
                                         <div class="input-group-text">
 
-                                            <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                            <span class="fas fa-file-signature {{ config('adminlte.classes_auth_icon', '') }}"></span>
 
                                         </div>
 
