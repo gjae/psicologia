@@ -130,9 +130,21 @@
 
     <ul class="nav nav-tabs" data-tabs="tabs">
 
-        <li ><a class="texto-registro" href="#pacientes" data-toggle="tab">Registro de Pacientes</a></li>
+        <li >
+            <a class="texto-registro" href="#pacientes" data-toggle="tab">
+                <div class="card-registro-new">
+                    
+                </div>
+            </a>
+        </li>
 
-        <li ><a class="texto-registro" href="#psicologo" data-toggle="tab">Registro de Psicólogos</a></li>
+        <li >
+            <a class="texto-registro" href="#psicologo" data-toggle="tab">
+                <div class="card-registro-new">
+
+                </div>
+            </a>
+        </li>
 
     </ul>
 

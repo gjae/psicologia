@@ -7,294 +7,56 @@ center a img {
 }
 
 /* login */
-
 .footer-login {
-
     font-size: 16px;
-
 }
-
 .remember-login {
-
     font-size: 16px;
-
 }
-
-
 .login-page, 
-
 .register-page {
-
     background-image: url(terapista.jpg);
-
     background-position: center center;
-
     background-size: cover;
-
     background-repeat: no-repeat;
-
 }
-
 .card-header .card-title {
-
     font-size: 16px;
-
     font-weight: bold;
-
     text-transform: uppercase;
-
 }
-
-
 
 .btn.btn-primary {
-
     font-size: 16px;
-
     margin: 20px 0;
-
     text-transform: uppercase;
-
 }
 
-
-
-/* admin */
-
-.sidebar-mini {
-
-    font-size: 14px;
-
-   
-
-}
-
-.main-sidebar .brand-link span {
-
-    font-size: 16px;
-
-    padding: 10px 0;
-
-}
-
-
-
-.card-body .inner p {
-
-    font-size: 16px;
-
-}
-
-
-
-a.small-box-footer {
-
-    font-size: 16px;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    gap: 10px;
-
-}
-
-
-
-a.small-box-footer i {
-
-    font-size: 16px;
-
-}
-
-
-
-.nav-link span h5 {
-
-    margin-right: 15px;
-
-    text-transform: uppercase;
-
-}
-
-i h5.text-primary {
-
-    color: #494b51 !important;
-
-    margin-right: 15px;
-
-}
-
-
-
- .nav-link .fa-bars {
-
-    padding: 10px;
-
- }
-
-
-
-/* crear cuenta register-blade */
-
-
-
-.flex-container {
-
-    display: flex;
-
-    justify-content: center;
-
-}
-
-
-
-.registro-btn {
-
-    font-size: 16px;
-
-    text-transform: uppercase;
-
-    font-weight: bold;
-
-    text-align: center;
-
-}
-
-.card-footer p {
-
-    font-size: 16px;
-
-}
-
-
-
-.card-body h4 {
-
-    padding: 10px 0;
-
-}
-
-
-
-.input-group input {
-
-    font-size: 18px;
-
-}
-
-
-
-.input-group input[type= "file"] {
-
-    font-size: 12px;
-
-    height: 40px;
-
-}
-
-
-
-
-
-.input-group option{
-
-    font-size: 16px;
-
-}
-
-
-
-.input-group select {
-
-    padding: 0;
-
-    margin: 0;
-
-    font-size: 16px;
-
-}
-
-
-
-
-
-/* reserva cita */
-
-
-
-.nav.nav-tabs li a {
-
-    font-size: 14px;
-
-}
-
-
-
-.container center h1 {
-
-    margin: 20px 0;
-
-}
-
-
-
-.tab-pane h1 {
-
-    margin: 20px 0;
-
-}
-
-
-
-.sidebar-mini select.form-control, 
-
-input[type="date"].form-control, 
-
-input[type="time"].form-control {
-
+.card-footer center p.my-0 a {
     font-size: 20px;
-
-    height:35px;
-
-    margin: 30px 0;
-}
-
-/* login */
-.footer-login {
-    font-size: 16px;
-}
-
-.remember-login {
-    font-size: 16px;
-}
-
-.login-page,
-.register-page {
-    background-image: url(terapista.jpg);
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-.card-header .card-title {
-    font-size: 16px;
     font-weight: bold;
-    text-transform: uppercase;
+    color: #474b4e;
+    text-transform: capitalize;
 }
 
-.btn.btn-primary {
-    font-size: 16px;
-    margin: 20px 0;
-    text-transform: uppercase;
+.card-footer center p.my-0 a:hover {
+    color: #b6b5b5;
+}
+
+.card-footer center p.my-0.footer-login a {
+    color: #0841f3;
+}
+
+.card-footer center p.my-0.footer-login a:hover {
+    color: #6464f9;
 }
 
 /* admin */
+
 .sidebar-mini {
     font-size: 14px;
 }
+
 .main-sidebar .brand-link span {
     font-size: 16px;
     padding: 10px 0;
@@ -319,23 +81,28 @@ a.small-box-footer i {
 .nav-link span h5 {
     margin-right: 15px;
     text-transform: uppercase;
+
 }
+
 i h5.text-primary {
-    color: #494b51 !important;
-    margin-right: 15px;
+    display: none;
 }
 
 .nav-link .fa-bars {
     padding: 10px;
-}
+ }
+
+ .nav-item.dropdown.user-menu a.nav-link.dropdown-toggle span h5.text-primary::before {
+    content: "Cerrar Sesión: ";
+    padding-left: 20px;
+    color: #c21807;
+ }
 
 /* crear cuenta register-blade */
-
 .flex-container {
     display: flex;
     justify-content: center;
 }
-
 .registro-btn {
     font-size: 16px;
     text-transform: uppercase;
@@ -345,24 +112,19 @@ i h5.text-primary {
 .card-footer p {
     font-size: 16px;
 }
-
 .card-body h4 {
     padding: 10px 0;
 }
-
 .input-group input {
     font-size: 18px;
 }
-
-.input-group input[type="file"] {
+.input-group input[type= "file"] {
     font-size: 12px;
     height: 40px;
 }
-
-.input-group option {
+.input-group option{
     font-size: 16px;
 }
-
 .input-group select {
     padding: 0;
     margin: 0;
@@ -370,7 +132,6 @@ i h5.text-primary {
 }
 
 /* reserva cita */
-
 .nav.nav-tabs li a {
     font-size: 14px;
 }
@@ -378,17 +139,15 @@ i h5.text-primary {
 .container center h1 {
     margin: 20px 0;
 }
-
 .tab-pane h1 {
     margin: 20px 0;
 }
-
-.sidebar-mini select.form-control,
-input[type="date"].form-control,
+.sidebar-mini select.form-control, 
+input[type="date"].form-control, 
 input[type="time"].form-control {
     font-size: 20px;
-    height: 35px;
-
+    height:35px;
+    margin: 30px 0;
 }
 
 /* estlos pendientes registro */
@@ -434,4 +193,10 @@ table h6 {
 
 table i h4 {
     text-transform: capitalize;
+}
+
+/* estilos a los registros de paciente y psicologo */
+
+.card-registro-new {
+    background-image: url(doctor-svgrepo-com.svg);
 }
