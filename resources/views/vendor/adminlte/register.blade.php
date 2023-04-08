@@ -508,7 +508,7 @@
 
                     <div class="card-body">
 
-                        <h4>Registro de psicólogos</h4>
+                        <h4>Registro de psicólog</h4>
 
                         
 
