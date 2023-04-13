@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -40,6 +44,21 @@ class LoginController extends Controller
     }
 
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return array
+     */
+    
+    protected function credentials(Request $request)
+    {   
+        /*
+        It returns an array with both input credentials, in order to compare them with the database credentials in the attemptLogin method.
+        */
+        return $request->only($this->username(), 'password');
+    }
+
+
     public function login(Request $request)
     {
         $this->validateLogin($request);
@@ -58,5 +77,38 @@ class LoginController extends Controller
         $this->incrementLoginAttempts($request);
 
         return $this->sendFailedLoginResponse($request);
+    }
+
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        return $this->authenticated($request, $this->guard('web')->user())
+                ?: redirect()->intended($this->redirectPath());
+    }
+
+    protected function attemptLogin(Request $request)
+    {
+        return $this->guard()->attempt(
+            $this->credentials($request), $request->filled('remember')
+        );
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        $errors= [];
+        $user= User::where($this->username(), $request->input($this->username()))->first();
+
+        //Validates if the input matches one of the database users.
+        if(!$user){
+            //It assigns error message to form username field
+            $errors[$this->username()] = trans('auth.failed');
+        }else{
+            //It assigns error message to form password field
+            $errors['password'] = trans('auth.password');
+        }
+        throw ValidationException::withMessages($errors);
     }
 }

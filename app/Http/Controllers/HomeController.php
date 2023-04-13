@@ -59,74 +59,79 @@ class HomeController extends Controller
     public function index()
 
     {
+        if(Auth::user()->age<20){
+            return view('whatsapp');
+        }else{
+            /**
 
-        /**
+            * cantidad de reservaciones - contador estadísticas generales
 
-         * cantidad de reservaciones - contador estadísticas generales
+            */
 
-         */
+            $reservaciones = '';
 
-        $reservaciones = '';
+            
 
-        
+            if (Auth::check() && Auth::user()->hasRole('administrador') ){
 
-        if (Auth::check() && Auth::user()->hasRole('administrador') ){
+                $reservaciones=count(Reservations::all());
 
-            $reservaciones=count(Reservations::all());
+            }
 
-        }
-
-        if (Auth::user()->hasRole('psicologo')) {
+            if (Auth::user()->hasRole('psicologo')) {
 
 
 
-            $reservaciones = count($reserva1 = Reservations::whereHas('schedule',function($q){ 
+                $reservaciones = count($reserva1 = Reservations::whereHas('schedule',function($q){ 
 
-                $q-> whereHas('AtThisHourPsyc',function($l){ 
+                    $q-> whereHas('AtThisHourPsyc',function($l){ 
 
-                    $l->whereHas('personalInfo',function($m){ 
+                        $l->whereHas('personalInfo',function($m){ 
 
-                        $m ->where('id',Auth::user()->id); 
+                            $m ->where('id',Auth::user()->id); 
+
+                        }); 
 
                     }); 
 
-                }); 
+                })->get());
 
-            })->get());
+            }
 
+            
+
+            
+
+            $usuarios        = count(user::all())-User::role('administrador')->count();
+
+            $terapias        = Therapy::all();
+
+            $horarios        = count(Schedules::all());
+
+            $psicologos      = Psychologist::latest('ranking')->take(3)->get();
+
+            $psicologos_cant = count(Psychologist::all());
+
+
+
+            return view('home',
+
+                compact('terapias',
+
+                'horarios',
+
+                'psicologos',
+
+                'reservaciones',
+
+                'usuarios',
+
+                'psicologos_cant')
+
+            );
+            
         }
-
         
-
-        
-
-        $usuarios        = count(user::all())-User::role('administrador')->count();
-
-        $terapias        = Therapy::all();
-
-        $horarios        = count(Schedules::all());
-
-        $psicologos      = Psychologist::latest('ranking')->take(3)->get();
-
-        $psicologos_cant = count(Psychologist::all());
-
-
-
-        return view('home',
-
-            compact('terapias',
-
-            'horarios',
-
-            'psicologos',
-
-            'reservaciones',
-
-            'usuarios',
-
-            'psicologos_cant')
-
-        );
 
     }
 

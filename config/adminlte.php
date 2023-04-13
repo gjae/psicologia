@@ -597,6 +597,19 @@ return [
             'can'       => 'usuarios.index'
 
         ],
+        
+
+        [
+
+            'text'      => 'Pacientes',
+
+            'route'     => 'pacientes.index',
+
+            'icon'      => 'fa fa-users',
+
+            'can'       => 'pacientes.index'
+
+        ],
 
         [
 

@@ -9,7 +9,7 @@ class Reservations extends Model
 {
     use HasFactory;
     protected $table    = 'reservations';
-    protected $fillable = ['appointment_date' , 'appointment_info','id_user','id_schedule','cause','number_of_sessions','amount'];
+    protected $fillable = ['appointment_date' , 'appointment_info','id_user','id_schedule','cause','number_of_sessions','amount','link_meeting'];
 
     public function schedule() {
     	return $this->hasOne(Schedules::class,'id','id_schedule');

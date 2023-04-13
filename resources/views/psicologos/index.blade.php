@@ -8,6 +8,15 @@
 <script>
     function psicologos(){
         return {
+            info_psicologo(psicologo){
+                fetch(`psicologos/${psicologo}`)
+                        .then(r => r.json())
+                        .then((data) => {
+                            
+                        }
+
+                        ).catch()
+            },
             eliminarpsicologos(id){
                 Swal.fire({
 
@@ -119,7 +128,11 @@
 
                 <tr>
 
-                    <td><img src="{{ asset($psicologo->photo) }}" class="img-circle" alt="" height="52" width="52"></td>
+                    <td>
+                        <a href="{{route('psicologos.show', $psicologo->id)}}">
+                            <img src="{{ asset($psicologo->photo) }}" class="img-circle" alt="" height="52" width="52">
+                        </a>
+                    </td>
 
                     <td>{{$psicologo->personalInfo->name}} {{$psicologo->personalInfo->lastname}}</td>
 
@@ -147,7 +160,59 @@
 
         </table>
 
+
+        <template id="my-template">
+
+            <swal-title>
+
+            </swal-title>
+
+            <swal-html> 
+
+                <h4>Está de acuerdo?</h4>
+
+                <p>4 sesiones x S/ 360</p>
+
+                <p>6 sesionesx S/ 450</p>
+
+                <p>8 sesionesx S/ 650</p>
+
+                <p>12 sesionesx S/ 700</p>
+
+            </swal-html>
+
+            <swal-icon type="warning" color="red"></swal-icon>
+
+                <swal-button type="confirm">
+
+                    Si
+
+                </swal-button>
+
+                <swal-button type="cancel">
+
+                    No
+
+                </swal-button>
+
+            <swal-param name="allowEscapeKey" value="false" />
+
+            <swal-param
+
+            name="customClass"
+
+            value='{ "popup": "my-popup" }' />
+
+            <swal-function-param
+
+            name="didOpen"
+
+            value="popup => console.log(popup)" />
+
+        </template>
     </div>
+
+    
 
 </div>
 

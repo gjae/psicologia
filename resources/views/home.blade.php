@@ -136,8 +136,10 @@
 
         return {
             
+            selectedTherapist: false,
             current_date:'',
             reserved_pane:false,
+            esperar_link:'',
 
             message:false,
 
@@ -216,7 +218,12 @@
 
             
             message:'',
-
+            validarfecha(){
+                const fecha= this.formData.appointment_date
+                if(moment(fecha).day()===0){
+                    alert("No se puede seleccionar el dia domingo. Porfavor seleccione otra fecha")
+                }
+            },
             get horario_de_consulta_prop(){
 
                 const nuevoarrayhoras= this.horarios;
@@ -247,51 +254,46 @@
                  var year = today.getFullYear();
                 
                 if(month.toString().length==1){
-                    //month = '0'+parseInt(today.getMonth() + 1);
-                    return `${year}-0${month}-${day}`; 
+                   month= `0${month}`
                 }
-                if(month.toString().length==2){
-                   //var month = today.getMonth() + 1;
+
+                if(day.toString().length==1){
+                    day = `0${day}`; 
+                }
                    return `${year}-${month}-${day}`; 
-                }
-                console.log(month.toString().length)
             },
-            get fecha_actual_mas_2(){
-                var dias_a_partir_de_hoy = 2;
-                return moment(this.fecha_actual).add(2, 'day').format('YYYY-MM-DD');
+            get fecha_actual_mas_1(){
+                var dias_a_partir_de_hoy = 1;
+                return moment(this.fecha_actual).add(1, 'day').format('YYYY-MM-DD');
             },
             seleccionarespecialista(){
-                var especialistaEnTerapia= this.tipo_terapia_id;
+                //console.log("ASDAS"+this.fecha_actual_mas_1)
+                
+                var especialistaEnTerapia = this.tipo_terapia_id;
 
                 fetch(`seleccionar_especialista/${especialistaEnTerapia}`).
                 then(r => r.json()).
                 then((data) => {
                     this.especialistas= data
-                    
                     this.dias_atencion= this.especialistas.works_at_hours
                 }).catch()
             },
             reserva_gratuita(param){
-
                 fetch(`reserva_gratuita/${param}`).
-
                 then(r => r.json()).
-
                 then((data) => {
 
                         if(data==0){
 
-                                this.reserved_pane=false,
+                            this.reserved_pane=false,
 
-                                this.primera_vez=true,
+                            this.primera_vez=true,
 
-                                this.message=false
+                            this.message=false
 
-                            }
+                        }
 
                         if(data==1){
-
-
 
                             this.reserved_pane=true,
 
@@ -304,20 +306,19 @@
                             then(r => r.json()).
 
                             then((data) => {
-                                console.log(data)
+                                //console.log(data)
 
                                 this.mis_reservaciones= data;
+                                console.log(this.mis_reservaciones.link_meeting)
+
+                                if(this.mis_reservaciones.link_meeting===undefined){
+                                    this.esperar_link= 'Espera que tu psicólogo te compara el link de la reunión. Regresa más tarde para ver si ya está disponible el link';
+                                }
 
                             }).catch()
-
                         }
-
                     }
-
                     ).catch()
-
-                
-
             },
 
             ReservaForm(){
@@ -399,7 +400,8 @@
                             this.disableButton=true
 
                             this.open_resumen_link= true
-
+                            
+                            location.href ='{{route("home")}}';
                         }
 
                     })
@@ -592,11 +594,8 @@
    
 
 <center>
-
     <div class="callout"><h1 x-show="message" class="text-danger"> <i class="fa fa-exclamation-circle" aria-hidden="true"></i>  Usted ya tiene una reservación gratuita con nosotros</h1></div>
-
 </center>
-
 
 
     <div class="container card p-10" x-show="message">
@@ -624,6 +623,8 @@
                     <th>Especialista</th>
 
                     <th>Problema a tratar</th>
+                    
+                    <th>Link de la reunión</th>
 
                 </thead>
 
@@ -647,7 +648,15 @@
                             </td>
 
                             <td x-text="reservacion.cause"></td>
+                            
+                            <template x-show="reservacion.link_meeting !== undefined">
+                                <td x-text="reservacion.link_meeting"></td>
 
+                            </template>
+                            <template x-show="reservacion.link_meeting === undefined">
+                                <td x-text="esperar_link">
+                                </td>
+                            </template>
                         </tr>
                         <option :value="tipo_problema.id" x-text="tipo_problema.problem"></option>
                     </template>
@@ -818,8 +827,8 @@
                                     <div class="container">
                                         <div class="row">
                                             <template x-for="especialista in especialistas" :key="especialista.id">
-                                                <div class="p-5">
-                                                        <a href="#" @click="formData.especialista=`${especialista.personal_info.name} ${especialista.personal_info.lastname}`"><img :src="`${especialista.photo.substring(1)}`" class="mx-auto d-block hover-img img-circle" alt="" height="52" width="52" x-on:click="psicologos(especialista.id),message= true">
+                                                <div class="p-5" x-on:click="psicologos(especialista.id),message= true">
+                                                        <a href="#" @click="formData.especialista=`${especialista.personal_info.name} ${especialista.personal_info.lastname}`,selectedTherapist= true"><img :src="`${especialista.photo.substring(1)}`" class="mx-auto d-block hover-img img-circle" alt="" height="52" width="52" >
                                                         <h4 class="text-center"><span x-text="especialista.personal_info.name"></span>  <span x-text="especialista.personal_info.lastname"></span></h4>
                                                         
 
@@ -844,15 +853,15 @@
                                 <hr>
 
                                 
-                                <h4 class="text-primary">Paso 2. Que día y en que horario desea tener su consulta?</h4>
                                 
-                            <div class="row p10">
+                                <h4 class="text-primary">Paso 2. Que día y en que horario desea tener su consulta?</h4>
+                                <div class="row p10" x-show="selectedTherapist">
 
                                 <div class="container col-lg-6">
 
                                     <label x-show="message">Fecha de consulta</label>
 
-                                    <input type="date" class="form-control" x-model="formData.appointment_date" :min="fecha_actual" :max="fecha_actual_mas_2">
+                                    <input type="date" class="form-control" x-model="formData.appointment_date" :min="fecha_actual" :max="fecha_actual_mas_1" :change="validarfecha()">
 
                                 </div>
 
@@ -978,13 +987,13 @@
         <swal-html> 
             <h4>Está de acuerdo?</h4>
 
-            <p>4 x S/ 360</p>
+            <p>4 sesiones x S/ 360</p>
 
-            <p>6 x S/ 450</p>
+            <p>6 sesionesx S/ 450</p>
 
-            <p>8 x S/ 650</p>
+            <p>8 sesionesx S/ 650</p>
 
-            <p>12 x S/ 700</p>
+            <p>12 sesionesx S/ 700</p>
 
         </swal-html>
 

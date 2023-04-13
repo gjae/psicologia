@@ -263,7 +263,7 @@
             <div class="card-body">
 
                 <div class="container">
-
+                    <h5>Seleccione todas las horas en las que desea prestar atención cada día</h5>
                     <form @submit.prevent="registrarHorario">
                         
 

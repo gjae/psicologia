@@ -165,8 +165,7 @@
                             {{-- Name field --}}
 
                             <div class="input-group mb-3">
-
-                                <input type="text" required name="name" class="form-control @error('name') is-invalid @enderror"
+                                <input title="Introduce tu nombre" type="text" required name="name" class="form-control @error('name') is-invalid @enderror"
 
                                     value="{{ old('name') }}" placeholder="{{ __('adminlte::adminlte.full_name') }}" autofocus>
 
@@ -202,7 +201,7 @@
 
                             <div class="input-group mb-3">
 
-                                <input type="text" required name="lastname" class="form-control @error('lastname') is-invalid @enderror"
+                                <input title="Apellido" title="Introduce tu apellido" type="text" required name="lastname" class="form-control @error('lastname') is-invalid @enderror"
 
                                     value="{{ old('lastname') }}" placeholder="{{ __('adminlte::adminlte.lastname') }}" autofocus>
 
@@ -240,7 +239,7 @@
 
                             <div class="input-group mb-3">
 
-                                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                                <input title="Email" type="email" name="email" class="form-control @error('email') is-invalid @enderror"
 
                                     value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}">
 
@@ -276,7 +275,7 @@
 
                             <div class="input-group mb-3">
 
-                                <input type="text" required name="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" placeholder="Teléfono">
+                                <input title="Teléfono" type="text" required name="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" placeholder="Teléfono">
 
 
 
@@ -310,7 +309,7 @@
 
                             <div class="input-group mb-3">
 
-                                <select name="gender" id="gender" class="form-control @error('gender') is-invalid @enderror" value="{{ old('gender') }}">
+                                <select title="Género" name="gender" id="gender" class="form-control @error('gender') is-invalid @enderror" value="{{ old('gender') }}">
 
                                     <option value="H">Hombre</option>
 
@@ -350,7 +349,7 @@
 
                             <div class="input-group mb-3">
 
-                                <input type="text" required name="age" class="form-control @error('age') is-invalid @enderror" value="{{ old('age') }}" placeholder="Edad" >
+                                <input title="edad" type="text" required name="age" class="form-control @error('age') is-invalid @enderror" value="{{ old('age') }}" placeholder="Edad" >
 
 
 
@@ -504,7 +503,7 @@
 
                                 <div class="input-group mb-3">
 
-                                    <input  required type="text"  name="name" class="form-control @error('name') is-invalid @enderror"
+                                    <input title="Nombre" required type="text"  name="name" class="form-control @error('name') is-invalid @enderror"
 
                                         value="{{ old('name') }}" placeholder="Nombre" autofocus accept="image/*">
 
@@ -540,7 +539,7 @@
 
                                 <div class="input-group mb-3">
 
-                                    <input  required type="text"  name="lastname" class="form-control @error('lastname') is-invalid @enderror"
+                                    <input title="Apellido" required type="text"  name="lastname" class="form-control @error('lastname') is-invalid @enderror"
 
                                         value="{{ old('lastname') }}" placeholder="Apellido" autofocus>
 
@@ -576,7 +575,7 @@
 
                                 <div class="input-group mb-3">
 
-                                    <input  required type="text"  name="age" class="form-control @error('age') is-invalid @enderror"
+                                    <input title="Edad" required type="text"  name="age" class="form-control @error('age') is-invalid @enderror"
 
                                         value="{{ old('age') }}" placeholder="Edad" autofocus>
 
@@ -614,7 +613,7 @@
 
                                 <div class="input-group mb-3">
 
-                                    <input  required type="email"  name="email" class="form-control @error('email') is-invalid @enderror"
+                                    <input title="Email" required type="email"  name="email" class="form-control @error('email') is-invalid @enderror"
 
                                         value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}">
 
@@ -650,7 +649,7 @@
 
                                 <div class="input-group mb-3">
 
-                                    <select name="therapy_id" id="" class="form-control @error('therapy_id') is-invalid @enderror" value="{{ old('therapy_id') }}">
+                                    <select title="Selecciona en que tipo de terapia te especializas" name="therapy_id" id="" class="form-control @error('therapy_id') is-invalid @enderror" value="{{ old('therapy_id') }}">
 
                                         <template x-for="terapia in tipo_terapias" :key="terapia.id">
 
@@ -692,7 +691,7 @@
 
                                 <div class="input-group mb-3">
 
-                                    <input  required type="text" name="personal_phone" class="form-control @error('personal_phone') is-invalid @enderror" value="{{ old('personal_phone') }}" placeholder="Teléfono personal">
+                                    <input title="Teléfono Personal" required type="text" name="personal_phone" class="form-control @error('personal_phone') is-invalid @enderror" value="{{ old('personal_phone') }}" placeholder="Teléfono personal">
 
 
 
@@ -726,7 +725,7 @@
 
                                 <div class="input-group mb-3">
 
-                                    <input  required type="text"  name="bussiness_phone" class="form-control @error('bussiness_phone') is-invalid @enderror" value="{{ old('bussiness_phone') }}" placeholder="Teléfono de empresa">
+                                    <input title="Teléfono de empresa" required type="text"  name="bussiness_phone" class="form-control @error('bussiness_phone') is-invalid @enderror" value="{{ old('bussiness_phone') }}" placeholder="Teléfono de empresa">
 
 
 
@@ -800,7 +799,7 @@
 
                                 <div class="input-group mb-3">
 
-                                    <input  required type="text"  name="specialty" class="form-control @error('specialty') is-invalid @enderror" value="{{ old('specialty') }}" placeholder="Especialidad" >
+                                    <input title="Cuál es tu especialidad?" required type="text"  name="specialty" class="form-control @error('specialty') is-invalid @enderror" value="{{ old('specialty') }}" placeholder="Especialidad" >
 
 
 
@@ -834,7 +833,7 @@
 
                                 <div class="input-group mb-3">
 
-                                    <textarea name="bio" class="form-control bio @error('bio') is-invalid @enderror" value="{{ old('bio') }}" placeholder="BIO" ></textarea>
+                                    <textarea title="Solo se permiten 200 caracteres" name="bio" class="form-control bio @error('bio') is-invalid @enderror" value="{{ old('bio') }}" placeholder="BIO" max="200"></textarea>
 
                                     <div class="input-group-append">
 
@@ -868,7 +867,7 @@
 
                                     <label for="photo">Cargue una foto</label>
 
-                                    <input  required type="file"  name="photo" class="form-control @error('photo') is-invalid @enderror" value="{{ old('photo') }}">
+                                    <input title="Carga una foto" required type="file"  name="photo" class="form-control @error('photo') is-invalid @enderror" value="{{ old('photo') }}">
 
 
 
@@ -902,7 +901,7 @@
 
                                 <div class="input-group mb-3">
 
-                                    <input  required type="password"  name="password" class="form-control @error('password') is-invalid @enderror"
+                                    <input required type="password"  name="password" class="form-control @error('password') is-invalid @enderror"
 
                                         placeholder="{{ __('adminlte::adminlte.password') }}">
 
@@ -938,7 +937,7 @@
 
                                 <div class="input-group mb-3">
 
-                                    <input  required type="password"  name="password_confirmation"
+                                    <input required type="password"  name="password_confirmation"
 
                                         class="form-control @error('password_confirmation') is-invalid @enderror"
 

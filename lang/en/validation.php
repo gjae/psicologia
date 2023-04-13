@@ -102,7 +102,7 @@ return [
 
     'enum' => 'The selected :attribute is invalid.',
 
-    'exists' => 'The selected :attribute is invalid.',
+    'exists' => 'El atributo :attribute es incorrecto.',
 
     'file' => 'The :attribute must be a file.',
 
@@ -290,7 +290,7 @@ return [
 
     'timezone' => 'The :attribute must be a valid timezone.',
 
-    'unique' => 'The :attribute has already been taken.',
+    'unique' => 'El :attribute ya fué registrado.',
 
     'uploaded' => 'The :attribute failed to upload.',
 

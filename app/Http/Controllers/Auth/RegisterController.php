@@ -235,7 +235,7 @@ class RegisterController extends Controller
 
             'email'     => 'required|max:50|unique:users,email',
 
-            'bio'     => 'required|max:250',
+            'bio'     => 'required|max:200',
 
             'specialty'     => 'required|max:250',
 

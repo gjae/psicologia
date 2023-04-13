@@ -106,12 +106,22 @@ class PsychologistController extends Controller
 
      */
 
-    public function show($id)
+    public function show($psicologo)
 
     {
+        $info_psicologo = Psychologist::where('id',$psicologo)
+        ->with('personalInfo')
+        ->with('worksAtHours')
+        ->with('personalInfo.Reservations')
+        ->first();
 
+        $reservations = Reservations::whereHas('Schedule',function($q) use ($psicologo){
+            $q->where('id_psychologist',$psicologo);
+        })
+        ->get();
+
+        return view('psicologos.info_psicologo',compact('info_psicologo','reservations'));
         //
-
     }
 
 
@@ -134,8 +144,19 @@ class PsychologistController extends Controller
 
         //
 
+    }
 
+    
 
+    public function link_meet(Request $request){
+        if(Reservations::where('id',$request['id'])->exists()==true){
+            Reservations::where('id',$request['id'])
+            ->update([ 'link_meeting' => $request['link_meeting'] ]);
+            return back();
+        }else
+        {
+           return 0;
+        }
     }
 
     public function eliminar_horarios($id){
@@ -187,24 +208,30 @@ class PsychologistController extends Controller
 
     {
         
-        $id_usuario= $id;
-        $id_psicologo= User::where('id',$id_usuario)->first()->isPsychologist->id;
+        $id_usuario = $id;
+        $id_psicologo = User::where('id',$id_usuario)
+        ->first()
+        ->isPsychologist
+        ->id;
 
         Reservations::whereHas('schedule',function($q) use ($id_psicologo){
             $q->where('id_psychologist',$id_psicologo);
         })->delete();
 
         Schedules::where('id_psychologist',$id_psicologo)->delete();
+        
         Psychologist::where('id',$id_psicologo)->delete();
+
         User::where('id',$id)->delete();
 
         return redirect('/psicologos');
-
     }
 
     
     public function problems($id_problema){
-        $problemas= Problems::where('id_therapy',$id_problema)->get();
+
+        $problemas = Problems::where('id_therapy',$id_problema)->get();
+        
         return $problemas;
     }
 

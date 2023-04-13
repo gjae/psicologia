@@ -12,7 +12,7 @@ class AdminController extends Controller
     //
     public function evaluar_psicologo(){
 
-        $psicologos= Psychologist::all();
+        $psicologos= Psychologist::orderBy('ranking', 'desc')->get();
 
         return view('puntajes',compact('psicologos'));
     }

@@ -33,13 +33,19 @@ use Illuminate\Http\Request;
 
 */
 
-//Route::middleware(["web","auth","auth.session.timeout"])->group(function () {
 
-Route::middleware(["web","auth","verified","auth.session.timeout"])->group(function () {
+
+Route::middleware(["web","auth","auth.session.timeout"])->group(function () {
+
+//Route::middleware(["web","auth","verified","auth.session.timeout"])->group(function () {
 
     Route::resource('usuarios',App\Http\Controllers\UserController::class);
 
+    
+    Route::resource('pacientes',App\Http\Controllers\PacientesController::class);
 
+
+    
 
     Route::get('mis_reservaciones/{id_usuario}', function($id){
 
@@ -54,7 +60,7 @@ Route::middleware(["web","auth","verified","auth.session.timeout"])->group(funct
         return $mis_reservaciones;
 
     });
-
+     
 
     Route::get('horarios_psicologos/{id_especialista}', function($id) {
 
@@ -104,8 +110,10 @@ Route::get('/', function () {
 
 
 
-//Auth::routes();
-Auth::routes(['verify' => true]);
+Route::post('link_meet/{reservation}',[App\Http\Controllers\PsychologistController::class,'link_meet'])->name('link_meet');
+
+Auth::routes();
+//Auth::routes(['verify' => true]);
 
 
 

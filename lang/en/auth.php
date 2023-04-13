@@ -28,8 +28,9 @@ return [
 
 
 
-    'failed' => 'Nombre de usuario inválido o contraseña inválida',
+    'failed' => 'Nombre de usuario inválido',
 
+    'email' => 'El correo es incorrecto.',
     'password' => 'La contraseña es incorrecta.',
 
     'throttle' => 'Muchos intentos. Porfavor intente en  :seconds segundos.',

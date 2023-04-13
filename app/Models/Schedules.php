@@ -16,6 +16,6 @@ class Schedules extends Model
     }
 
     public function AtThisHourReservations() {
-    	return $this->hasOne(reservations::class,'id','id_psychologist');
+    	return $this->hasOne(reservations::class,'id_schedule','id_psychologist');
     }
 }
