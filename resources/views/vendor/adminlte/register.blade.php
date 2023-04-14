@@ -130,9 +130,21 @@
 
     <ul class="nav nav-tabs" data-tabs="tabs">
 
-        <li ><a class="texto-registro" href="#pacientes" data-toggle="tab">Registro de Pacientes</a></li>
+        <li >
+            <a class="texto-registro" href="#pacientes" data-toggle="tab">
+                <div class="card-registro-new">
 
-        <li ><a class="texto-registro" href="#psicologo" data-toggle="tab">Registro de Psicólogos</a></li>
+                </div>
+            </a>
+        </li>
+
+        <li >
+            <a class="texto-registro" href="#psicologo" data-toggle="tab">
+                <div class="card-registro-new">
+
+                </div>
+            </a>
+        </li>
 
     </ul>
 
@@ -154,7 +166,7 @@
 
                 <div class="card-body ">
 
-                    <h4>Registro de pacientes</h4>
+                    <h4>Registro de pacies</h4>
 
                         <form action="{{ $register_url }}" method="post" >
 
@@ -495,7 +507,7 @@
 
                     <div class="card-body">
 
-                        <h4>Registro de psicólogos</h4>
+                        <h4>Registro de psicólog</h4>
 
                         
 
@@ -834,6 +846,12 @@
                                 <div class="input-group mb-3">
 
                                     <textarea title="Solo se permiten 200 caracteres" name="bio" class="form-control bio @error('bio') is-invalid @enderror" value="{{ old('bio') }}" placeholder="BIO" max="200"></textarea>
+
+                                    <textarea  name="bio" class="@error('bio') is-invalid @enderror" value="{{ old('bio') }}">
+                                        
+                                    </textarea>
+
+
 
                                     <div class="input-group-append">
 
