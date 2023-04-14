@@ -149,10 +149,10 @@ class PsychologistController extends Controller
     
 
     public function link_meet(Request $request){
-        if(Reservations::where('id',$request['id'])->exists()==true){
+        if(Reservations::where('id',$request['id'])->exists() == true){
             Reservations::where('id',$request['id'])
             ->update([ 'link_meeting' => $request['link_meeting'] ]);
-            return back();
+            return redirect()->back();
         }else
         {
            return 0;

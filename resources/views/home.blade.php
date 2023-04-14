@@ -139,7 +139,7 @@
             selectedTherapist: false,
             current_date:'',
             reserved_pane:false,
-            esperar_link:'',
+            link:'',
 
             message:false,
 
@@ -267,7 +267,6 @@
                 return moment(this.fecha_actual).add(1, 'day').format('YYYY-MM-DD');
             },
             seleccionarespecialista(){
-                //console.log("ASDAS"+this.fecha_actual_mas_1)
                 
                 var especialistaEnTerapia = this.tipo_terapia_id;
 
@@ -306,13 +305,13 @@
                             then(r => r.json()).
 
                             then((data) => {
-                                //console.log(data)
 
                                 this.mis_reservaciones= data;
-                                console.log(this.mis_reservaciones.link_meeting)
-
-                                if(this.mis_reservaciones.link_meeting===undefined){
-                                    this.esperar_link= 'Espera que tu psicólogo te compara el link de la reunión. Regresa más tarde para ver si ya está disponible el link';
+                                
+                                if(this.mis_reservaciones[0].link_meeting==undefined){
+                                    this.link= 'Espera que tu psicólogo te compara el link de la reunión. Regresa más tarde para ver si ya está disponible el link';
+                                }else{
+                                    this.link=this.mis_reservaciones[0].link_meeting
                                 }
 
                             }).catch()
@@ -649,14 +648,9 @@
 
                             <td x-text="reservacion.cause"></td>
                             
-                            <template x-show="reservacion.link_meeting !== undefined">
-                                <td x-text="reservacion.link_meeting"></td>
-
-                            </template>
-                            <template x-show="reservacion.link_meeting === undefined">
-                                <td x-text="esperar_link">
-                                </td>
-                            </template>
+                            <td>
+                                <span x-text="link"></span>
+                            </td>
                         </tr>
                         <option :value="tipo_problema.id" x-text="tipo_problema.problem"></option>
                     </template>

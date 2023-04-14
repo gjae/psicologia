@@ -151,7 +151,7 @@
                         <td>
                             <input type="hidden" value="{{$reservation->id}}" name="id">
                             @if($reservation->link_meeting)
-                                <input type="text" name="link-meet" placeholder="Link de la reunión" title="Porfavor comparte el link del meeting" class="form-control" value="{{$reservation->link_meeting}}" disabled> 
+                                <input type="text" name="link_meeting" placeholder="Link de la reunión" title="Porfavor comparte el link del meeting" class="form-control" value="{{$reservation->link_meeting}}" > 
                             @else
 
                                 <input type="text" name="link_meeting" placeholder="Link de la reunión" title="Porfavor comparte el link del meeting" class="form-control" >
@@ -159,8 +159,7 @@
                         </td>
                         <td> 
                         <button type="submit" class="btn btn-success" >Actualizar</button>    
-                        <!--button type="submit" class="btn btn-success" x-on:click="
-                        actualizareserva({{$reservation->id}}, links[{{$reservation->id}}])">Actualizar</button--></td>
+                        </td>
                     </form>
                     
                     @endif
