@@ -229,15 +229,11 @@ class PsychologistController extends Controller
 
     
     public function problems($id_problema){
-
         $problemas = Problems::where('id_therapy',$id_problema)->get();
-        
         return $problemas;
     }
 
     public function registrar_horarios(){
-
-
         if(Auth::user()
         ->Ispsychologist){
 

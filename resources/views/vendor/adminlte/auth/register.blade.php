@@ -663,45 +663,7 @@
 
 
 
-                                {{-- Therapy --}}
-
-                                <div class="input-group mb-3">
-
-                                    <select title="Selecciona en que tipo de terapia te especializas" name="therapy_id" id="" class="form-control @error('therapy_id') is-invalid @enderror" value="{{ old('therapy_id') }}">
-
-                                        <template x-for="terapia in tipo_terapias" :key="terapia.id">
-
-                                            <option :value="terapia.id" x-text="terapia.therapy_type"></option>
-
-                                        </template>
-
-                                    </select>
-
-
-
-                                    <div class="input-group-append">
-
-                                        <div class="input-group-text">
-
-                                            <span class="fas fa-book {{ config('adminlte.classes_auth_icon', '') }}"></span>
-
-                                        </div>
-
-                                    </div>
-
-
-
-                                    @error('therapy')
-
-                                        <span class="invalid-feedback" role="alert">
-
-                                            <strong>{{ $message }}</strong>
-
-                                        </span>
-
-                                    @enderror
-
-                                </div>
+                                
 
 
 
@@ -812,6 +774,45 @@
                                 </div>
 
 
+                                {{-- Therapy --}}
+
+                                <div class="input-group mb-3">
+
+                                    <select title="Selecciona en que tipo de terapia te especializas" name="therapy_id" id="" class="form-control @error('therapy_id') is-invalid @enderror" value="{{ old('therapy_id') }}">
+
+                                        <template x-for="terapia in tipo_terapias" :key="terapia.id">
+
+                                            <option :value="terapia.id" x-text="terapia.therapy_type"></option>
+
+                                        </template>
+
+                                    </select>
+
+
+
+                                    <div class="input-group-append">
+
+                                        <div class="input-group-text">
+
+                                            <span class="fas fa-book {{ config('adminlte.classes_auth_icon', '') }}"></span>
+
+                                        </div>
+
+                                    </div>
+
+
+
+                                    @error('therapy')
+
+                                        <span class="invalid-feedback" role="alert">
+
+                                            <strong>{{ $message }}</strong>
+
+                                        </span>
+
+                                    @enderror
+
+                                </div>
 
                                 {{-- Specialty field --}}
 

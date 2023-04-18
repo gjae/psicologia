@@ -44,21 +44,6 @@
 
     }
 
-    .active a{
-
-        color:#000 !important;
-
-    }
-
-    .active{
-
-        border-radius:5px 5px 0px 0px;
-
-        font-weight: bold;
-
-        
-
-    }
 
 
 
@@ -685,7 +670,7 @@
 
                             <li data-toggle="tab" :class="{'active': activeTab === 'tab1'}">
 
-                                <a href="#red" id="tipo_terapia_pane_link"  x-on:click.prevent="activeTab = 'tab1'" >Tipo de terapia</a>
+                                <a href="#red" id="tipo_terapia_pane_link"   >Tipo de terapia</a>
 
                             </li>
 
@@ -693,19 +678,20 @@
 
                                 <a href="#orange"                            
 
-                                 x-on:click.prevent="activeTab= 'tab2'" >Problema a tratar</a>
+                                  >Problema a tratar</a>
 
                             </li>
 
                             <li data-toggle="tab" :class="{'active': activeTab === 'tab3'}">
 
-                                <a href="#yellow"  x-on:click.prevent="activeTab = 'tab3'">Preguntas</a>
+                                <a href="#yellow">Preguntas</a>
 
                             </li>
 
-                            <li data-toggle="tab"  :class="{'active': activeTab === 'tab4'}">
+                            <!--li data-toggle="tab"  :class="{'active': activeTab === 'tab4'}">
 
-                                <a href="#green" x-on:click.prevent="activeTab = 'tab4'">Reserva</a></li>
+                                <a href="#green" >Reserva</a>
+                            </li-->
 
                         </ul>
 
@@ -713,58 +699,63 @@
 
 
 
-                    <!--div class="tab-content"-->
 
                     <div>
 
-                        <div id="red" class="tab-pane" x-show="activeTab === 'tab1'" >
+                        <div id="red" class="tab-pane" x-show="activeTab === 'tab1'"  x-ref="tab1">
+                            <div class="input-group">
+                                <select name="therapy_type" class="form-control"  x-model="tipo_terapia_id" >
 
-                            <select name="therapy_type" class="form-control" x-on:change="problema(),seleccionarespecialista(),open_problem_link=true,activeTab= 'tab2'" x-model="tipo_terapia_id" @click="$nextTick(() => $refs.tab2.focus())">
+                                <option value="#"><b>Seleccione una opcion</b></option>    
 
-                            <option value="#">Seleccione una opcion</option>    
+                                @foreach($terapias as $terapia) 
+                                        <option value="{{$terapia->id}}">{{$terapia->therapy_type}}</option>
+                                @endforeach
+                                </select>
 
-                            @foreach($terapias as $terapia) 
-                                    <option value="{{$terapia->id}}">{{$terapia->therapy_type}}</option>
-                            @endforeach
-                            </select>
+                                <div class="input-group-append">
+                                    <button x-on:click="problema(),seleccionarespecialista(),open_problem_link=true,activeTab= 'tab2'" class="btn btn-primary" @click="$nextTick(() => $refs.tab2.focus())" style="    margin-top: 19px;"> Siguiente </button>
+                                </div>
+                            
+                            </div>
                         </div>
-
 
 
                         <div id="orange" x-show="activeTab=== 'tab2'" x-ref="tab2" class="tab-pane">
                             <h1>Cuál es el problema?</h1>
 
+                            <div class="input-group">
+                                
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary"  @click="$nextTick(() => $refs.tab1.focus()), activeTab= 'tab1'"> Atrás
+                                    </button>
+                                </div>
 
+                                <select name="tipo_problema" id="" class="form-control @error('tipo_problema') is-invalid @enderror" x-model="tipo_problema_id" style="    margin-top: 19px;">
 
-                            <select name="tipo_problema" x-on:change="activeTab= 'tab3'"  @click="$nextTick(() => $refs.tab3.focus())" id="" class="form-control @error('tipo_problema') is-invalid @enderror" x-model="tipo_problema_id">
+                                    <option value="#"><b>Seleccione una opcion</b></option>       
 
-                                <option value="#">Seleccione una opcion</option>       
+                                    <template x-for="tipo_problema in problemas_bag" :key="tipo_problema.id">
 
-                                <template x-for="tipo_problema in problemas_bag" :key="tipo_problema.id">
-
-                                    <option :value="tipo_problema.id" x-text="tipo_problema.problem"></option>
-
-                                </template>
-
-                            </select>
+                                        <option :value="tipo_problema.id" x-text="tipo_problema.problem"></option>
+                                    </template>
+                                        
+                                </select>
+                                <div class="input-group-append">
+                                    <button  x-on:click="activeTab= 'tab3'"  @click="$nextTick(() => $refs.tab3.focus())" class="btn btn-primary"> Siguiente </button>
+                                </div>
+                            </div>
                         </div>
-
                     </div>
 
 
 
                     <div id="yellow" class="tab-pane" x-show="activeTab=== 'tab3'" x-ref="tab3" class="tab-pane">
-
                         <h1>Que busca con ésta sesión?</h1>
-
-                        
-                        
-
-
                         <div class="input-group ">
                             <select name="motivo_consulta" class="form-control" id="motivo_consulta" x-model="motivo_consulta" style="    margin-top: 19px;">
 
-                                <option> Seleccione una opción</option>    
+                                <option> <b>Seleccione una opción</b></option>    
 
                                 <option value="consejo">Consejo</option>
 
@@ -864,7 +855,7 @@
                                     <label x-show="message">Horarios disponibles</label>
                                     <select name="horario" class="form-control" id="horario" x-model="horario" @change="resume_pane= true">
 
-                                        <option value="#">Seleccione una opcion</option>
+                                        <option value="#"><b>Seleccione una opcion</b></option>
 
                                         <template x-if="horarios.length === 0">
 
