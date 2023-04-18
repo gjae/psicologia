@@ -1,30 +1,6 @@
 @extends('adminlte::auth.auth-page', ['auth_type' => 'register'])
 
-<style>
 
-    /* .nav li{
-
-        padding:10px;
-
-    }
-
-    .register-page{
-
-        
-
-        background-image: url("/images/terapista.jpg");
-
-        background-repeat: no-repeat;
-
-            background-size: cover;
-
-        background-position: center ;
-
-        justify-content: flex-start !important;
-
-    } */
-
-</style>
 
 <script>
 
@@ -128,8 +104,6 @@
 
     @section('auth_body')
 
-    <ul class="nav nav-tabs" data-tabs="tabs">
-
     <ul class="nav nav-tabs m-0 p-0 flex-container">
         <li class="bg-primary lista-registro">
             <a class="texto-registro" data-toggle="tab" href="#pacientes">
@@ -149,11 +123,6 @@
                 <h3 class="text-center text-uppercase my-3">Registro de Psicólogos</h3>
             </a>
         </li>
-        
-        <li ><a class="texto-registro" href="#pacientes" data-toggle="tab">Registro de Pacientes</a></li>
-
-        <li ><a class="texto-registro" href="#psicologo" data-toggle="tab">Registro de Psicólogos</a></li>
-
     </ul>
 
     <div class="tab-content" x-data="registro()" x-init="terapias()">
@@ -174,7 +143,7 @@
 
                     <h4 class="bg-primary text-center text-uppercase">Registro de pacientes</h4>
 
-                        <form action="{{ $register_url }}" method="post" >
+                        <form class="formulario-ayuda" action="{{ $register_url }}" method="post" >
 
                             @csrf
 
@@ -328,6 +297,9 @@
                             <div class="input-group mb-3">
 
                                 <select title="Género" name="gender" id="gender" class="form-control @error('gender') is-invalid @enderror" value="{{ old('gender') }}">
+
+                                <option disabled selected class="text-bold">--Indica tu Sexo--</option>
+
 
                                     <option value="H">Hombre</option>
 
