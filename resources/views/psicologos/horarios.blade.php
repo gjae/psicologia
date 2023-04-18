@@ -263,16 +263,16 @@
             <div class="card-body">
 
                 <div class="container">
-                    <h5>Seleccione todas las horas en las que desea prestar atención cada día</h5>
+                    <h4 class="my-4">Seleccione todas las horas en las que desea prestar atención cada día</h4>
                     <form @submit.prevent="registrarHorario">
                         
 
                         <div>
-                            <div class="row m-3">
-                                <div class="col-2">
+                            <div class="row justify-content-center align-items-center m-0 p-0 eliminar-margen-indeseado text-center">
+                                <div class="col-10 col-lg-2">
                                     <label for="lunes"> Lunes </label>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-10 col-lg-4">
                                     <select name="hora_inicio" class="form-control" id="" x-model="horariosPorDia.Lunes.inicio">
                                         <option value="hora_de_inicio">- Hora -</option>
                                         <option value="10">10</option>
@@ -290,7 +290,7 @@
                                     </select>
                                 </div>
 
-                                <div class="col-3">
+                                <div class="col-10 col-lg-4">
                                     <select name="hora_meridiem_inicio" class="form-control" id="" x-model="horariosPorDia.Lunes.meridiem">
                                         <option value="meridiem_de_inicio">- AM - PM -</option>
                                         <option value="AM">AM</option>
@@ -300,13 +300,13 @@
                             </div>
 
                         
-                            <div class="row m-3">
+                            <div class="row justify-content-center align-items-center m-0 p-0 eliminar-margen-indeseado text-center">
                                 
-                                <div class="col-2">
+                                <div class="col-10 col-lg-2">
                                     <label for="martes"> Martes </label>
                                 </div>
                                                                
-                                <div class="col-3">
+                                <div class="col-10 col-lg-4">
                                     <select name="hora_inicio" class="form-control" id="" x-model="horariosPorDia.Martes.inicio">
                                         <option value="hora_de_inicio">- Hora -</option>
                                         <option value="10">10</option>
@@ -324,7 +324,7 @@
                                     </select>
                                 </div>
 
-                                <div class="col-3">
+                                <div class="col-10 col-lg-4">
                                     <select name="hora_meridiem_inicio" class="form-control" id="" x-model="horariosPorDia.Martes.meridiem">
                                         <option value="meridiem_de_inicio">- AM - PM -</option>
                                         <option value="AM">AM</option>
@@ -335,13 +335,13 @@
                             </div>
 
                     
-                            <div class="row m-3">
-                                <div class="col-2">
+                            <div class="row justify-content-center align-items-center m-0 p-0 eliminar-margen-indeseado text-center">
+                                <div class="col-10 col-lg-2">
                                     <label for="miercoles"> Miércoles </label>
                                 </div>
                                 
                                 
-                                <div class="col-3">
+                                <div class="col-10 col-lg-4">
 
                                     <select name="hora_inicio" class="form-control" x-model="horariosPorDia.Miércoles.inicio" id=""  >
                                         <option value="hora_de_inicio">- Hora -</option>
@@ -360,7 +360,7 @@
                                     </select>
                                 </div>
 
-                                <div class="col-3">
+                                <div class="col-10 col-lg-4">
                                     <select name="hora_meridiem_inicio" class="form-control" x-model="horariosPorDia.Miércoles.meridiem" id="" >
                                         <option value="meridiem_de_inicio">- AM - PM -</option>
                                         <option value="AM">AM</option>
@@ -370,11 +370,11 @@
                             </div>
 
                         
-                            <div class="row m-3">
-                                <div class="col-2">
+                            <div class="row justify-content-center align-items-center m-0 p-0 eliminar-margen-indeseado text-center">
+                                <div class="col-10 col-lg-2">
                                     <label for="jueves"> Jueves </label>
                                 </div>                                                         
-                                <div class="col-3">
+                                <div class="col-10 col-lg-4">
                                     <select name="hora_inicio" class="form-control" x-model="horariosPorDia.Jueves.inicio" id="" >
                                         <option value="hora_de_inicio">- Hora -</option>
                                         <option value="10">10</option>
@@ -392,7 +392,7 @@
                                     </select>
                                 </div>
 
-                                <div class="col-3">
+                                <div class="col-10 col-lg-4">
                                     <select name="hora_meridiem_inicio" class="form-control" x-model="horariosPorDia.Jueves.meridiem" id="" >
                                         <option value="meridiem_de_inicio">- AM - PM -</option>
                                         <option value="AM">AM</option>
@@ -402,11 +402,11 @@
                             </div>
 
                     
-                            <div class="row m-3">
-                                <div class="col-2">
+                            <div class="row justify-content-center align-items-center m-0 p-0 eliminar-margen-indeseado text-center">
+                                <div class="col-10 col-lg-2">
                                     <label for="viernes"> Viernes </label>
                                 </div>                                                            
-                                <div class="col-3">
+                                <div class="col-10 col-lg-4">
                                     <select name="hora_inicio" class="form-control" x-model="horariosPorDia.Viernes.inicio" id="" >
                                         <option value="hora_de_inicio">- Hora -</option>
                                         <option value="10">10</option>
@@ -424,7 +424,7 @@
                                     </select>
                                 </div>
 
-                                <div class="col-3">
+                                <div class="col-10 col-lg-4">
                                     <select name="hora_meridiem_inicio" class="form-control" x-model="horariosPorDia.Viernes.meridiem" id="" >
                                         <option value="meridiem_de_inicio">- AM - PM -</option>
                                         <option value="AM">AM</option>
@@ -434,11 +434,11 @@
                             </div>
 
                         
-                            <div class="row m-3">
-                                <div class="col-2">
+                            <div class="row justify-content-center align-items-center m-0 p-0 eliminar-margen-indeseado text-center">
+                                <div class="col-10 col-lg-2">
                                     <label for="sabado"> Sábado </label>
                                 </div>                                                         
-                                <div class="col-3">
+                                <div class="col-10 col-lg-4">
 
                                     <select name="hora_inicio" class="form-control" x-model="horariosPorDia.Sábado.inicio" id="" >
                                         <option value="hora_de_inicio">- Hora -</option>
@@ -457,7 +457,7 @@
                                     </select>
                                 </div>
 
-                                <div class="col-3">
+                                <div class="col-10 col-lg-4">
                                     <select name="hora_meridiem_inicio" class="form-control" x-model="horariosPorDia.Sábado.meridiem" id="">
                                         <option value="meridiem_de_inicio">- AM - PM -</option>
                                         <option value="AM">AM</option>
@@ -467,16 +467,18 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-12">
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-lg-10">
                                 
                                 {{-- Register button --}}
 
                                 <button type="submit" class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}" >
+                                    <h5 class="texto-boton-editado py-2">
+                                        <span class="fas fa-calendar"></span>
 
-                                    <span class="fas fa-calendar"></span>
-
-                                    Actualizar días y horarios de atención
+                                        Actualizar días y horarios de atención
+                                    </h5>
+                                    
 
                                 </button>
 

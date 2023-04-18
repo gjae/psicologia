@@ -233,4 +233,37 @@ table i h4 {
     text-transform: capitalize;
 }
 
-/* hasya aqui cabron */
+
+.texto-boton-editado {
+    font-size: 12px;
+}
+
+@media (min-width: 992px) {
+    .texto-boton-editado {
+        font-size: 18px;
+    }
+}
+
+.eliminar-margen-indeseado select.form-control {
+    margin: 10px 0 15px 0;
+}
+
+.display-boton-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.display-boton-container button {
+    text-transform: uppercase;
+    font-size: 18px;
+    padding: 5px 15px;
+    
+}
+
+.efecto-foto {
+    padding: 20px 0;
+}
+
+.efecto-foto:hover {
+    background-color: #f2f2f2;
+}

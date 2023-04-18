@@ -658,120 +658,124 @@
 
     <div class="row justify-content-center" x-show="primera_vez">
 
-        <div class="col-md-8">
+        <div class="col-12 col-md-10 col-lg-8">
 
-            <div class="card">
+            <div class="card pb-4">
 
-                <div class="card-header"><h2>Diagnóstico</h2></div>
+                <div class="card-header text-uppercase bg-primary"><h2>Diagnóstico</h2>
+                </div>
 
-                    <div class="card-body">
+                <div class="card-body">
 
-                        <ul class="nav nav-tabs" data-tabs="tabs">
+                    <ul class="nav nav-tabs" data-tabs="tabs">
 
-                            <li data-toggle="tab" :class="{'active': activeTab === 'tab1'}">
+                        <li data-toggle="tab" :class="{'active': activeTab === 'tab1'">
 
-                                <a href="#red" id="tipo_terapia_pane_link"   >Tipo de terapia</a>
+                            <a class="bg-secondary my-3" href="#red" id="tipo_terapia_pane_link"   >Tipo de Terapia</a>
 
-                            </li>
+                        </li>
 
-                            <li data-toggle="tab" :class="{'active': activeTab==='tab2'}">
+                        <li data-toggle="tab" :class="{'active': activeTab==='tab2'}">
 
-                                <a href="#orange"                            
+                            <a class="bg-success my-3" href="#orange"                            
 
-                                  >Problema a tratar</a>
+                                >Problema a tratar</a>
 
-                            </li>
+                        </li>
 
-                            <li data-toggle="tab" :class="{'active': activeTab === 'tab3'}">
+                        <li data-toggle="tab" :class="{'active': activeTab === 'tab3'}">
 
-                                <a href="#yellow">Preguntas</a>
+                            <a class="bg-info my-3" href="#yellow">Preguntas</a>
 
-                            </li>
+                        </li>
 
-                            <!--li data-toggle="tab"  :class="{'active': activeTab === 'tab4'}">
+                        <!--li data-toggle="tab"  :class="{'active': activeTab === 'tab4'}">
 
-                                <a href="#green" >Reserva</a>
-                            </li-->
+                            <a href="#green" >Reserva</a>
+                        </li-->
 
-                        </ul>
-
-
-
+                    </ul>
 
 
+                    <div id="red" class="tab-pane" x-show="activeTab === 'tab1'"  x-ref="tab1">
 
-                    <div>
 
-                        <div id="red" class="tab-pane" x-show="activeTab === 'tab1'"  x-ref="tab1">
-                            <div class="input-group">
+                        <div class="input-group row">
+                            <div class="col-12">
+                                <h3 class="bg-secondary text-center mt-5 py-3 text-capitalize">Seleccione el Tipo de Terapia que desea.</h3>
+                            </div>
+                            <div class="col-12">
                                 <select name="therapy_type" class="form-control"  x-model="tipo_terapia_id" >
-
-                                <option value="#"><b>Seleccione una opcion</b></option>    
-
-                                @foreach($terapias as $terapia) 
+                                    @foreach($terapias as $terapia) 
                                         <option value="{{$terapia->id}}">{{$terapia->therapy_type}}</option>
-                                @endforeach
+                                    @endforeach
                                 </select>
 
-                                <div class="input-group-append">
-                                    <button x-on:click="problema(),seleccionarespecialista(),open_problem_link=true,activeTab= 'tab2'" class="btn btn-primary" @click="$nextTick(() => $refs.tab2.focus())" style="    margin-top: 19px;"> Siguiente </button>
-                                </div>
-                            
                             </div>
                         </div>
+                        <div class="display-boton-container">
+                        
+                            <button x-on:click="problema(),seleccionarespecialista(),open_problem_link=true,activeTab= 'tab2'" class="btn btn-danger" @click="$nextTick(() => $refs.tab2.focus())"> Siguiente >> </button>
+                        
+                        </div>
+                    </div> <!--  div red -->
 
 
-                        <div id="orange" x-show="activeTab=== 'tab2'" x-ref="tab2" class="tab-pane">
-                            <h1>Cuál es el problema?</h1>
+                    <div id="orange" x-show="activeTab=== 'tab2'" x-ref="tab2" class="tab-pane">
+                        <div class="row">
+                            <div class="col-12">
+                                <h3 class="bg-success text-center mt-5 py-3 text-capitalize">¿Qué Problema Desea Tratar?</h3>
+                            </div>
 
-                            <div class="input-group">
+                            <div class="col-12">
                                 
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary"  @click="$nextTick(() => $refs.tab1.focus()), activeTab= 'tab1'"> Atrás
-                                    </button>
-                                </div>
-
-                                <select name="tipo_problema" id="" class="form-control @error('tipo_problema') is-invalid @enderror" x-model="tipo_problema_id" style="    margin-top: 19px;">
-
-                                    <option value="#"><b>Seleccione una opcion</b></option>       
+                                <select name="tipo_problema" id="" class="form-control @error('tipo_problema') is-invalid @enderror" x-model="tipo_problema_id" >
 
                                     <template x-for="tipo_problema in problemas_bag" :key="tipo_problema.id">
 
                                         <option :value="tipo_problema.id" x-text="tipo_problema.problem"></option>
                                     </template>
-                                        
                                 </select>
-                                <div class="input-group-append">
-                                    <button  x-on:click="activeTab= 'tab3'"  @click="$nextTick(() => $refs.tab3.focus())" class="btn btn-primary"> Siguiente </button>
-                                </div>
+
                             </div>
                         </div>
-                    </div>
-
-
+                            <div class="display-boton-container">
+                                <button class="btn btn-danger mr-5"  @click="$nextTick(() => $refs.tab1.focus()), activeTab= 'tab1'"> << Atrás
+                                </button>
+                                <button  x-on:click="activeTab= 'tab3'"  @click="$nextTick(() => $refs.tab3.focus())" class="btn btn-danger"> Siguiente >> </button>
+                            </div>
+                            
+                    </div> <!--  div orange -->
 
                     <div id="yellow" class="tab-pane" x-show="activeTab=== 'tab3'" x-ref="tab3" class="tab-pane">
-                        <h1>Que busca con ésta sesión?</h1>
-                        <div class="input-group ">
-                            <select name="motivo_consulta" class="form-control" id="motivo_consulta" x-model="motivo_consulta" style="    margin-top: 19px;">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3 class="bg-info text-center mt-5 py-3 text-capitalize">¿Qué Buscas con esta Sesión?</h3>
+                                </div>
+                                <div class="col-12">
+                                    <select name="motivo_consulta" class="form-control" id="motivo_consulta" x-model="motivo_consulta" >
 
-                                <option> <b>Seleccione una opción</b></option>    
+                                        <option> <b>Seleccione una opción</b></option>    
 
-                                <option value="consejo">Consejo</option>
+                                        <option value="consejo">Consejo</option>
 
-                                <option value="proceso psicológico">Proceso psicológico</option>
+                                        <option value="proceso psicológico">Proceso psicológico</option>
 
-                                <option value="cuestionamientos">Resolver cuestionamientos</option>
+                                        <option value="cuestionamientos">Resolver cuestionamientos</option>
 
-                                <option value="gratuita">Ayuda gratuita</option>
+                                        <option value="gratuita">Ayuda gratuita</option>
 
-                            </select>
-                            
-                            <div class="input-group-append">
-                                <button @click="sugerencia()" class="btn btn-primary"> Siguiente </button>
+                                    </select>
+
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                           
+                
+                            <div class="display-boton-container">
+                                <button @click="sugerencia()" class="btn btn-danger"> Siguiente >></button>
+                            </div>
+                          
+                    </div> <!-- div yellow -->
 
 
 
@@ -781,9 +785,9 @@
 
                                 <center>
 
-                                    <h1 @click="$dispatch('mi_evento', heroes)">Reserva tu terapia</h1>
+                                    <h2 class="h1 text-capitalize" @click="$dispatch('mi_evento', heroes)">Reserva tu terapia</h1>
 
-                                    <h5> Te recomendamos nuestros tres mejores terapeutas en el tipo de terapia que necesitas </h5>
+                                    <h4> Te recomendamos nuestros tres mejores terapeutas en el tipo de terapia que necesitas </h5>
 
                                 </center>
 
@@ -800,7 +804,7 @@
                                 <div class="row p-2 justify-content-center">
 
                                     <div class="col-12 p-2">
-                                        <h4 class="text-primary">Paso 1. Selecciona a tu terapeuta</h4>
+                                        <h3 class="bg-info p-3">Paso 1. Selecciona a tu terapeuta</h4>
 
                                         @if(count($psicologos)==0)
                                             <div>
@@ -812,15 +816,20 @@
                                     <div class="container">
                                         <div class="row">
                                             <template x-for="especialista in especialistas" :key="especialista.id">
-                                                <div class="p-5" x-on:click="psicologos(especialista.id),message= true">
-                                                        <a href="#" @click="formData.especialista=`${especialista.personal_info.name} ${especialista.personal_info.lastname}`,selectedTherapist= true"><img :src="`${especialista.photo.substring(1)}`" class="mx-auto d-block hover-img img-circle" alt="" height="52" width="52" >
-                                                        <h4 class="text-center"><span x-text="especialista.personal_info.name"></span>  <span x-text="especialista.personal_info.lastname"></span></h4>
-                                                        
+                                                <div class="col-12" x-on:click="psicologos(especialista.id),message= true">
+                                                        <div class="efecto-foto">
+                                                            <a class="d-block my-3 text-center" href="#" @click="formData.especialista=`${especialista.personal_info.name} ${especialista.personal_info.lastname}`,selectedTherapist= true">
+                                                                <img :src="`${especialista.photo.substring(1)}`" class="mx-auto d-block my-4" alt="" height="200" width="200" >
+                                                                <h2 class="text-center text-capitalize"><span x-text="especialista.personal_info.name"></span>  <span x-text="especialista.personal_info.lastname"></span></h2>
+                                                            
 
-                                                        <h5>Especialista en <span x-text="especialista.therapy.therapy_type"></span></h5>
+                                                                <h3 class="text-center">Especialista en <span x-text="especialista.therapy.therapy_type"></span></h3>
+                                                            </a>
 
-                                                    <h5><span x-text="especialista.bio"></span></h5>
-                                                    <h5 class="font-weight-bold">Días y horarios de atención: </h5>
+                                                        </div>
+                                                       
+                                                        <h4 class="text-center text-capitalize"><span x-text="especialista.bio"></span></h4>
+                                                        <h4 class="text-center font-weight-bold">Días y horarios de atención: </h4>
                                                     
 
                                                     <template x-for="schedule in especialista.works_at_hours">
@@ -839,7 +848,7 @@
 
                                 
                                 
-                                <h4 class="text-primary">Paso 2. Que día y en que horario desea tener su consulta?</h4>
+                                <h3 class="bg-info p-3 my-3">Paso 2. Que día y en que horario desea tener su consulta?</h3>
                                 <div class="row p10" x-show="selectedTherapist">
 
                                 <div class="container col-lg-6">
@@ -921,35 +930,35 @@
 
                         </form>
 
-                    </div>
+                    </div> <!--  div green -->
 
-                    
+                
 
                     <div class="whatsapp">
 
-                        <blockquote class="blockquote" x-show="whatsapp">
+                    <blockquote class="blockquote" x-show="whatsapp">
 
-                        <h1 class="h2" >Escríbenos a nuestro whatsapp oficial para obtener un consejo</h1> 
+                    <h1 class="h2" >Escríbenos a nuestro whatsapp oficial para obtener un consejo</h1> 
 
-                        <i x-show="whatsapp"><h4> Haz click en la imagen para llevarte a whatsapp web</h4></i>
+                    <i x-show="whatsapp"><h4> Haz click en la imagen para llevarte a whatsapp web</h4></i>
 
-                        </blockquote>
+                    </blockquote>
 
-                        <center><a href="https://wa.link/o9fv1e"><img src="{{asset('images/whatsapp.png')}}" alt="Escríbenos a nuestro whatsapp" srcset="" x-show="whatsapp" width="120"></a>
+                    <center><a href="https://wa.link/o9fv1e"><img src="{{asset('images/whatsapp.png')}}" alt="Escríbenos a nuestro whatsapp" srcset="" x-show="whatsapp" width="120"></a>
 
-                        <blockquote class="blockquote" x-show="whatsapp_helpgroup">
+                    <blockquote class="blockquote" x-show="whatsapp_helpgroup">
 
-                        <h1 class="h2" >Escríbenos a nuestro grupo de ayuda de Whatsapp</h1>    
+                    <h1 class="h2" >Escríbenos a nuestro grupo de ayuda de Whatsapp</h1>    
 
-                        <i x-show="whatsapp_helpgroup"><h4> Haz click en la imagen para llevarte a whatsapp web</h4></i>
+                    <i x-show="whatsapp_helpgroup"><h4> Haz click en la imagen para llevarte a whatsapp web</h4></i>
 
-                        </blockquote>
+                    </blockquote>
 
-                        <a href="https://wa.link/34z7ns"><img src="{{asset('images/whatsapp.png')}}" alt="Escríbenos a nuestro whatsapp" srcset="" x-show="whatsapp_helpgroup" width="120"></a>
+                    <a href="https://wa.link/34z7ns"><img src="{{asset('images/whatsapp.png')}}" alt="Escríbenos a nuestro whatsapp" srcset="" x-show="whatsapp_helpgroup" width="120"></a>
 
-                        </center>
+                    </center>
 
-                    </div>
+                    </div> <!--  dib whtsapp -->
 
                 </div>
 
