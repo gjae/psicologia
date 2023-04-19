@@ -267,3 +267,7 @@ table i h4 {
 .efecto-foto:hover {
     background-color: #f2f2f2;
 }
+
+.evitar-click {
+    display: none;
+}

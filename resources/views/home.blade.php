@@ -706,7 +706,7 @@
                                 </div>
                                 <div class="col-12">
                                     <select name="therapy_type" class="form-control"  x-model="tipo_terapia_id" >
-                                        <option class="text-bold" value="#"><b>Seleccione una opción</b></option> 
+                                        <option class="text-bold evitar-click" value="#"><b>Seleccione una opción </b></option> 
                                         <!-- agregado para arreglar -->
                                         @foreach($terapias as $terapia) 
                                             <option value="{{$terapia->id}}">{{$terapia->therapy_type}}</option>
@@ -759,8 +759,8 @@
                                 </div>
                                 <div class="col-12">
                                     <select name="motivo_consulta" class="form-control" id="motivo_consulta" x-model="motivo_consulta" >
-
-                                        <option class="text-bold"> <b>Seleccione una opción</b></option>    
+                                      
+                                        <option class="text-bold d-none"> <b>Seleccione una opción</b></option>    
 
                                         <option value="consejo">Consejo</option>
 
