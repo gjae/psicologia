@@ -828,7 +828,7 @@
                                                                 <h2 class="text-center text-capitalize"><span x-text="especialista.personal_info.name"></span>  <span x-text="especialista.personal_info.lastname"></span></h2>
                                                             
 
-                                                                <h3 class="text-center">Especialista en <span x-text="especialista.therapy.therapy_type"></span></h3>
+                                                                <h3 class="text-center text-capitalize">Especialista en <span x-text="especialista.therapy.therapy_type"></span></h3>
                                                             </a>
 
                                                         </div>
