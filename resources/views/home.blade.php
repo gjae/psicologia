@@ -696,56 +696,61 @@
 
                     </ul>
 
-
-                    <div id="red" class="tab-pane" x-show="activeTab === 'tab1'"  x-ref="tab1">
-
-
-                        <div class="input-group row">
-                            <div class="col-12">
-                                <h3 class="bg-secondary text-center mt-5 py-3 text-capitalize">Seleccione el Tipo de Terapia que desea.</h3>
-                            </div>
-                            <div class="col-12">
-                                <select name="therapy_type" class="form-control"  x-model="tipo_terapia_id" >
-                                    @foreach($terapias as $terapia) 
-                                        <option value="{{$terapia->id}}">{{$terapia->therapy_type}}</option>
-                                    @endforeach
-                                </select>
-
-                            </div>
-                        </div>
-                        <div class="display-boton-container">
-                        
-                            <button x-on:click="problema(),seleccionarespecialista(),open_problem_link=true,activeTab= 'tab2'" class="btn btn-danger" @click="$nextTick(() => $refs.tab2.focus())"> Siguiente >> </button>
-                        
-                        </div>
-                    </div> <!--  div red -->
+                    <div> <!-- div arriba de red -->
+                        <div id="red" class="tab-pane" x-show="activeTab === 'tab1'"  x-ref="tab1">
 
 
-                    <div id="orange" x-show="activeTab=== 'tab2'" x-ref="tab2" class="tab-pane">
-                        <div class="row">
-                            <div class="col-12">
-                                <h3 class="bg-success text-center mt-5 py-3 text-capitalize">¿Qué Problema Desea Tratar?</h3>
-                            </div>
+                            <div class="input-group row">
+                                <div class="col-12">
+                                    <h3 class="bg-secondary text-center mt-5 py-3 text-capitalize">Seleccione el Tipo de Terapia que desea.</h3>
+                                </div>
+                                <div class="col-12">
+                                    <select name="therapy_type" class="form-control"  x-model="tipo_terapia_id" >
+                                        <option class="text-bold" value="#"><b>Seleccione una opción</b></option> 
+                                        <!-- agregado para arreglar -->
+                                        @foreach($terapias as $terapia) 
+                                            <option value="{{$terapia->id}}">{{$terapia->therapy_type}}</option>
+                                        @endforeach
+                                    </select>
 
-                            <div class="col-12">
-                                
-                                <select name="tipo_problema" id="" class="form-control @error('tipo_problema') is-invalid @enderror" x-model="tipo_problema_id" >
-
-                                    <template x-for="tipo_problema in problemas_bag" :key="tipo_problema.id">
-
-                                        <option :value="tipo_problema.id" x-text="tipo_problema.problem"></option>
-                                    </template>
-                                </select>
-
-                            </div>
-                        </div>
+                                </div> <!--  cierre del col 12 -->
+                            </div> <!-- cierre del row -->
                             <div class="display-boton-container">
-                                <button class="btn btn-danger mr-5"  @click="$nextTick(() => $refs.tab1.focus()), activeTab= 'tab1'"> << Atrás
-                                </button>
-                                <button  x-on:click="activeTab= 'tab3'"  @click="$nextTick(() => $refs.tab3.focus())" class="btn btn-danger"> Siguiente >> </button>
-                            </div>
                             
-                    </div> <!--  div orange -->
+                                <button x-on:click="problema(),seleccionarespecialista(),open_problem_link=true,activeTab= 'tab2'" class="btn btn-danger" @click="$nextTick(() => $refs.tab2.focus())"> Siguiente >> </button>
+                            
+                            </div>
+                        </div> <!--  div red -->
+                   
+
+
+                        <div id="orange" x-show="activeTab=== 'tab2'" x-ref="tab2" class="tab-pane">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h3 class="bg-success text-center mt-5 py-3 text-capitalize">¿Qué Problema Desea Tratar?</h3>
+                                </div>
+
+                                <div class="col-12">
+                                    
+                                    <select name="tipo_problema" id="" class="form-control @error('tipo_problema') is-invalid @enderror" x-model="tipo_problema_id" >
+                                        <!-- aqui iria 736 linea -->
+
+                                        <template x-for="tipo_problema in problemas_bag" :key="tipo_problema.id">
+
+                                            <option :value="tipo_problema.id" x-text="tipo_problema.problem"></option>
+                                        </template>
+                                    </select>
+
+                                </div> <!-- cierre del col-12 -->
+                            </div> <!-- cierre del row -->
+                                <div class="display-boton-container">
+                                    <button class="btn btn-danger mr-5"  @click="$nextTick(() => $refs.tab1.focus()), activeTab= 'tab1'"> << Atrás
+                                    </button>
+                                    <button  x-on:click="activeTab= 'tab3'"  @click="$nextTick(() => $refs.tab3.focus())" class="btn btn-danger"> Siguiente >> </button>
+                                </div>
+                                
+                        </div> <!--  div orange -->
+                    </div><!-- cierre del div que no vemos funcion -->
 
                     <div id="yellow" class="tab-pane" x-show="activeTab=== 'tab3'" x-ref="tab3" class="tab-pane">
                             <div class="row">
@@ -755,7 +760,7 @@
                                 <div class="col-12">
                                     <select name="motivo_consulta" class="form-control" id="motivo_consulta" x-model="motivo_consulta" >
 
-                                        <option> <b>Seleccione una opción</b></option>    
+                                        <option class="text-bold"> <b>Seleccione una opción</b></option>    
 
                                         <option value="consejo">Consejo</option>
 
@@ -767,8 +772,8 @@
 
                                     </select>
 
-                                </div>
-                            </div>
+                                </div> <!-- cierre de col -12 -->
+                            </div> <!-- cierre de row -->
                            
                 
                             <div class="display-boton-container">
