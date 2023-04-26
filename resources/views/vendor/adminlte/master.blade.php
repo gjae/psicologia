@@ -6,8 +6,6 @@
 
 <head>
 
-    
-
     {{-- Base Meta Tags --}}
 
     <meta charset="utf-8">
@@ -17,6 +15,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
+<script type="text/javascript">window.localStorage.setItem('logueado', true);</script>
+
+
+    <script type="text/javascript">
+
+
+    window.addEventListener('storage', storageChange, false);
+    function storageChange (event) {
+        console.log(event);
+        if(event.key === 'logueado' && event.newValue ==='false'){
+            window.location.href="/login";
+        }
+        /*
+        if(localStorage.logeado=="false"){
+            window.location.replace("/login"); 
+        }else
+            window.location.reload(true); */
+      }
+
+</script>
+
     
 
     

@@ -1,7 +1,6 @@
 <?php
 
-
-
+use App\Models\Psychologist;
 use App\Models\Therapy;
 
 use App\Models\Schedules;
@@ -39,13 +38,11 @@ Route::middleware(["web","auth","auth.session.timeout"])->group(function () {
 
 //Route::middleware(["web","auth","verified","auth.session.timeout"])->group(function () {
 
-    Route::resource('usuarios',App\Http\Controllers\UserController::class);
+    Route::resource('usuarios',App\Http\Controllers\UserController::class)->middleware('permission:usuarios.index');
 
     
-    Route::resource('pacientes',App\Http\Controllers\PacientesController::class);
+    Route::resource('pacientes',App\Http\Controllers\PacientesController::class)->middleware('permission:pacientes.index');
 
-
-    
 
     Route::get('mis_reservaciones/{id_usuario}', function($id){
 
@@ -59,14 +56,14 @@ Route::middleware(["web","auth","auth.session.timeout"])->group(function () {
 
         return $mis_reservaciones;
 
-    });
+    }); //bueno, aquí probar si el administrador no puede acceder a ésto, y si el psicologo no puede acceder a ésto. De lo contrario hay que crear un permiso para ésta ruta.
      
 
     Route::get('horarios_psicologos/{id_especialista}', function($id) {
 
         return Schedules::where('id_psychologist',$id)->get();
 
-    })->name('horarios_psicologos');
+    })->name('horarios_psicologos')->middleware('permission:registrar_horarios_index');
 
 
     Route::resource('reservas',App\Http\Controllers\ReservasController::class);
@@ -76,18 +73,18 @@ Route::middleware(["web","auth","auth.session.timeout"])->group(function () {
 
     
 
-    Route::get('evaluar_psicologo',[App\Http\Controllers\AdminController::class,'evaluar_psicologo'])->name('evaluar_psicologo');
+    Route::get('evaluar_psicologo',[App\Http\Controllers\AdminController::class,'evaluar_psicologo'])->name('evaluar_psicologo')->middleware('permission:evaluar');
 
 
 
-    Route::post('evaluar/{id}',[App\Http\Controllers\AdminController::class,'evaluar'])->name('evaluar');
+    Route::post('evaluar/{id}',[App\Http\Controllers\AdminController::class,'evaluar'])->name('evaluar'); //intenta ver si como administrador o paciente puedes acceder a ésta seccion. Si sí puedes, entonces hay que hacer un permiso para ésta ruta.
 
-     Route::resource('psicologos',App\Http\Controllers\PsychologistController::class);
+     Route::resource('psicologos',App\Http\Controllers\PsychologistController::class)->middleware('permission:psicologos.index');
 
 
     Route::delete('eliminar_horarios/{id}',[App\Http\Controllers\PsychologistController::class, 'eliminar_horarios'])->name('eliminar_horarios');
 
-    Route::get('registrar_horarios',[App\Http\Controllers\PsychologistController::class,'registrar_horarios'])->name('registrar_horarios_index');
+    Route::get('registrar_horarios',[App\Http\Controllers\PsychologistController::class,'registrar_horarios'])->name('registrar_horarios_index')->middleware('permission:registrar_horarios_index');
 
 
 
@@ -124,4 +121,5 @@ Route::get('terapias',function(){
 })->name('terapias');
 
 Route::post('/registerpsychologist',[App\Http\Controllers\Auth\RegisterController::class, 'createPsychologist'])->name('registerpsychologist');
+
 

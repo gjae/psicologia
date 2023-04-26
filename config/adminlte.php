@@ -610,6 +610,7 @@ return [
             'can'       => 'pacientes.index'
 
         ],
+        
 
         [
 

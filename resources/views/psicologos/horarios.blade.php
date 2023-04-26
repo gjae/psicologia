@@ -3,7 +3,7 @@
 
 
 @section('content')
-
+@can('registrar_horarios_index')
 
 
 @section('css')
@@ -525,5 +525,8 @@
 
 </body>
 
+ @else
+    <h2>Usted no tiene los permisos para acceder a la sección de evaluaciones</h2>
+@endcan
 @endsection
 

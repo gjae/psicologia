@@ -24,6 +24,10 @@ class PsychologistController extends Controller
 
 {
 
+    public function __construct(){
+        $this->middleware('auth')->except(['logout']);
+    }
+
     /**
 
      * Display a listing of the resource.
@@ -258,6 +262,7 @@ class PsychologistController extends Controller
                 $q->where('id',$idTerapia);
             })
             ->take(3)
+            ->orderBy('ranking', 'desc')
             ->get();
     }
     public function registrar_horarios_store(Request $request){

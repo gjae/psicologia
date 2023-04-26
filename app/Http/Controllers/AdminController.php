@@ -10,6 +10,10 @@ use DB;
 class AdminController extends Controller
 {
     //
+    public function __construct(){
+        $this->middleware('auth')->except(['logout']);
+    }
+
     public function evaluar_psicologo(){
 
         $psicologos= Psychologist::orderBy('ranking', 'desc')->get();

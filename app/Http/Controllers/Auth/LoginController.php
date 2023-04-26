@@ -49,7 +49,21 @@ class LoginController extends Controller
      *
      * @return array
      */
-    
+    public function logout(Request $request)
+    {
+        Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect('login'); 
+        /*$this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return $this->loggedOut($request) ?: redirect('/');*/
+    }
+
     protected function credentials(Request $request)
     {   
         /*

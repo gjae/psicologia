@@ -10,6 +10,10 @@ use App\Models\Psychologist;
 
 class UserController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth')->except(['logout']);
+    }
+
     /**
      * Display a listing of the resource.
      *
