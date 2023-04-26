@@ -271,3 +271,27 @@ table i h4 {
 .evitar-click {
     display: none;
 }
+
+/* estilos paginas de erro 404 y pagina 403 */
+
+.error-imagen-404 {
+    background-image: url(404-error.jpg);
+    height: 100vh;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.error-imagen-403 {
+    background-image: url(403-error.jpg);
+    height: 100vh;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@media (min-width: 992px) {
+    .order-reverse {
+        flex-direction: row-reverse;
+    }
+}
