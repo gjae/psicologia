@@ -387,10 +387,9 @@
                             
                             location.href ='{{route("home")}}';
                         }
-
                     })
-
-                    .catch((data)=> console.log('Error'),
+                    .catch((data)=> {
+                        console.log('Error'),
 
                     
 
@@ -405,6 +404,7 @@
                         html: '<h4>Asegurate de que completaste todo el formulario.</h4>'
 
                         })
+                    }
 
                     )
 
@@ -1148,7 +1148,7 @@
 
 <div class="row">
 
-    <div class="col-lg-4">
+    <div class="col-lg-6">
 
         <div class="small-box bg-gradient-primary">
 
@@ -1176,23 +1176,23 @@
 
     </div>
 
-    <div class="col-lg-4 offset-3">
+    <div class="col-lg-6">
 
         
 
         <div class="small-box bg-gradient-info">
 
-            <div class="inner">
+            <div class="inner" style="padding:10px;">
 
                 <span class="info-box-text">Puntuación</span>
-
+                <h1 class="info-box-number text-dark">{{Auth::user()->Ispsychologist->ranking}}</h1>
             </div>
 
-            <div class="icon">
+            <div class="icon" style="padding:10px;">
 
-                <div class="info-box-content" style="padding:10px;">
+                <div class="info-box-content">
 
-                    <h1 class="info-box-number text-dark">{{Auth::user()->Ispsychologist->ranking}}</h1>
+                    
 
             </div>
 

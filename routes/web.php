@@ -63,7 +63,7 @@ Route::middleware(["web","auth","auth.session.timeout"])->group(function () {
 
         return Schedules::where('id_psychologist',$id)->get();
 
-    })->name('horarios_psicologos')->middleware('permission:registrar_horarios_index');
+    })->name('horarios_psicologos'); //->middleware('permission:registrar_horarios_index') Al habilitar este middleware para ésta ruta obtengo un error al consultar ésta ruta desde el panel de reservas.. Es obvio
 
 
     Route::resource('reservas',App\Http\Controllers\ReservasController::class);
