@@ -40,9 +40,6 @@
 
     <div class="card" x-data="ranking()">
         
-            <a href="{{ route('notes.destroy', $note->id) }}">Eliminar nota</a>
-        
-
             <div class="card-header">
 
                 <h1>Evaluar psicólogos</h1>
@@ -71,7 +68,6 @@
 
                         <th>Género</th>
 
-                        <th>Especialidad</th>
 
                         <th>BIO</th>
 
@@ -119,11 +115,16 @@
 
                             <td>{{$psicologo->personalInfo->gender}}</td>
 
-                            <td>{{$psicologo->specialty}}</td>
-
                             <td>{{$psicologo->bio}}</td>
 
-                            <td>{{$psicologo->therapy->therapy_type}}</td>
+                            <td>
+                                <ul>
+                                    @foreach($psicologo->therapiesOffered as $tipo_therapy)
+                                        <li><p>{{$tipo_therapy->therapy->therapy_type}}</p></li>
+                                        
+                                    @endforeach    
+                                </ul>
+                            </td>
 
                             <td>{{$psicologo->personal_phone}}</td>
 

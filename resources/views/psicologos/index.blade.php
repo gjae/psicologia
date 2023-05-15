@@ -108,7 +108,6 @@
 
                 <th>Género</th>
 
-                <th>Especialidad</th>
 
                 <th>BIO</th>
 
@@ -142,11 +141,21 @@
 
                     <td>{{$psicologo->personalInfo->gender}}</td>
 
-                    <td>{{$psicologo->specialty}}</td>
-
                     <td>{{$psicologo->bio}}</td>
 
-                    <td>{{$psicologo->therapy->therapy_type}}</td>
+                    <td>
+                        <ul>
+                            @foreach($psicologo->therapiesOffered as $tipo_therapy)
+                                <li><p>{{$tipo_therapy->therapy->therapy_type}}</p></li>
+
+                                
+                                @foreach($tipo_therapy->ProblemsTreated as $problem)
+                                   <p><span class="breadcrumb" style="background:info;"> {{ App\Models\Problems::find($problem->id_problem)->problem}}</span></p>
+                                @endforeach
+                                
+                            @endforeach    
+                        </ul>
+                    </td>
 
                     <td>{{$psicologo->personal_phone}}</td>
 

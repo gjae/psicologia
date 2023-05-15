@@ -6,15 +6,37 @@
 
     function registro(){
 
+
+
+        
         return {
 
             activetab:'',
-
+            terapiasSeleccionadas: [],
+            cadenaTerapias:'',
+            selectedTypes: [],
             tipo_terapias:[],
+            tipo_problemas:[],
+            checkboxesterapiasSeleccionadas() {
+                this.cadenaTerapias = this.terapiasSeleccionadas.join(', ');
+            }
+            ,
+            toggleTipoTerapia(terapia) {
+                terapia.selected = !terapia.selected;
 
+                if (terapia.selected) {
+                // Habilitar los checkboxes de los tipos de problema relacionados
+                terapia.treat_problem.forEach((tipo_problema) => {
+                    tipo_problema.disabled = false;
+                });
+                } else {
+                // Deshabilitar los checkboxes de los tipos de problema relacionados
+                terapia.treat_problem.forEach((tipo_problema) => {
+                    tipo_problema.disabled = true;
+                });
+                }
+            },
             terapias(){
-
-                
 
                 fetch('{{route("terapias")}}')
 
@@ -23,11 +45,9 @@
                     .then(
 
                         (data) => {
-                            console.log(data)
                             this.tipo_terapias = data
 
-                            
-
+                   console.log(this.tipo_terapias)
                         }
 
                     )
@@ -489,6 +509,15 @@
 
                         
 
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                                 {{-- Name field --}}
 
                                 <div class="input-group mb-3">
@@ -750,29 +779,22 @@
 
                                 <div class="input-group mb-3">
 
-                                    <select title="Selecciona en que tipo de terapia te especializas" name="therapy_id" id="" class="form-control @error('therapy_id') is-invalid @enderror" value="{{ old('therapy_id') }}">
+                                       <template x-for="terapia in tipo_terapias" :key="terapia.id">
+                                            <div>
+                                                <label title="Selecciona en qué tipo de terapia te especializas" x-text="terapia.therapy_type"></label>
+                                                <input name="therapy[]"  type="checkbox" :value="terapia.id" class="form-control @error('therapy_id') is-invalid @enderror" x-model="selectedTypes" @click="toggleTipoTerapia(terapia)">
 
-                                        <template x-for="terapia in tipo_terapias" :key="terapia.id">
 
-                                            <option :value="terapia.id" x-text="terapia.therapy_type"></option>
+                                                <h3><b>Especialidad</b></h3>
 
+                                                <template x-for="tipo_problema in terapia.treat_problem" :key="tipo_problema.id">
+                                                    <div>
+                                                        <h4 x-text="tipo_problema.problem"></h4>
+                                                        <input type="checkbox" :value="tipo_problema.id" name="tipo_problemas[]" class="form-control" x-bind:disabled="!terapia.selected" >
+                                                    </div>
+                                                </template>
+                                            </div>
                                         </template>
-
-                                    </select>
-
-
-
-                                    <div class="input-group-append">
-
-                                        <div class="input-group-text">
-
-                                            <span class="fas fa-book {{ config('adminlte.classes_auth_icon', '') }}"></span>
-
-                                        </div>
-
-                                    </div>
-
-
 
                                     @error('therapy')
 
@@ -789,9 +811,6 @@
                                 {{-- Specialty field --}}
 
                                 <div class="input-group mb-3">
-
-                                    <input title="Cuál es tu especialidad?" required type="text"  name="specialty" class="form-control @error('specialty') is-invalid @enderror" value="{{ old('specialty') }}" placeholder="Especialidad" >
-
 
 
                                     <div class="input-group-append">
@@ -982,6 +1001,24 @@
 
     </div>
 
+    <script>
+
+         const checkboxes = document.querySelectorAll('input[name="therapy"]');
+  let cadena_terapias = ''; // Variable global que almacenará los valores de los checkboxes seleccionados
+
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener('change', function() {
+      if (this.checked) {
+        cadena_terapias += (cadena_terapias === '') ? this.value : ', ' + this.value;
+      } else {
+        cadena_terapias = cadena_terapias.replace(this.value, '').replace(', , ', ', ');
+      }
+      console.log(checkboxes);
+       document.querySelector('input[name="terapias_seleccionadas"]').value = cadena_terapias
+      console.log(cadena_terapias); // Para comprobar que se están concatenando los valores correctamente
+    });
+  });
+    </script>
 @stop
 
 

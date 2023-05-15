@@ -11,24 +11,23 @@ class Psychologist extends Model
     protected $table    = 'psychologist';
     protected $fillable = [
         'id_user',
-        'therapy_id',
         'bio',
         'ranking',
         'personal_phone',
         'bussiness_phone',
-        'photo',
-        'specialty'];
+        'photo'];
 
     public function WorksAtHours(){
     	return $this->hasMany(Schedules::class,'id_psychologist','id');
     }
 
-    public function Therapy(){
-        return $this->HasOne(Therapy::class,'id','therapy_id');
-    }
 
     public function personalInfo(){
         return $this->belongsTo(User::class,'id_user','id');
+    }
+
+    public function TherapiesOffered(){
+        return $this->hasMany(Psycho_therapy::class,'id_psycho','id');
     }
 
 }

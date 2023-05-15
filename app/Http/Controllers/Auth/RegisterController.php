@@ -7,7 +7,8 @@ namespace App\Http\Controllers\Auth;
 
 
 use App\Http\Controllers\Controller;
-
+use App\Models\Psycho_therapy;
+use App\Models\Problem_psycho_therapy;
 use App\Models\Psychologist;
 
 use App\Providers\RouteServiceProvider;
@@ -218,6 +219,7 @@ class RegisterController extends Controller
 
 
 
+
         $validator = Validator::make($request->all(), [
 
             
@@ -236,8 +238,6 @@ class RegisterController extends Controller
             'email'     => 'required|max:50|unique:users,email',
 
             'bio'     => 'required|max:200',
-
-            'specialty'     => 'required|max:250',
 
             'password'  => 'required|max:30|confirmed',
 
@@ -329,8 +329,6 @@ class RegisterController extends Controller
 
             [
 
-                'therapy_id'        => $request['therapy_id'],
-
                 'id_user'           => $id_user,
 
                 'photo'             => $url_final,
@@ -341,13 +339,25 @@ class RegisterController extends Controller
 
                 'personal_phone'    => $request['personal_phone'],
 
-                'bussiness_phone'   => $request['bussiness_phone'],
-
-                'specialty'         => $request['specialty']
+                'bussiness_phone'   => $request['bussiness_phone']
 
             ]
 
             );
+
+            for($i=0; $i<count($request['therapy']);$i++){
+                Psycho_therapy::create([
+                    'id_psycho' => Psychologist::latest()->first()->id,
+                    'id_therapy'=> $request['therapy'][$i]
+                ]);
+            }
+
+            for($i=0; $i<count($request['tipo_problemas']);$i++){
+                Problem_psycho_therapy::create([
+                    'id_psycho_therapy' => Psycho_therapy::latest()->first()->id,
+                    'id_problem'=> $request['tipo_problemas'][$i]
+                ]);
+            }
             return redirect()->route('inicio')->with('success', 'El psicologo ha sido creado con éxito! Inicie sesión');
         }else{
             return back()->with('error', 'El psicologo ya está registrado');

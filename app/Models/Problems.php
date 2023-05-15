@@ -11,7 +11,8 @@ class Problems extends Model
     protected $table    = 'problems';
     protected $fillable = ['id_therapy' , 'problem'];
 
+
     public function TreatedInTherapy(){
-    	return $this->belongsTo(Therapy::class,'id','id_therapy');
+    	return $this->belongsTo(problem_psycho_therapy::class,'id_problem','id');
     }
 }

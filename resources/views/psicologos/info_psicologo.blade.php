@@ -32,7 +32,12 @@
 
                             <h3><b>Teléfono de empresa:</b> {{$info_psicologo->bussiness_phone}}</h3>
                             
-                            <h3><b>Especialista en {{$info_psicologo->therapy->therapy_type}} - {{$info_psicologo->specialty}}</b></h3>
+                            <h3><b>Especialista en 
+                            <ul>
+                                @foreach($info_psicologo->therapiesOffered as $tipo_therapy)
+                                    <li><p>{{$tipo_therapy->therapy->therapy_type}}</p></li>
+                                @endforeach    
+                            </ul> 
                         
                             <h3><b>
                             Puntuación: {{$info_psicologo->ranking}}

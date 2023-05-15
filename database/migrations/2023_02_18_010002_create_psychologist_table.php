@@ -18,17 +18,14 @@ return new class extends Migration
             $table->increments('id');
             $table->string('personal_phone');
             $table->string('bussiness_phone');
-            $table->string('specialty');
             $table->string('bio');
             $table->string('dias_atencion')->nullable();
             $table->string('photo')->nullable();
             $table->integer('ranking')->nullable();
-            $table->integer('therapy_id')->unsigned();
             $table->integer('id_user')->unsigned();
             $table->timestamps();
 
             
-            $table->foreign('therapy_id')->references('id')->on('therapy');
 
             $table->foreign('id_user')->references('id')->on('users');
         });

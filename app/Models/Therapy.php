@@ -12,9 +12,12 @@ class Therapy extends Model
     protected $fillable = ['therapy_type' ,'description'];
 
     public function TreatProblem() {
-    	return $this->hasOne(Problems::class,'id_therapy','id');
+    	return $this->hasMany(Problems::class,'id_therapy','id');
     }
     public function Specialist() {
     	return $this->belongsTo(User::class,'id_therapy','id');
+    }
+    public function psycho_therapy() {
+    	return $this->belongsTo(Psycho_therapy::class,'id_therapy','id');
     }
 }

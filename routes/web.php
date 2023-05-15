@@ -5,6 +5,7 @@ use App\Models\Therapy;
 
 use App\Models\Schedules;
 
+use App\Models\Problems;
 use App\Models\Reservations;
 
 use Illuminate\Support\Facades\Route;
@@ -93,11 +94,18 @@ Route::middleware(["web","auth","auth.session.timeout"])->group(function () {
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    Route::post('/consulta_problemas/{id_problema}',[App\Http\Controllers\PsychologistController::class,'problems'])->name('consulta_problemas');
+    
 
 });
+Route::post('/consulta_problemas/{id_problema}',[App\Http\Controllers\PsychologistController::class,'problems'])->name('consulta_problemas');
 
-Route::get('seleccionar_especialista/{id_terapia}',[App\Http\Controllers\PsychologistController::class,'seleccionarEspecialista'])->name('especialistaEn');
+Route::get('/tipo_terapia_tipo_problema/{id_terapia}',function($id){ 
+    $problemas = Problems::where('id_therapy',$id)->get();
+        return $problemas;
+})->name('tipo_problemas');
+
+
+Route::get('seleccionar_especialista/{id_terapia}/{id_problema}',[App\Http\Controllers\PsychologistController::class,'seleccionarEspecialista'])->name('especialistaEn');
 
 Route::get('/', function () {
 
@@ -116,7 +124,14 @@ Auth::routes();
 
 Route::get('terapias',function(){
 
-    return Therapy::all();
+   /* $tipoTerapias = Therapy::with('TreatProblem')->get();
+
+    $tipoTerapias = $tipoTerapias->map(function ($terapia) {
+        $terapia->selected = false;
+        
+    });
+    return $tipoTerapias;*/
+    return Therapy::with('TreatProblem')->get();
 
 })->name('terapias');
 

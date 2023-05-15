@@ -231,8 +231,8 @@ class PsychologistController extends Controller
         return redirect('/psicologos');
     }
 
-    
     public function problems($id_problema){
+        /** POST */
         $problemas = Problems::where('id_therapy',$id_problema)->get();
         return $problemas;
     }
@@ -253,18 +253,25 @@ class PsychologistController extends Controller
         return view('psicologos.horarios',compact('horario_psicologo'));
     }
 
-    public function seleccionarEspecialista($idTerapia){
-        return Psychologist::with('personalInfo')
-            ->with('therapy')
+    public function seleccionarEspecialista($idTerapia,$idProblema){
+            return Psychologist::with('personalInfo')
+            ->with('TherapiesOffered.therapy')
             ->with('WorksAtHours')
-            ->whereHas('therapy',
+            ->whereHas('TherapiesOffered',
             function($q) use ($idTerapia){ 
-                $q->where('id',$idTerapia);
+                $q->where('id_therapy',$idTerapia);
+            })
+            ->whereHas('TherapiesOffered.ProblemsTreated',function($j) use ($idProblema){
+                $j->where('id_problem',$idProblema);
             })
             ->take(3)
             ->orderBy('ranking', 'desc')
             ->get();
+
     }
+
+
+
     public function registrar_horarios_store(Request $request){
         $horariosPorDias= $request['diasDeAtencion'][0];
 

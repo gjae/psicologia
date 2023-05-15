@@ -164,11 +164,12 @@
 
 
 
-            tipo_problema_id:'',
+            
 
             horario: '',           //Id de horario
             tipo_terapia_id:'',
-
+            tipo_problema_id:'',
+            
             consejos_pane:false,
 
             resume_pane:false,
@@ -186,6 +187,7 @@
             horarios: [],
 
             nuevoarrayhoras:[],
+            tipos_terapia_especialista:[],
 
             formData:{
 
@@ -254,12 +256,16 @@
             seleccionarespecialista(){
                 
                 var especialistaEnTerapia = this.tipo_terapia_id;
-
-                fetch(`seleccionar_especialista/${especialistaEnTerapia}`).
+                var especialistaEnProblema = this.tipo_problema_id;
+                
+                fetch(`seleccionar_especialista/${especialistaEnTerapia}/${especialistaEnProblema}`).
                 then(r => r.json()).
                 then((data) => {
                     this.especialistas= data
                     this.dias_atencion= this.especialistas.works_at_hours
+                    this.tipos_terapia_especialista = data[0].therapies_offered[0]
+
+                    console.log(data);
                 }).catch()
             },
             reserva_gratuita(param){
@@ -717,7 +723,7 @@
                             </div> <!-- cierre del row -->
                             <div class="display-boton-container">
                             
-                                <button x-on:click="problema(),seleccionarespecialista(),open_problem_link=true,activeTab= 'tab2'" class="btn btn-danger" @click="$nextTick(() => $refs.tab2.focus())"> Siguiente >> </button>
+                                <button x-on:click="problema(),open_problem_link=true,activeTab= 'tab2'" class="btn btn-danger" @click="$nextTick(() => $refs.tab2.focus())"> Siguiente >> </button>
                             
                             </div>
                         </div> <!--  div red -->
@@ -732,9 +738,9 @@
 
                                 <div class="col-12">
                                     
-                                    <select name="tipo_problema" id="" class="form-control @error('tipo_problema') is-invalid @enderror" x-model="tipo_problema_id" >
-                                        <!-- aqui iria 736 linea -->
-
+                                    <select name="tipo_problema_id" id="" class="form-control @error('tipo_problema') is-invalid @enderror" x-model="tipo_problema_id">
+                                        
+                                        <option class="text-bold evitar-click" value="#"><b>Seleccione una opción </b></option> 
                                         <template x-for="tipo_problema in problemas_bag" :key="tipo_problema.id">
 
                                             <option :value="tipo_problema.id" x-text="tipo_problema.problem"></option>
@@ -746,7 +752,7 @@
                                 <div class="display-boton-container">
                                     <button class="btn btn-danger mr-5"  @click="$nextTick(() => $refs.tab1.focus()), activeTab= 'tab1'"> << Atrás
                                     </button>
-                                    <button  x-on:click="activeTab= 'tab3'"  @click="$nextTick(() => $refs.tab3.focus())" class="btn btn-danger"> Siguiente >> </button>
+                                    <button  x-on:click="activeTab= 'tab3', seleccionarespecialista()"  @click="$nextTick(() => $refs.tab3.focus())" class="btn btn-danger"> Siguiente >> </button>
                                 </div>
                                 
                         </div> <!--  div orange -->
@@ -828,7 +834,13 @@
                                                                 <h2 class="text-center text-capitalize"><span x-text="especialista.personal_info.name"></span>  <span x-text="especialista.personal_info.lastname"></span></h2>
                                                             
 
-                                                                <h3 class="text-center text-capitalize">Especialista en <span x-text="especialista.therapy.therapy_type"></span></h3>
+                                                                <!--h3 class="text-center text-capitalize">Especialista en </h3>
+                                                                <template x-for="tipo_terapia in tipos_terapia_especialista" :key="tipo_terapia.id">
+                                                                    <p>
+                                                                        <span x-text="tipo_terapia">
+                                                                        </span>
+                                                                    </p>
+                                                                </template-->
                                                             </a>
 
                                                         </div>
