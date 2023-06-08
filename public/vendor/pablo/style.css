@@ -295,3 +295,51 @@ table i h4 {
         flex-direction: row-reverse;
     }
 }
+
+/* estilos del registro psicologo */
+
+.container-terapia {
+    border-bottom: 1px solid #ccc;
+}
+
+.container-terapia-a {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap:4px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.check-de-terapia, .estilo-text-area textarea {
+    font-size: 18px;
+}
+
+.check-de-terapia h3 {
+    font-size: 18px;
+}
+
+.psico-profile h1 {
+    font-size: 34px;
+    font-weight: 700;
+}
+
+.psico-profile h2 {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.psico-profile ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.psico-profile ul li  {
+    font-weight: 400;
+}
+
+.tabla-administrador ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
