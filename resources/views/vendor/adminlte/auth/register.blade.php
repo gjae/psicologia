@@ -39,19 +39,13 @@
             terapias(){
 
                 fetch('{{route("terapias")}}')
-
                     .then(r => r.json())
-
                     .then(
-
                         (data) => {
                             this.tipo_terapias = data
-
-                   console.log(this.tipo_terapias)
+                            console.log(this.tipo_terapias)
                         }
-
                     )
-
             }
 
         }

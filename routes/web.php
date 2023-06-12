@@ -7,7 +7,9 @@ use App\Models\Schedules;
 
 use App\Models\Problems;
 use App\Models\Reservations;
+use App\Models\Psycho_therapy;
 
+use App\Models\Problem_psycho_therapy;
 use Illuminate\Support\Facades\Route;
 
 use Illuminate\Http\Request;
@@ -87,14 +89,20 @@ Route::middleware(["web","auth","auth.session.timeout"])->group(function () {
 
     Route::get('registrar_horarios',[App\Http\Controllers\PsychologistController::class,'registrar_horarios'])->name('registrar_horarios_index')->middleware('permission:registrar_horarios_index');
 
-
-
     Route::post('registrar_horarios',[App\Http\Controllers\PsychologistController::class,'registrar_horarios_store'])->name('registrar_horarios_post');
-
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+    /* ACTUALIZAR INFO PSICOLOGO */
     
+        Route::get('actualizar_informacion/edit',[App\Http\Controllers\PsychologistController::class,'edit'])->name('actualizarinfo')->middleware('permission:actualizarinfo');
+
+        Route::post('update_info/{psicologo}',[App\Http\Controllers\PsychologistController::class,'update'])->name('update_info_post');
+
+        Route::get('delete_therapies/{id}',[App\Http\Controllers\PsychologistController::class,'delete_therapies'])->name('delete_therapies');
+    
+        Route::get('delete_problems/{id}/{idproblema}',[App\Http\Controllers\PsychologistController::class,'delete_problems'])->name('delete_problems');
+        /* ACTUALIZAR INFO PSICOLOGO */
 
 });
 Route::post('/consulta_problemas/{id_problema}',[App\Http\Controllers\PsychologistController::class,'problems'])->name('consulta_problemas');
@@ -113,7 +121,10 @@ Route::get('/', function () {
 
 })->middleware('guest')->name('inicio');
 
+Route::get('confirmar_asistencia/{confirm}/{idCita}',function($confirmation,$idCita){
+    Reservations::where('id',$idCita)->update(['status'=>$confirmation]);
 
+});
 
 Route::post('link_meet/{reservation}',[App\Http\Controllers\PsychologistController::class,'link_meet'])->name('link_meet');
 
@@ -123,17 +134,25 @@ Auth::routes();
 
 
 Route::get('terapias',function(){
-
-   /* $tipoTerapias = Therapy::with('TreatProblem')->get();
-
-    $tipoTerapias = $tipoTerapias->map(function ($terapia) {
-        $terapia->selected = false;
-        
-    });
-    return $tipoTerapias;*/
     return Therapy::with('TreatProblem')->get();
-
 })->name('terapias');
+
+
+
+Route::get('tipos_terapia_current_user/{id}',function($id){
+    //$currentProblems= Problem_psycho_therapy::with('problems')->where('id_psycho_therapy',1)->pluck('id_problem')->toArray();
+    $currentTherapies=Psycho_therapy::with('therapy')->with('problemsTreated.problems')->where('id_psycho',$id)->pluck('id_therapy')->toArray(); //retorna array de los ID de los tipos de terapia que presta elpsicologo logueado
+    $data=array(
+        "currentTherapies" => Psycho_therapy::with('therapy')->with('problemsTreated.problems')
+        ->where('id_psycho',$id)
+        ->get(),
+        "availableTherapies"=> Therapy::whereNotIn('id',$currentTherapies)->get(),
+        
+        //"availableProblems"=> Problems::whereNotIn('id',$currentProblems)->get()
+    );
+    return $data;
+})->name('tipos_terapia_current_user');
+
 
 Route::post('/registerpsychologist',[App\Http\Controllers\Auth\RegisterController::class, 'createPsychologist'])->name('registerpsychologist');
 

@@ -1,0 +1,24 @@
+TO DO LIST  
+
+
+Completar actualización del perfil del psicólogo.
+
+hacer la parte de actualizar tipo de terapias. Agrega un nuevo tipo de terapia, y agrega o elimina otros tipos de problema.
+
+Mostrar en el panel de reserva cual es el tipo de terapia y tipo de problema seleccionado. (Las variables JS que están siendo usadas para la consulta solo reflejan el ID de la terapia y el ID del problema seleccionado. Como hago para mostrar sus nombres para que el usuario sepa... ?) 
+
+limpiar un poco el código antes de subirlo
+
+activar middleware de verificacion de correo cuando vayas a subir al servidor. (Recuerda que es descomentando las rutas que estan comentadas, y descomentando el trait en el modelo de usuario)
+
+hacer merge y push a master. Arreglar problema de master.
+
+hacer que lalista detipos de problema que atiende elpsicologo se pueda eliminar asi comolostipos de terapia
+
+agregar nuevos tipos de problema de las terapias que ya se3 manejan.
+
+cuando elpsicoogo no tienehorarios registrados y envia el formulario de actualizacion dedatossin actualizarhorarios, me da un error
+
+cuando envio el formulario sin actualizar la contraserña,igualse cambia.POrque?
+
+estilos.Los arregla pablo.

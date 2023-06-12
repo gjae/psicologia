@@ -636,6 +636,7 @@ return [
 
         ],
 
+
         
 
         [
@@ -657,6 +658,17 @@ return [
             'route'     => 'reservas.index',
 
             'icon'      => 'fa fa-bookmark'
+
+        ],
+        
+        [
+
+            'text'      => 'Mi cuenta',
+
+            'route'     => 'actualizarinfo',
+
+            'icon'      => 'fa fa-cogs',
+            'can'       => 'actualizarinfo'
 
         ],
 
