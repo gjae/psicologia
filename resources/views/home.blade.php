@@ -125,6 +125,7 @@
             current_date:'',
             reserved_pane:false,
             link:'',
+            menores:false,
 
             message:false,
 
@@ -198,8 +199,10 @@
                 schedule:'',
 
                 cause: '',
-
+                apoderado: '',
                 especialista:'',
+                tipo_terapia:'',
+                tipo_problema:''
 
             },
 
@@ -313,9 +316,13 @@
 
             ReservaForm(){
 
-                this.formData.schedule= this.horario
+                this.formData.schedule = this.horario
 
-                this.formData.cause= this.motivo_consulta
+                this.formData.cause = this.motivo_consulta
+
+                
+                this.formData.tipo_terapia = this.tipo_terapia_id
+                this.formData.tipo_problema = this.tipo_problema_id
 
                 Swal.fire({
 
@@ -437,7 +444,9 @@
             },
 
             problema(){
-
+                if(this.tipo_terapia_id== 3){
+                    this.menores=true
+                }
                 this.tipo_terapia_pane= false
 
                 this.consejos_pane= false
@@ -899,8 +908,14 @@
 
                                 </div>
 
+                                <div class="col-lg-6" x-show="menores">
+                                    <label for="apoderado">Soy el apoderado</label>
+                                    <input name="apoderado" x-model="formData.apoderado" type="checkbox">
+                                </div>
+
                             </div>
 
+                            
                             <hr>
 
                             <div id="resume_pane" x-show="resume_pane" >

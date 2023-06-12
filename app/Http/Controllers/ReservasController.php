@@ -9,6 +9,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Reservations;
+use App\Models\Therapy;
+use App\Models\Problems;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -114,7 +116,6 @@ class ReservasController extends Controller
     public function store(Request $request)
 
     {
-
         if( Reservations::where('appointment_date',$request->appointment_date)
 
             ->where('id_schedule',$request->schedule)
@@ -125,6 +126,12 @@ class ReservasController extends Controller
 
         }else{
 
+            //dd($request);
+
+            $tipo_terapia= Therapy::where('id',$request->tipo_terapia)->first()->therapy_type;
+
+            $tipo_problema= Problems::where('id',$request->tipo_problema)->first()->problem;
+            //dd($tipo_terapia);
             Reservations::create([
 
                 'appointment_date'  => $request->appointment_date,
@@ -133,10 +140,14 @@ class ReservasController extends Controller
 
                 'id_schedule'       => $request->schedule,
 
-                'cause'             => $request->cause 
+                'cause'             => $request->cause,
+                
+                'apoderado'      => $request->apoderado,
+                'tipo_terapia'      => $tipo_terapia,
+                'tipo_problema'     => $tipo_problema
 
             ]);
-
+//Aquí tenemos que validar si "apoderado" viene vacío. Si no viene vacío lo guardamos.
             return 0;
 
         } 

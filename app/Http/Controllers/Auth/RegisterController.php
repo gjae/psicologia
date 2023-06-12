@@ -215,9 +215,9 @@ class RegisterController extends Controller
 
     protected function createPsychologist(Request $request)
 
-    {   
+    {       
 
-
+//dd($request);
 
 
         $validator = Validator::make($request->all(), [

@@ -5,7 +5,7 @@
 @section('content')
 
 @section('js')
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
 
     <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap.min.js"></script>
@@ -37,8 +37,53 @@
 <script>
     function reservas(){
         return {
+            mostrarBoton: true,
+            
             link_meet:'',
+            
             links:{},
+            confirmarAsistencia(citaPasada,idCita) {
+               // alert(citaPasada) //SÍ es una cita pasada
+                if(citaPasada== false){
+                    Swal.fire({
+                        icon:'warning',
+                        title: 'No puedes confirmar la asistencia',
+                        text: 'La fecha y hora de la cita no ha llegado'
+                        })
+                    }else{
+                        Swal.fire({
+                    title: 'Confirmar asistencia',
+                    text: '¿El paciente asistió a la cita?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí',
+                    cancelButtonText: 'No',
+                    reverseButtons: true
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        fetch(`confirmar_asistencia/1/${idCita}`).
+                        then(
+                            Swal.fire({
+                            title: 'Listo',
+                            icon: 'success'
+                            })
+                        ).catch()
+                        this.ocultos= false
+                        this.message= false
+                        //aquí ocultar los botones de link meeting, actualizar, y confirmar asistencia. Cambiar por un mensaje que diga "El paciente asistió a su cita."
+                        location.reload()
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        fetch(`confirmar_asistencia/0/${idCita}`).
+                        then(
+                            location.reload()
+                        ).catch()
+                    }
+                    });
+                }
+                
+            },
+            actualizar_link_meet(){
+
+            },
             actualizareserva(id, link){
                 
                 fetch(`link_meet/${id}`,{
@@ -64,7 +109,7 @@
                     location.reload()
                 }).catch()
             }
-            /*actualizareserva(id){
+            /*,actualizareserva(id){
                 fetch(`link_meet/${id}`,{
 
                         method: 'POST',
@@ -102,12 +147,11 @@
 
     </div>
 
-    <div class="card-body" x-data="reservas()" x-init="inicializar()">
+    <div class="card-body" x-data="reservas()">
             <table id="example" class="table table-responsive-lg table-striped">
 
                 <thead class="thead-dark">
                     <tr>
-                        
                         <th>Paciente</th>
 
                         <th>Email</th>
@@ -117,9 +161,13 @@
 
                         <th>Hora de consulta</th>
 
-                        <th>Psicólogo</th>
-
+                        <th>Terapeuta</th> 
+                        <th>Terapia</th>
+                        <th>Problema a tratar</th>
                         <th>Motivo de consulta</th>
+                        <th>
+                             Apoderado
+                        </th>
                         @if(Auth::user()->hasRole('psicologo'))
                         <th>Link de la reunión</th>
                         <th></th>
@@ -128,8 +176,17 @@
                 </thead>
 
                 @foreach($reservations as $reservation)
-
-                <tr>
+                    @if($reservation->status==0)
+                        <tr x-data="{
+                        citaPasada: @json($reservation->appointment_date <= now()),
+                        ocultos: true,
+                        message: true,
+                        mostrarLinkMeeting: true,
+                        }" style="background-color:#f952526e;">
+                    @elseif($reservation->status==1)
+                        <tr style="background-color:#a6ff8b8f;">
+                    @endif
+                
 
                     <td>{{$reservation->patient->name}}</td>
 
@@ -141,8 +198,21 @@
                     <td>{{$reservation->schedule->schedule}}</td>
 
                     <td class="text-capitalize">{{$reservation->schedule->AtThisHourPsyc->personalInfo->name}} {{$reservation->schedule->AtThisHourPsyc->personalInfo->lastname}}</td>
+                    
+                    <td>{{$reservation->tipo_terapia}}</td>
+                    <td>{{$reservation->tipo_problema}}</td>
                     <td>{{$reservation->cause}}</td>
-
+                    @if($reservation->tipo_terapia == "Terapia de menores")
+                        <td>
+                            @if($reservation->apoderado == 1)
+                                <p>SÍ</p>
+                            @else
+                                <p>NO</p>
+                            @endif
+                        </td>
+                    @else
+                        <td></td>
+                    @endif
                     @if(Auth::user()->hasRole('psicologo'))
                     <form method="post" action="{{route('link_meet',['reservation'=>$reservation->id])}}" role="form" >
 							@method("post")
@@ -151,14 +221,24 @@
                         <td>
                             <input type="hidden" value="{{$reservation->id}}" name="id">
                             @if($reservation->link_meeting)
-                                <input type="text" name="link_meeting" placeholder="Link de la reunión" title="Porfavor comparte el link del meeting" class="form-control" value="{{$reservation->link_meeting}}" > 
-                            @else
+                                <input type="text" name="link_meeting" placeholder="Link de la reunión" title="Porfavor comparte el link del meeting" class="form-control" value="{{$reservation->link_meeting}}"  x-show="ocultos" > 
 
-                                <input type="text" name="link_meeting" placeholder="Link de la reunión" title="Porfavor comparte el link del meeting" class="form-control" >
+                                
+                            @else
+                                <input type="text" name="link_meeting" placeholder="Link de la reunión" title="Porfavor comparte el link del meeting" class="form-control"  x-show="ocultos">
                             @endif    
+                            @if($reservation->status==1)
+                                    <h5 >El paciente ya asistió a su cita</h5>
+                                @endif
                         </td>
                         <td> 
-                        <button type="submit" class="btn btn-success" >Actualizar</button>    
+                            @if(!$reservation->link_meeting)
+                            <button type="submit" class="btn btn-success" x-show="ocultos" @click="actualizar_link_meet">Actualizar</button>
+                            @endif
+
+                            @if($reservation->link_meeting)
+                            <button type="button" class="btn btn-info" @click="confirmarAsistencia(citaPasada,'{{$reservation->id}}')" x-show="ocultos">Confirmar asistencia</button>    
+                            @endif
                         </td>
                     </form>
                     
@@ -166,6 +246,13 @@
                 </tr>
                 @endforeach
             </table>
+
+            <small>
+                <p>*  El registro aparecerá marcado en rojo mientras no ha llegado la fecha de consulta. Una vez llegado el día de la consulta, podrá actualizar el status de la reserva para controlar los pacientes que asistieron a consulta y los que no.</p>
+                <p>
+                    Las reservaciones concretadas aparecerán marcadas en color verde
+                </p>
+            </small>
     </div>
 
 </div>
