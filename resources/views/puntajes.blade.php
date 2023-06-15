@@ -46,7 +46,7 @@
 
             </div>
 
-            <div class="card-body">
+            <div class="card-body tabla-administrador">
 
                 <table id="example" class="table table-responsive table-striped table-bordered">
 

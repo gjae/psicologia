@@ -771,12 +771,29 @@
 
                                 {{-- Therapy --}}
 
-                                <div class="input-group mb-3">
+                                <div class="mb-3 check-de-terapia">
+
+                                        <h3 class="text-center py-4 text-bold">Seleccione la terapia o los tipos de terapia en que se especializa:</h3>
 
                                        <template x-for="terapia in tipo_terapias" :key="terapia.id">
-                                            <div>
-                                                <label title="Selecciona en qué tipo de terapia te especializas" x-text="terapia.therapy_type"></label>
-                                                <input name="therapy[]"  type="checkbox" :value="terapia.id" class="form-control @error('therapy_id') is-invalid @enderror" x-model="selectedTypes" @click="toggleTipoTerapia(terapia)">
+                                            <div class="container-terapia py-3">
+                                                <div class="container-terapia-a">
+                                                    <label class="label-terapia" title="Selecciona en qué tipo de terapia te especializas" x-text="terapia.therapy_type"></label>
+                                                    <input name="therapy[]"  type="checkbox" :value="terapia.id" class="form-control @error('therapy_id') is-invalid @enderror" x-model="selectedTypes" @click="toggleTipoTerapia(terapia)">
+                                                </div>
+
+                                                <div class="container-terapia">
+                                                    <h3 class="text-center py-4 text-bold">Problema a Atender:</h3>
+
+                                                    <template x-for="tipo_problema in terapia.treat_problem" :key="tipo_problema.id">
+                                                        <div class="container-terapia-a">
+                                                            <h4 x-text="tipo_problema.problem"></h4>
+                                                            <input type="checkbox" :value="tipo_problema.id" name="tipo_problemas[]" class="form-control" x-bind:disabled="!terapia.selected" >
+                                                        </div>
+                                                    </template>
+
+                                                </div>
+                                               
 
 
                                                 <h3><b>Especialidad</b></h3>
@@ -807,7 +824,7 @@
                                 <div class="input-group mb-3">
 
 
-                                    <div class="input-group-append">
+                                   <!--  <div class="input-group-append">
 
                                         <div class="input-group-text">
 
@@ -815,7 +832,7 @@
 
                                         </div>
 
-                                    </div>
+                                    </div> --> <!-- creo no va -->
 
 
 
@@ -835,7 +852,7 @@
 
                                 {{-- BIO field --}}
 
-                                <div class="input-group mb-3">
+                                <div class="input-group mb-3 estilo-text-area">
 
                                     <textarea title="Solo se permiten 200 caracteres" name="bio" class="form-control bio @error('bio') is-invalid @enderror" value="{{ old('bio') }}" placeholder="BIO" maxlength="200"></textarea>
 
@@ -862,6 +879,8 @@
                                     @enderror
 
                                 </div>
+                                <p class="text-center py-3 text-secondary">Solo se permiten 200 caracteres en su bio...</p>
+
 
 
 
