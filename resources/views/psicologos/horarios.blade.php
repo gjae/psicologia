@@ -178,8 +178,7 @@
                 if (opt.isConfirmed) {
                     console.log(this.horario.fin)
 
-                fetch('{{route("registrar_horarios_post")}}', 
-
+                fetch('{{route("registrar_horarios_post")}}',
                 {
 
 			        method: 'POST',

@@ -784,7 +784,7 @@
                                                 <template x-for="tipo_problema in terapia.treat_problem" :key="tipo_problema.id">
                                                     <div>
                                                         <h4 x-text="tipo_problema.problem"></h4>
-                                                        <input type="checkbox" :value="tipo_problema.id" name="tipo_problemas[]" class="form-control" x-bind:disabled="!terapia.selected" >
+                                                        <input type="checkbox" :value="tipo_problema.id" name="tipo_problemas[]" class="form-control" x-bind:disabled="!terapia.selected">
                                                     </div>
                                                 </template>
                                             </div>
@@ -837,7 +837,7 @@
 
                                 <div class="input-group mb-3">
 
-                                    <textarea title="Solo se permiten 200 caracteres" name="bio" class="form-control bio @error('bio') is-invalid @enderror" value="{{ old('bio') }}" placeholder="BIO" max="200"></textarea>
+                                    <textarea title="Solo se permiten 200 caracteres" name="bio" class="form-control bio @error('bio') is-invalid @enderror" value="{{ old('bio') }}" placeholder="BIO" maxlength="200"></textarea>
 
                                     <div class="input-group-append">
 

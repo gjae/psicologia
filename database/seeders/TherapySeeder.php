@@ -18,15 +18,15 @@ class TherapySeeder extends Seeder
         //
         Therapy::create([
             "therapy_type"   => 'Terapia de pareja',
-            "description"    => "lorem ipsum dolor sit amet"
+            
         ]);
         Therapy::create([
             "therapy_type"   => 'Terapia personal',
-            "description"    => "lorem ipsum dolor sit amet"
+            
         ]);
         Therapy::create([
             "therapy_type"   => 'Terapia de menores',
-            "description"    => "lorem ipsum dolor sit amet"
+            
         ]);
     }
 }

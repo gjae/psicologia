@@ -9,7 +9,7 @@ class Therapy extends Model
 {
     use HasFactory;
     protected $table    = 'therapy';
-    protected $fillable = ['therapy_type' ,'description'];
+    protected $fillable = ['therapy_type'];
 
     public function TreatProblem() {
     	return $this->hasMany(Problems::class,'id_therapy','id');

@@ -18,9 +18,11 @@
         return {
             tipos_terapias:[],
             availableTherapies:[],
+            availableProblems:[],
             items: [],
             problemas_tratados_actualmente:[],
             nuevos_tipos_de_terapia:[], 
+            nuevos_tipos_de_problema:[],
             lista_problema(){
                 fetch('{{route("terapias")}}')
                     .then(r => r.json())
@@ -31,14 +33,30 @@
                         }
                     )
             },
+            toggleTipoTerapia(terapia) {
+                terapia.selected = !terapia.selected;
+
+                if (terapia.selected) {
+                // Habilitar los checkboxes de los tipos de problema relacionados
+                terapia.treat_problem.forEach((tipo_problema) => {
+                    tipo_problema.disabled = false;
+                });
+                } else {
+                // Deshabilitar los checkboxes de los tipos de problema relacionados
+                terapia.treat_problem.forEach((tipo_problema) => {
+                    tipo_problema.disabled = true;
+                });
+                }
+            },
             tipos_de_terapia(user_id){
                 fetch(`${baseUrl}/tipos_terapia_current_user/${user_id}`).
                 then(r => r.json())
                 .then((data)=> {
-                    this.problemas_tratados_actualmente= data.currentTherapies[0].problems_treated
+                    //this.problemas_tratados_actualmente= data.currentTherapies[0].problems_treated
                     this.items= data.currentTherapies
-                    console.log(this.items)
                     this.availableTherapies= data.availableTherapies
+                    console.log(this.items)
+                    this.availableProblems= data.availableProblems
                 }).catch()
             },
             deletetherapies(id){
@@ -48,6 +66,9 @@
             },
             deleteproblems(id, idproblema){
                 fetch(`${baseUrl}/delete_problems/${id}/${idproblema}`).then(
+                    (resp)=>{
+                        alert("se hizo");
+                    }
                     
                     ).catch()
             },
@@ -230,7 +251,7 @@
                     </div>
                     
                     <div class="col-md-7 mb-3">
-                        <input  title="bio" type="text" required name="bio" class="form-control @error('bio') is-invalid @enderror" value="{{$psicologo->bio}}">
+                        <input  title="bio" type="text" required name="bio" maxlength="200" class="form-control @error('bio') is-invalid @enderror" value="{{$psicologo->bio}}">
 
                         @error('bio')
 
@@ -291,9 +312,7 @@
                                     <option value="PM">PM</option>
                                 </select>
                         </div>
-                        
-                        
-                        @endforeach
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -302,45 +321,46 @@
             <div class="card-header"><span>Tipos de terapia y tipos de problema</span>
             </div>
             <div class="row"><!-- Cambiar foto de perfil-->
-
-            
-                
                 <div class="col-md-7 mb-3 body-card" x-init="lista_problema,tipos_de_terapia({{Auth::user()->isPsychologist->id}})">
-                <h4>Eliminar tipos de terapia ofrecidos actualmente</h4>
+                    <h4>Eliminar tipos de terapia ofrecidos actualmente</h4>
                     <template x-for="item in items" :key="item.id">
                         <div class="card">
                             <div>
                                 <span x-text="item.therapy.therapy_type"></span>
+
+                                <template x-for="iteracion_array_problemas in item.problems_treated" :key="iteracion_array_problemas.id">
+                                    <div>
+                                        <template x-for="nombre_problema in iteracion_array_problemas.problems" :key="nombre_problema.id">
+                                            <div>
+                                                <span x-text="nombre_problema.problem"></span>
+                                                <button @click="deleteproblems(iteracion_array_problemas.id,nombre_problema.id)" class="btn btn-danger"> <i class="fa fa-solid fa-trash"></i> Eliminar</button>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </template>
                             </div>
-                        <div>
-                        </div>
-                        <button @click="items = items.filter(i => i.id !== item.id), deletetherapies(item.id)" class="btn btn-danger"> <i class="fa fa-solid fa-trash"></i> Eliminar</button>
-                        </div>
-                    </template>
-                    <h4>Eliminar tipos de problema ofrecidos actualmente</h4>
-                    <template x-for="problems in problemas_tratados_actualmente">
-                        <div>
-                            <template x-for="nombre_problema in problems.problems" :key="nombre_problema.id">
-                                <div class="card">
-                                    <span x-text="nombre_problema.problem"></span>
-                                    <button @click="deleteproblems(problems.id,nombre_problema.id)" class="btn btn-danger"> <i class="fa fa-solid fa-trash"></i> Eliminar</button>
-                                </div>
-                            </template> 
+                            <button @click="items = items.filter(i => i.id !== item.id), deletetherapies(item.id)" class="btn btn-danger"> <i class="fa fa-solid fa-trash"></i> Eliminar</button>
                         </div>
                     </template>
                 </div>
             </div>
 
             
-            <h4>Agregar un nuevotipo de terapia</h4>
             <template x-for="terapia in availableTherapies" :key="terapia.id">
-                    
                 <div>
-                    <input type="checkbox" :value="terapia.id" name="nuevos_tipos_de_terapia[]">
+                    <input type="checkbox" :value="terapia.id" name="nuevos_tipos_de_terapia[]"  @click="toggleTipoTerapia(terapia)">
                     <h5 x-text="terapia.therapy_type"></h5>
+
+                    <h1>ESTOS SON LOS TIPOS DE PROBLEMA DISPONIBLES PARA ESTA TERAPIA</h1>
+                    <template x-for="problema_tratado in availableProblems" :key="problema_tratado.id">
+                        <div x-show="problema_tratado.id_therapy == terapia.id">
+                            <input type="checkbox" :value="problema_tratado.id" name="nuevos_tipos_de_problema[]" x-bind:disabled="!terapia.selected">
+                            <h5 x-text="problema_tratado.problem"></h5>
+                        </div>
+                    </template>
+                    
                 </div>
             </template>
-                
         </div>
             
         <div class="card">
@@ -355,7 +375,8 @@
                     </div>
                     
                     <div class="col-md-7 mb-3">
-                        <input title="password" type="password" required name="password" class="form-control @error('password') is-invalid @enderror" value="{{$psicologo->personalInfo->password}}">
+                        <input type="hidden" name="contrasena_original" value="{{ $psicologo->personalInfo->password}}">
+                        <input title="password" type="password" name="password" value="{{ $psicologo->personalInfo->password}}" class="form-control @error('password') is-invalid @enderror">
 
                         @error('password')
 
@@ -376,8 +397,8 @@
                     
                     <div class="col-md-7 mb-3">
                         <img src="{{ asset($psicologo->photo) }}" class="img-circle" alt="" height="52" width="52">
-                        
-                        <input title="Carga una foto" required type="file" name="photo" class="form-control @error('photo') is-invalid @enderror">
+                        <input type="hidden" value="{{ asset($psicologo->photo) }}" name="old_pic">
+                        <input title="Carga una foto" type="file" name="photo" class="form-control @error('photo') is-invalid @enderror" value="{{ asset($psicologo->photo) }}">
 
                         @error('photo')
 

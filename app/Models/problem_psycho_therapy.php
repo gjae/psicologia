@@ -17,4 +17,8 @@ class problem_psycho_therapy extends Model
     public function problems(){
         return $this->hasMany(Problems::class,'id','id_problem');
     }
+
+    public function psycho_therapy(){
+        return $this->hasOne(Psycho_therapy::class,'id','id_psycho_therapy');
+    }
 }

@@ -23,7 +23,7 @@ use Carbon\Carbon;
 use DB;
 
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Problem_psycho_therapy;
+use App\Models\Problem_psycho_therapy;
 
 use App\Models\Problems;
 
@@ -202,18 +202,46 @@ class PsychologistController extends Controller
     public function update(Request $request, $id)
 
     {
-
+        
         if(isset($request['nuevos_tipos_de_terapia'])){
-            
-            foreach($request['nuevos_tipos_de_terapia'] as $nueva_terapia){
-                Psycho_therapy::create(['id_psycho' => Auth::user()->ispsychologist->id,'id_therapy'=> $nueva_terapia]);
+            foreach($request['nuevos_tipos_de_terapia'] as $index => $nueva_terapia){
+                Psycho_therapy::firstOrCreate(['id_psycho' => Auth::user()->ispsychologist->id,'id_therapy'=> $nueva_terapia]);
+                $ultimo_registro= Psycho_therapy::latest()->first()->id;
+                
+                
             }
+            /**
+             * ACTUALIZACION EN TABLA PROBLEM_PSYCHO_THERAPY
+             */
+            foreach($request['nuevos_tipos_de_problema'] as $index1 => $nuevo_tipos_de_problema){
+                problem_psycho_therapy::create([
+                    'id_psycho_therapy' => $ultimo_registro,
+                    'id_problem' => $nuevo_tipos_de_problema
+                ]);
+            }
+            
+            /**
+             * ACTUALIZACION EN TABLA PROBLEM_PSYCHO_THERAPY
+             */
+            
         }
+
+        
+
         $user= User::find($id);
         $usuario_id= $user->id;
         $psychologist_id= $user->Ispsychologist->id;
+        $url_final=$request['old_pic'];
+        $password= $request['password'];
 
-        $imagen = $request->file("photo");
+        if ($request['password'] == Auth::user()->password) {
+            $password = Auth::user()->password;
+        }else {
+            $password = Hash::make($password);
+        }
+
+        if(isset($request['photo'])){
+            $imagen = $request->file("photo");
 
             $nombreimagen = Str::slug("profile-").".".$imagen->guessExtension();
 
@@ -221,9 +249,10 @@ class PsychologistController extends Controller
 
             $imagen->getRealPath();
 
-            copy($imagen->getRealPath(),$ruta.'/images/'.$usuario_id.$nombreimagen);
+            copy($imagen->getRealPath(),$ruta.'/images/'.$usuario_id.$nombreimagen); 
 
             $url_final= '/images/'.$usuario_id.$nombreimagen;
+        }
 
 
         /** Actualizacion en tabla de psicologo */
@@ -251,47 +280,48 @@ class PsychologistController extends Controller
         }else{
             $usuario->gender= $request['gender'];
         }
-        $usuario->password= Hash::make($request['password']);
+        $usuario->password= $password;
         $usuario->save();
         
         /** Actualizacion en tabla de usuario */
-
-        foreach($request['horarios'] as $horario){
-            
-            if ($horario['dia'] !== 'seleccione' && $horario['inicio'] !== 'hora_de_inicio' && $horario['meridiem'] !== 'meridiem_de_inicio') {
-        
-            
-            if($horario['inicio']!=NULL){
+        if(isset($request['horarios'])){
+            foreach($request['horarios'] as $horario){
                 
+                if ($horario['dia'] !== 'seleccione' && $horario['inicio'] !== 'hora_de_inicio' && $horario['meridiem'] !== 'meridiem_de_inicio') {
+            
                 
-                    if($horario['meridiem']== NULL){
-                        $meridiem= 'AM';
-                    }else{
-                        $meridiem= $horario['meridiem'];
-                    }
-                    if($horario['inicio']==12){
-                            $hora_fin = '1:00 PM';
-                    }
-
-                    if(intval($horario['inicio'])>12 || intval($horario['inicio'])<12){
-                        
-                        if(intval($horario['inicio'])+1==12){
-                            $hora_fin = (intval($horario['inicio'])+1).':00 PM';
+                if($horario['inicio']!=NULL){
+                    
+                    
+                        if($horario['meridiem']== NULL){
+                            $meridiem= 'AM';
                         }else{
-                        $hora_fin = (intval($horario['inicio'])+1).':00 '.$meridiem;
+                            $meridiem= $horario['meridiem'];
                         }
-                    }
-                
-                $hora= $horario['inicio'].':00 '.$meridiem.' - '.$hora_fin;
-                
-            }
-        
-        
-                $schedule= Schedules::find($horario['dia_schedule']);
-                $schedule->dia = $horario['dia'];
-                $schedule->schedule = $hora;
-                $schedule->save();
-                
+                        if($horario['inicio']==12){
+                                $hora_fin = '1:00 PM';
+                        }
+    
+                        if(intval($horario['inicio'])>12 || intval($horario['inicio'])<12){
+                            
+                            if(intval($horario['inicio'])+1==12){
+                                $hora_fin = (intval($horario['inicio'])+1).':00 PM';
+                            }else{
+                            $hora_fin = (intval($horario['inicio'])+1).':00 '.$meridiem;
+                            }
+                        }
+                    
+                    $hora= $horario['inicio'].':00 '.$meridiem.' - '.$hora_fin;
+                    
+                }
+            
+            
+                    $schedule= Schedules::find($horario['dia_schedule']);
+                    $schedule->dia = $horario['dia'];
+                    $schedule->schedule = $hora;
+                    $schedule->save();
+                    
+                }
             }
         }
 
@@ -301,11 +331,12 @@ class PsychologistController extends Controller
 
 
     public function delete_therapies($id){
-        //dd($id);
+        //dd($id." - ".);
         Psycho_therapy::where('id',$id)->delete();
+        Problem_psycho_therapy::where('id_psycho_therapy',$id)->delete();
     }
     public function delete_problems($id,$idproblema){
-        Problem_psycho_therapy::where('id_psycho_therapy',$id)->where('id_problem',$idproblema)->delete();
+        Problem_psycho_therapy::where('id',$id)->where('id_problem',$idproblema)->delete();
         
     }
     /**
@@ -354,10 +385,13 @@ class PsychologistController extends Controller
         ->Ispsychologist){
 
         $horario_psicologo = 
+
         Schedules::where('id_psychologist',Auth::user()
         ->Ispsychologist
         ->id)
+        ->orderByRaw("FIELD(dia, 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado')")
         ->get();
+        
         }else{
         $horario_psicologo='';
         }
@@ -421,8 +455,7 @@ class PsychologistController extends Controller
         
         
         $horariosPorDias= $request['diasDeAtencion'][0];
-
-        /*$hora= $this->schedule_stringify($horariosPorDias);*/
+        //dd($horariosPorDias);
         foreach($horariosPorDias as $horario){
             if($horario['inicio']!=NULL){
 
@@ -440,27 +473,19 @@ class PsychologistController extends Controller
                         if(intval($horario['inicio'])+1==12){
                             $hora_fin = (intval($horario['inicio'])+1).':00 PM';
                         }else{
-                        $hora_fin = (intval($horario['inicio'])+1).':00 '.$meridiem;
+                            $hora_fin = (intval($horario['inicio'])+1).':00 '.$meridiem;
                         }
                     }
                 
                 $hora= $horario['inicio'].':00 '.$meridiem.' - '.$hora_fin;
 
-            Schedules::create([
+                Schedules::firstOrCreate([
                     'id_psychologist'=>Auth::user()->Ispsychologist->id, 
                     'schedule' => $hora,
                     'dia' => $horario['dia']
                 ]);
             }
         }
-
-        //dd($request);
-
-        /*Schedules::create([
-                    'id_psychologist'=>Auth::user()->Ispsychologist->id, 
-                    'schedule' => $hora,
-                    'dia' => $horario['dia']
-                ]);*/
 
         if ($request) {
             return 1;

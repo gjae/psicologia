@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('therapy', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('therapy_type'); //terapia de pareja, de menores, personal
-            $table->string('description');
+            $table->string('therapy_type');
             $table->timestamps();
         });
     }
