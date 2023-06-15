@@ -13,7 +13,7 @@ center a img {
 .remember-login {
     font-size: 16px;
 }
-.login-page, 
+.login-page,
 .register-page {
     background-image: url(terapista.jpg);
     background-position: center center;
@@ -81,7 +81,6 @@ a.small-box-footer i {
 .nav-link span h5 {
     margin-right: 15px;
     text-transform: uppercase;
-
 }
 
 i h5.text-primary {
@@ -90,13 +89,16 @@ i h5.text-primary {
 
 .nav-link .fa-bars {
     padding: 10px;
- }
+}
 
- .nav-item.dropdown.user-menu a.nav-link.dropdown-toggle span h5.text-primary::before {
+.nav-item.dropdown.user-menu
+    a.nav-link.dropdown-toggle
+    span
+    h5.text-primary::before {
     content: "Cerrar Sesión: ";
     padding-left: 20px;
     color: #c21807;
- }
+}
 
 /* crear cuenta register-blade */
 .nav.nav-tabs.m-0.p-0.flex-container {
@@ -112,13 +114,12 @@ i h5.text-primary {
     transition: all 0.3s ease-in;
 }
 
-
-.texto-registro:hover, .texto-registro:focus {
+.texto-registro:hover,
+.texto-registro:focus {
     border: none;
     border-radius: unset;
     width: 100%;
-    background-color: rgba(255,255,255,.5) !important;
-
+    background-color: rgba(255, 255, 255, 0.5) !important;
 }
 
 .card-registro-new {
@@ -130,14 +131,12 @@ i h5.text-primary {
     width: 50px;
 }
 
-
 .registro-btn {
     font-size: 16px;
     text-transform: uppercase;
     font-weight: bold;
     text-align: center;
 }
-
 
 .card-footer p {
     font-size: 16px;
@@ -156,11 +155,11 @@ i h5.text-primary {
 .input-group input {
     font-size: 18px;
 }
-.input-group input[type= "file"] {
+.input-group input[type="file"] {
     font-size: 12px;
     height: 40px;
 }
-.input-group option{
+.input-group option {
     font-size: 16px;
 }
 .input-group select {
@@ -180,17 +179,17 @@ i h5.text-primary {
 .tab-pane h1 {
     margin: 20px 0;
 }
-.sidebar-mini select.form-control, 
-input[type="date"].form-control, 
+.sidebar-mini select.form-control,
+input[type="date"].form-control,
 input[type="time"].form-control {
     font-size: 20px;
-    height:35px;
+    height: 35px;
     margin: 30px 0;
 }
 
 /* estlos pendientes registro */
 
-.login-page .card-body.login-card-body, 
+.login-page .card-body.login-card-body,
 .login-page .card-body.login-card-body,
 .login-page .card-body.login-card-body button.align-baseline {
     font-size: 14px;
@@ -199,7 +198,7 @@ input[type="time"].form-control {
 img.hover-img.img-circle {
     margin: 10px 10px 10px 20px;
 }
-table i h4, 
+table i h4,
 table h6 {
     margin-left: 20px;
 }
@@ -207,7 +206,6 @@ table i h4,
 table h6 {
     margin-left: 20px;
 }
-
 
 /* nuevos cambios  */
 
@@ -233,7 +231,6 @@ table i h4 {
     text-transform: capitalize;
 }
 
-
 .texto-boton-editado {
     font-size: 12px;
 }
@@ -257,7 +254,6 @@ table i h4 {
     text-transform: uppercase;
     font-size: 18px;
     padding: 5px 15px;
-    
 }
 
 .efecto-foto {
@@ -305,17 +301,23 @@ table i h4 {
 .container-terapia-a {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap:4px;
+    gap: 4px;
     width: 80%;
     margin: 0 auto;
 }
 
-.check-de-terapia, .estilo-text-area textarea {
+.check-de-terapia,
+.estilo-text-area textarea {
     font-size: 18px;
 }
 
 .check-de-terapia h3 {
     font-size: 18px;
+}
+
+.checkboxesterapia {
+    display: flex;
+    align-items: center;
 }
 
 .psico-profile h1 {
@@ -334,7 +336,7 @@ table i h4 {
     padding: 0;
 }
 
-.psico-profile ul li  {
+.psico-profile ul li {
     font-weight: 400;
 }
 

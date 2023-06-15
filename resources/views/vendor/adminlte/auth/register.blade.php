@@ -794,16 +794,6 @@
 
                                                 </div>
                                                
-
-
-                                                <h3><b>Especialidad</b></h3>
-
-                                                <template x-for="tipo_problema in terapia.treat_problem" :key="tipo_problema.id">
-                                                    <div>
-                                                        <h4 x-text="tipo_problema.problem"></h4>
-                                                        <input type="checkbox" :value="tipo_problema.id" name="tipo_problemas[]" class="form-control" x-bind:disabled="!terapia.selected">
-                                                    </div>
-                                                </template>
                                             </div>
                                         </template>
 

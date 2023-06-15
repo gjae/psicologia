@@ -317,16 +317,17 @@
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-header"><span>Tipos de terapia y tipos de problema</span>
+        <div class="card p-4">
+            <div class="card-header">
+                <h2>Tipos de terapia y tipos de problema</h2>
             </div>
             <div class="row"><!-- Cambiar foto de perfil-->
-                <div class="col-md-7 mb-3 body-card" x-init="lista_problema,tipos_de_terapia({{Auth::user()->isPsychologist->id}})">
+                <div class="col-md-7 mb-3 body-card " x-init="lista_problema,tipos_de_terapia({{Auth::user()->isPsychologist->id}})">
                     <h4>Eliminar tipos de terapia ofrecidos actualmente</h4>
                     <template x-for="item in items" :key="item.id">
-                        <div class="card">
+                        <div class="card p-3">
                             <div>
-                                <span x-text="item.therapy.therapy_type"></span>
+                                <h2 x-text="item.therapy.therapy_type"></h2>
 
                                 <template x-for="iteracion_array_problemas in item.problems_treated" :key="iteracion_array_problemas.id">
                                     <div>
@@ -347,18 +348,18 @@
 
             
             <template x-for="terapia in availableTherapies" :key="terapia.id">
-                <div>
+                <div class="checkboxesterapia">
+                    <h2 x-text="terapia.therapy_type"></h2> 
                     <input type="checkbox" :value="terapia.id" name="nuevos_tipos_de_terapia[]"  @click="toggleTipoTerapia(terapia)">
-                    <h5 x-text="terapia.therapy_type"></h5>
+                    
+                    
 
-                    <h1>ESTOS SON LOS TIPOS DE PROBLEMA DISPONIBLES PARA ESTA TERAPIA</h1>
                     <template x-for="problema_tratado in availableProblems" :key="problema_tratado.id">
                         <div x-show="problema_tratado.id_therapy == terapia.id">
-                            <input type="checkbox" :value="problema_tratado.id" name="nuevos_tipos_de_problema[]" x-bind:disabled="!terapia.selected">
+                            <input type="checkbox" class="form-control" :value="problema_tratado.id" name="nuevos_tipos_de_problema[]" x-bind:disabled="!terapia.selected">
                             <h5 x-text="problema_tratado.problem"></h5>
                         </div>
                     </template>
-                    
                 </div>
             </template>
         </div>
