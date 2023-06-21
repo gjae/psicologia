@@ -23,7 +23,7 @@ use Carbon\Carbon;
 use DB;
 
 use Illuminate\Support\Facades\Auth;
-use App\Models\Problem_psycho_therapy;
+use App\Models\problem_psycho_therapy;
 
 use App\Models\Problems;
 
