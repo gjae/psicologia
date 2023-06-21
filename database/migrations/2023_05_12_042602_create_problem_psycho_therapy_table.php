@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('id_psycho_therapy')->unsigned();
             $table->integer('id_problem')->unsigned();
+            $table->integer('id_therapy')->unsigned();
             $table->timestamps();
         });
     }

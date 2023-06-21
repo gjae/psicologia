@@ -11,7 +11,8 @@ class problem_psycho_therapy extends Model
     protected $table = 'problem_psycho_therapy';
     protected $fillable= [
         'id_psycho_therapy',
-        'id_problem'
+        'id_problem',
+        'id_therapy'
     ];
 
     public function problems(){

@@ -297,7 +297,12 @@ table i h4 {
 .container-terapia {
     border-bottom: 1px solid #ccc;
 }
-
+.acomodar-checkbox {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
 .container-terapia-a {
     display: grid;
     grid-template-columns: 1fr 1fr;

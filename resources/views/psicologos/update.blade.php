@@ -16,6 +16,7 @@
     function actualizar(){
         const baseUrl = "{{ url('/') }}";
         return {
+            problemas: [], tipo_de_problema_para_actualizar: true,
             tipos_terapias:[],
             availableTherapies:[],
             availableProblems:[],
@@ -55,8 +56,8 @@
                     //this.problemas_tratados_actualmente= data.currentTherapies[0].problems_treated
                     this.items= data.currentTherapies
                     this.availableTherapies= data.availableTherapies
-                    console.log(this.items)
                     this.availableProblems= data.availableProblems
+                    console.log(this.availableTherapies)
                 }).catch()
             },
             deletetherapies(id){
@@ -67,7 +68,6 @@
             deleteproblems(id, idproblema){
                 fetch(`${baseUrl}/delete_problems/${id}/${idproblema}`).then(
                     (resp)=>{
-                        alert("se hizo");
                     }
                     
                     ).catch()
@@ -274,8 +274,6 @@
             <div class="card-body">
                 <div>
                         <h4>Días y horarios de atención</h4>
-                    
-                    
                         @foreach($psicologo->worksAtHours as $index=> $schedule)
                         <div>
                                 <h4>{{$schedule->dia}}</h4>
@@ -321,26 +319,30 @@
             <div class="card-header">
                 <h2>Tipos de terapia y tipos de problema</h2>
             </div>
-            <div class="row"><!-- Cambiar foto de perfil-->
+            <div class="row">
                 <div class="col-md-7 mb-3 body-card " x-init="lista_problema,tipos_de_terapia({{Auth::user()->isPsychologist->id}})">
-                    <h4>Eliminar tipos de terapia ofrecidos actualmente</h4>
                     <template x-for="item in items" :key="item.id">
                         <div class="card p-3">
                             <div>
-                                <h2 x-text="item.therapy.therapy_type"></h2>
+                                <h2 x-text="item.therapy.therapy_type" x-show="tipo_de_problema_para_actualizar"></h2>
 
                                 <template x-for="iteracion_array_problemas in item.problems_treated" :key="iteracion_array_problemas.id">
                                     <div>
+
+
+                                
+
+
                                         <template x-for="nombre_problema in iteracion_array_problemas.problems" :key="nombre_problema.id">
                                             <div>
                                                 <span x-text="nombre_problema.problem"></span>
-                                                <button @click="deleteproblems(iteracion_array_problemas.id,nombre_problema.id)" class="btn btn-danger"> <i class="fa fa-solid fa-trash"></i> Eliminar</button>
+                                                <button @click="deleteproblems(iteracion_array_problemas.id,nombre_problema.id)" class="btn btn-danger  ml-3"> <i class="fa fa-solid fa-trash"></i> Eliminar</button>
                                             </div>
                                         </template>
                                     </div>
                                 </template>
                             </div>
-                            <button @click="items = items.filter(i => i.id !== item.id), deletetherapies(item.id)" class="btn btn-danger"> <i class="fa fa-solid fa-trash"></i> Eliminar</button>
+                            <button @click="items = items.filter(i => i.id !== item.id), deletetherapies(item.id)" class="btn btn-danger my-3"> <i class="fa fa-solid fa-trash"></i> Eliminar</button>
                         </div>
                     </template>
                 </div>
@@ -348,16 +350,23 @@
 
             
             <template x-for="terapia in availableTherapies" :key="terapia.id">
-                <div class="checkboxesterapia">
-                    <h2 x-text="terapia.therapy_type"></h2> 
-                    <input type="checkbox" :value="terapia.id" name="nuevos_tipos_de_terapia[]"  @click="toggleTipoTerapia(terapia)">
+                <div>
+                    <div>
+                        <template x-if="availableProblems.filter(item => item.id_therapy === terapia.id).length !== 0">
+                            <div class="acomodar-checkbox">
+                                <h2 x-text="terapia.therapy_type" class="text-primary" x-show="tipo_de_problema_para_actualizar"></h2> 
+                                <input type="checkbox" :value="terapia.id" name="nuevos_tipos_de_terapia[]"  @click="toggleTipoTerapia(terapia)">
+                            </div>
+                        </template>
+                    </div>
+                    
                     
                     
 
                     <template x-for="problema_tratado in availableProblems" :key="problema_tratado.id">
-                        <div x-show="problema_tratado.id_therapy == terapia.id">
-                            <input type="checkbox" class="form-control" :value="problema_tratado.id" name="nuevos_tipos_de_problema[]" x-bind:disabled="!terapia.selected">
+                        <div x-show="problema_tratado.id_therapy == terapia.id"  class="acomodar-checkbox">
                             <h5 x-text="problema_tratado.problem"></h5>
+                            <input type="checkbox" :value="problema_tratado.id" name="nuevos_tipos_de_problema[]" x-bind:disabled="!terapia.selected">
                         </div>
                     </template>
                 </div>
@@ -369,7 +378,7 @@
                 <h2>Configuraciones</h2>
             </div>
             <div class="card-body">
-                <div class="input-group"><!-- Campo contraseña-->
+                <div class="input-group">
                     <div class="col-md-4 mb-3">
                         
                         <label for="">Cambiar contraseña</label>
@@ -391,7 +400,7 @@
                     </div>
                 </div>
 
-                <div class="input-group"><!-- Cambiar foto de perfil-->
+                <div class="input-group">
                     <div class="col-md-4 mb-3">
                         <label for="">Cambiar foto de perfil</label>
                     </div>
@@ -402,13 +411,9 @@
                         <input title="Carga una foto" type="file" name="photo" class="form-control @error('photo') is-invalid @enderror" value="{{ asset($psicologo->photo) }}">
 
                         @error('photo')
-
                             <span class="invalid-feedback" role="alert">
-
                                 <strong>{{ $message }}</strong>
-
                             </span>
-
                         @enderror
                     </div>
                 </div>

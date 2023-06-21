@@ -204,29 +204,34 @@ class PsychologistController extends Controller
     {
         
         if(isset($request['nuevos_tipos_de_terapia'])){
+            $ultimo_registro='';
             foreach($request['nuevos_tipos_de_terapia'] as $index => $nueva_terapia){
-                Psycho_therapy::firstOrCreate(['id_psycho' => Auth::user()->ispsychologist->id,'id_therapy'=> $nueva_terapia]);
-                $ultimo_registro= Psycho_therapy::latest()->first()->id;
-                
-                
-            }
-            /**
-             * ACTUALIZACION EN TABLA PROBLEM_PSYCHO_THERAPY
-             */
-            foreach($request['nuevos_tipos_de_problema'] as $index1 => $nuevo_tipos_de_problema){
-                problem_psycho_therapy::create([
-                    'id_psycho_therapy' => $ultimo_registro,
-                    'id_problem' => $nuevo_tipos_de_problema
-                ]);
-            }
-            
-            /**
-             * ACTUALIZACION EN TABLA PROBLEM_PSYCHO_THERAPY
-             */
-            
-        }
 
-        
+                $existingPsychotherapy = Psycho_therapy::where('id_therapy', $nueva_terapia)
+                ->where('id_psycho', Auth::user()->ispsychologist->id)
+                ->first();
+                if($existingPsychotherapy){
+                    $ultimo_registro= $existingPsychotherapy->id;
+                }else{
+
+                    Psycho_therapy::firstOrCreate(['id_psycho' => Auth::user()->ispsychologist->id,'id_therapy'=> $nueva_terapia]);
+                    $ultimo_registro = Psycho_therapy::orderBy('id', 'desc')->first()->id;
+                }
+                foreach($request['nuevos_tipos_de_problema'] as $index1 => $nuevo_tipos_de_problema){
+                    $id_de_terapia_padre_del_problema= Problems::where('id',$request['nuevos_tipos_de_problema'][$index1])->first()->id_therapy;
+                    $ultimo_registro_psycho_therapy_update= Psycho_therapy::where('id_psycho',Auth::user()->ispsychologist->id)->orderBy('id', 'desc')->first()->id;
+                    if($nueva_terapia == $id_de_terapia_padre_del_problema){
+
+                        problem_psycho_therapy::create([
+                            'id_therapy' => $id_de_terapia_padre_del_problema,
+                            'id_psycho_therapy' => $ultimo_registro,
+                            'id_problem' => $nuevo_tipos_de_problema
+                        ]);
+                    }
+                }
+            }
+
+        }
 
         $user= User::find($id);
         $usuario_id= $user->id;
@@ -273,7 +278,6 @@ class PsychologistController extends Controller
         $usuario->name= $request['nombre'];
         $usuario->lastname= $request['apellido'];
 
-        //dd($usuario->email);
         $usuario->email= $request['email'];
         if($request['gender']== NULL){
             $usuario->gender= 'H';
@@ -292,7 +296,6 @@ class PsychologistController extends Controller
                 
                 if($horario['inicio']!=NULL){
                     
-                    
                         if($horario['meridiem']== NULL){
                             $meridiem= 'AM';
                         }else{
@@ -310,11 +313,9 @@ class PsychologistController extends Controller
                             $hora_fin = (intval($horario['inicio'])+1).':00 '.$meridiem;
                             }
                         }
-                    
                     $hora= $horario['inicio'].':00 '.$meridiem.' - '.$hora_fin;
                     
                 }
-            
             
                     $schedule= Schedules::find($horario['dia_schedule']);
                     $schedule->dia = $horario['dia'];
@@ -331,7 +332,6 @@ class PsychologistController extends Controller
 
 
     public function delete_therapies($id){
-        //dd($id." - ".);
         Psycho_therapy::where('id',$id)->delete();
         Problem_psycho_therapy::where('id_psycho_therapy',$id)->delete();
     }
@@ -375,7 +375,6 @@ class PsychologistController extends Controller
     }
 
     public function problems($id_problema){
-        /** POST */
         $problemas = Problems::where('id_therapy',$id_problema)->get();
         return $problemas;
     }
@@ -417,11 +416,9 @@ class PsychologistController extends Controller
     }
 
 
-    public function schedule_stringify($horariosPorDias){
+    /*public function schedule_stringify($horariosPorDias){
         foreach($horariosPorDias as $horario){
-            //dd($horariosPorDias);
             if($horario['inicio']!=NULL){
-                //dd($horario);
                 
                     if($horario['meridiem']== NULL){
                         $meridiem= 'AM';
@@ -442,20 +439,14 @@ class PsychologistController extends Controller
                     }
                 
                 $hora= $horario['inicio'].':00 '.$meridiem.' - '.$hora_fin;
-                /*return $hora;
-                Schedules::create([
-                    'id_psychologist'=>Auth::user()->Ispsychologist->id, 
-                    'schedule' => $hora,
-                    'dia' => $horario['dia']
-                ]);*/
+                
             }
         }
-    }
+    }*/
     public function registrar_horarios_store(Request $request){
         
         
         $horariosPorDias= $request['diasDeAtencion'][0];
-        //dd($horariosPorDias);
         foreach($horariosPorDias as $horario){
             if($horario['inicio']!=NULL){
 

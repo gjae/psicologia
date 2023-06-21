@@ -9,7 +9,7 @@ use App\Models\Problems;
 use App\Models\Reservations;
 use App\Models\Psycho_therapy;
 
-use App\Models\Problem_psycho_therapy;
+use App\Models\problem_psycho_therapy;
 use Illuminate\Support\Facades\Route;
 
 use Illuminate\Http\Request;
@@ -102,7 +102,7 @@ Route::middleware(["web","auth","auth.session.timeout"])->group(function () {
         Route::get('delete_therapies/{id}',[App\Http\Controllers\PsychologistController::class,'delete_therapies'])->name('delete_therapies');
     
         Route::get('delete_problems/{id}/{idproblema}',[App\Http\Controllers\PsychologistController::class,'delete_problems'])->name('delete_problems');
-        /* ACTUALIZAR INFO PSICOLOGO */
+    /* ACTUALIZAR INFO PSICOLOGO */
 
 });
 Route::post('/consulta_problemas/{id_problema}',[App\Http\Controllers\PsychologistController::class,'problems'])->name('consulta_problemas');
@@ -140,65 +140,34 @@ Route::get('terapias',function(){
 
 
 Route::get('tipos_terapia_current_user/{id}',function($id){
-    /** pasar esta funcion a un controlador. */
-
-    /**
-     * 
-     * NECESITO LOS TIPOS DE PROBLEMA CORRESPONDIENTES A LAS TERAPIAS DISPONIBLES, no a las terapias ofrecidas actualmente..
-     */
+    /** pasar esta funcion a un controlador y refactorizar. */
     $availableProblems = [];
-    //$currentTherapies=Psycho_therapy::with('therapy')->with('problemsTreated.problems')->where('id_psycho',$id)->pluck('id_therapy')->toArray(); retorna array de los ID de los tipos de terapia que presta elpsicologo logueado 
     
-    $currentTherapies=Psycho_therapy::with('therapy.TreatProblems')->where('id_psycho',$id)->pluck('id_therapy')->toArray(); //
-    //$available_therapies= Therapy::whereNotIn('id',$currentTherapies)->get();
-    $available_therapies= Therapy::all();
-    
-    
-    
-    
-    //$available_therapies= Therapy::all();
-    //$id_psycho_therapy= problem_psycho_therapy::whereHas('psycho_therapy',function($q) use ($id){ $q->where('id_psycho',$id);})->first()->id;
-    //$currentProblems= problem_psycho_therapy::whereHas('psycho_therapy',function($q) use ($id){ $q->where('id_psycho',$id);})->get();  //-> esta consulta retorna el tipo de problema que atiende el psicologo actualmente.
-    $currentProblems= problem_psycho_therapy::whereHas('psycho_therapy',function($q){ $q->where('id_psycho',1);})->whereHas('problems')->pluck('id_problem')->toArray();
+    $currentTherapies = Psycho_therapy::with('therapy.TreatProblems')->where('id_psycho',$id)->pluck('id_therapy')->toArray();
+    $available_therapies = Therapy::all();
 
-    /*$problemas_que_no_son_atendidos_actualmente = Problems::where('id_therapy', $item_problem->id_therapy)
-        ->whereNotIn('id', $currentProblems)
-        ->get();*/
+    $currentProblems = problem_psycho_therapy::whereHas('psycho_therapy',function($q){ 
+        $q->where('id_psycho',Auth::user()->isPsychologist->id);
+    })
+    ->whereHas('problems')
+    ->pluck('id_problem')
+    ->toArray();
 
-    //$currentProblems= Problem_psycho_therapy::with('problems')->where('id_psycho_therapy',$id_psycho_therapy)->pluck('id_problem')->toArray();
-   
     foreach ($available_therapies as $item_therapy) {
-        //$problemas_asociados_a_terapia_iterada= Problems::where('id_therapy', $item_therapy->id)->get(); problemas asociados a la terapia que esta siendo iterada.
-        $problemas_asociados_a_terapia_iterada= Problems::where('id_therapy', $item_therapy->id)->whereNotIn('id',$currentProblems)->get();
-
-        /*$problemas_ofrecidos_por_el_psicologo= Problem_psycho_therapy::with('problems')->where('id_problem',$item_problem->id)->pluck('id_problem')->toArray();*/
-        /*$problemas_que_no_son_atendidos_actualmente = Problems::where('id_therapy', $item_problem->id_therapy)
-        ->whereNotIn('id', $currentProblems)
-        ->get();*/
+        $problemas_asociados_a_terapia_iterada = 
+        Problems::where('id_therapy', $item_therapy->id)
+        ->whereNotIn('id',$currentProblems)
+        ->get();
 
         $availableProblems = array_merge($availableProblems, $problemas_asociados_a_terapia_iterada->toArray());
     }
 
-    //$currentProblems= Problem_psycho_therapy::with('problems')->where('id_psycho_therapy',1)->pluck('id_problem')->toArray(); define los ID de los tipos de problema de la psico terapia 1.
-    /**
-     * consulta donde el ID de la problem psico terapia sea igual que el ID de la tabla psycho therapy donde el ID_psychologist sea igual que el ID recibido por parametro.
-     * 
-     * $p1= problem_psycho_therapy::whereHas('psycho_therapy',function($q){ $q->where('id_psycho',$id);})->first()->problems->first()->problem
-     * devuelve el nombre del problema asociado con la psicoterapia donde el ID del psicologo es igual al id recibido por parametro.
-     */
-    
-    $data=array(
+    $data = array(
         "currentTherapies" => Psycho_therapy::with('therapy')->with('problemsTreated.problems')
         ->where('id_psycho',$id)
         ->get(),
-        /*"currentTherapies" => Psycho_therapy::with('therapy')->with('therapy.TreatProblem')
-        ->where('id_psycho',$id)
-        ->get(),*/
         "availableTherapies" => $available_therapies,
-        //"availableTherapies"=> Therapy::whereNotIn('id',$currentTherapies)->get(),
         "availableProblems"=> $availableProblems
-        //"availableProblems"=> Problems::whereNotIn('id',$currentProblems)->where('id_therapy',$id_psycho_therapy)->get()
-        //AJUSTAR ESTA CONSULTA PARA QUE ME MUESTRE LOS PROBELMAS DISPONIBLES EN LA TERAPIA OFRECIDA. eJEMPLO, SEPARACION E INFIDELIDAD CUANDO LA TERQAPIA OFRECIDA ES LA DE PROBLEMAS DE COMUNICACION.
     );
     return $data;
 })->name('tipos_terapia_current_user');

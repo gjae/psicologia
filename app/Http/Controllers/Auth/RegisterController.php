@@ -8,7 +8,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Psycho_therapy;
-use App\Models\Problem_psycho_therapy;
+use App\Models\Problems;
+use App\Models\problem_psycho_therapy;
 use App\Models\Psychologist;
 
 use App\Providers\RouteServiceProvider;
@@ -217,7 +218,6 @@ class RegisterController extends Controller
 
     {       
 
-//dd($request);
 
 
         $validator = Validator::make($request->all(), [
@@ -345,18 +345,27 @@ class RegisterController extends Controller
 
             );
 
-            for($i=0; $i<count($request['therapy']);$i++){
+            foreach($request['therapy'] as $tipo_terapia){
                 Psycho_therapy::create([
                     'id_psycho' => Psychologist::latest()->first()->id,
-                    'id_therapy'=> $request['therapy'][$i]
+                    'id_therapy'=> $tipo_terapia
                 ]);
+            
+            foreach($request['tipo_problemas'] as $tipo_problema){
+                $id_de_terapia_padre_del_problema= Problems::where('id',$tipo_problema)->first()->id_therapy;
+                $ultimo_registro = Psycho_therapy::orderBy('id', 'desc')->first()->id;
+                
+                if( $id_de_terapia_padre_del_problema == $tipo_terapia){
+
+                    problem_psycho_therapy::create([
+                        'id_psycho_therapy'=> $ultimo_registro,
+                        'id_therapy' => $id_de_terapia_padre_del_problema,
+                        'id_problem'=> $tipo_problema
+                    ]);
+                }
             }
 
-            for($i=0; $i<count($request['tipo_problemas']);$i++){
-                Problem_psycho_therapy::create([
-                    'id_psycho_therapy' => Psycho_therapy::latest()->first()->id,
-                    'id_problem'=> $request['tipo_problemas'][$i]
-                ]);
+            
             }
             return redirect()->route('inicio')->with('success', 'El psicologo ha sido creado con éxito! Inicie sesión');
         }else{
