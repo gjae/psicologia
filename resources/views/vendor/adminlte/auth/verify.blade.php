@@ -12,12 +12,11 @@
 
     {{ __('adminlte::adminlte.verify_check_your_email') }}
     {{ __('adminlte::adminlte.verify_if_not_recieved') }},
-
     <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
         @csrf
         <button type="submit" class="btn btn-link p-0 m-0 align-baseline">
             {{ __('adminlte::adminlte.verify_request_another') }}
         </button>.
     </form>
-
+    <p>Si por alguna razón no puedes acceder a tu correo electrónico, <a href="{{route('registrar_nuevo_correo')}}">haz click aquí para ir a la pantalla principal y registrar un nuevo correo electrónico.</a></p>
 @stop

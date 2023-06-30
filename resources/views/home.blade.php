@@ -649,7 +649,7 @@
                             <td x-text="reservacion.cause"></td>
                             
                             <td>
-                                <span x-text="link"></span>
+                                <a x-bind:href="link" target="_blank" x-text="link"></a>
                             </td>
                         </tr>
                         <option :value="tipo_problema.id" x-text="tipo_problema.problem"></option>

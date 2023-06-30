@@ -42,8 +42,55 @@
             link_meet:'',
             
             links:{},
+            eliminarreserva(reserva){
+                Swal.fire({
+
+                    title: 'Está seguro de eliminar ésta reserva',
+                    icon: 'warning',
+                    cancelButtonText: "No",
+
+                    confirmButtonColor: '#3085d6',
+                    showCancelButton: true,
+                    confirmButtonText: 'Si',
+
+
+                    }).then((opt)=>{
+                    if (opt.isConfirmed){
+                            fetch(`reservas/${reserva}`,
+
+                        {
+                            method: 'DELETE',
+                                headers: {
+
+                                    'Content-Type': 'application/json',
+
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                    
+
+                                },
+
+                                body:reserva
+
+                        }).then((data) => {
+
+                            Swal.fire({
+
+                            icon: 'success',
+
+                            title: 'Listo!!',
+                            
+                            text: 'La reserva se ha eliminado',
+                            })
+                            
+                            location.reload()
+
+                        }).catch()
+
+
+                    }
+                    })
+            },
             confirmarAsistencia(citaPasada,idCita) {
-               // alert(citaPasada) //SÍ es una cita pasada
                 if(citaPasada== false){
                     Swal.fire({
                         icon:'warning',
@@ -109,31 +156,6 @@
                     location.reload()
                 }).catch()
             }
-            /*,actualizareserva(id){
-                fetch(`link_meet/${id}`,{
-
-                        method: 'POST',
-
-                        headers: {
-
-                            'Content-Type': 'application/json',
-
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-
-                        },
-                        body: JSON.stringify(this.link_meet)
-                    }).
-                then(r => r.json()).
-                then((data) => {
-                    Swal.fire({
-
-                        title: 'Listo',
-                        icon: 'success'
-
-                })
-                    location.reload()
-                }).catch()
-            }*/
         }
     }
 </script>
@@ -170,6 +192,9 @@
                         </th>
                         @if(Auth::user()->hasRole('psicologo'))
                         <th>Link de la reunión</th>
+                        <th></th>
+                        @elseif(Auth::user()->hasRole('administrador'))
+                        
                         <th></th>
                         @endif
                     </tr>
@@ -241,7 +266,10 @@
                             @endif
                         </td>
                     </form>
+                    @elseif(Auth::user()->hasRole('administrador'))
                     
+                    <td><button class="btn btn-danger" x-on:click="eliminarreserva({{$reservation->id}})">
+                       Eliminar</button></td>
                     @endif
                 </tr>
                 @endforeach

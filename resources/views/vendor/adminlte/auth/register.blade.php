@@ -736,6 +736,8 @@
 
                                     <select  name="gender" id="genderp" class="form-control @error('gender') is-invalid @enderror" value="{{ old('gender') }}">
 
+                                        <option disabled selected class="text-bold">--Indica tu Sexo--</option>
+                                        
                                         <option value="H">Hombre</option>
 
                                         <option value="M">Mujer</option>

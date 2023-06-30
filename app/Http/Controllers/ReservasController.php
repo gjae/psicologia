@@ -126,12 +126,11 @@ class ReservasController extends Controller
 
         }else{
 
-            //dd($request);
 
             $tipo_terapia= Therapy::where('id',$request->tipo_terapia)->first()->therapy_type;
 
             $tipo_problema= Problems::where('id',$request->tipo_problema)->first()->problem;
-            //dd($tipo_terapia);
+            
             Reservations::create([
 
                 'appointment_date'  => $request->appointment_date,
@@ -147,7 +146,6 @@ class ReservasController extends Controller
                 'tipo_problema'     => $tipo_problema
 
             ]);
-//Aquí tenemos que validar si "apoderado" viene vacío. Si no viene vacío lo guardamos.
             return 0;
 
         } 
@@ -252,12 +250,13 @@ class ReservasController extends Controller
 
      */
 
-    public function destroy($id)
+    public function destroy($reserva)
 
     {
 
         //
-
+        Reservations::where('id',$reserva)->delete();
+    
     }
 
 }
