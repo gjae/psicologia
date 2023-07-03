@@ -20,6 +20,32 @@
 
 <script>
 
+    document.getElementById('form-valor').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var valor = document.getElementById('input-valor').value;
+
+        fetch('/actualizar-valor', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}' // Asegúrate de incluir el token CSRF en tu formulario
+            },
+            body: JSON.stringify({ valor: valor })
+        })
+        .then(function(response) {
+            if (response.ok) {
+                console.log('Valor actualizado correctamente');
+            } else {
+                console.error('Error al actualizar el valor');
+            }
+        })
+        .catch(function(error) {
+            console.error('Error al realizar la solicitud');
+        });
+    });
+
+    /** AQUI EMPIEZAN LOS SCRIPTS DE */
     function horarios(){
 
         return {
@@ -244,6 +270,11 @@
 </script>
 
 <body>
+    <h2>PROBANDO PUSHER</h2>
+    <form id="form-valor">
+        <input type="text" id="input-valor">
+        <button type="submit">Actualizar</button>
+    </form>
 
     <div class="row" x-data="horarios()">
 

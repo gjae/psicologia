@@ -484,5 +484,17 @@ class PsychologistController extends Controller
             return 0;
         }
     }
+
+    public function actualizarValor(Request $request){
+        // Obtiene el valor enviado por el usuario
+        $valor = $request->input('valor');
+
+         // Guarda el valor en algún lugar, como una base de datos o un archivo
+
+        // Envía una notificación a través de WebSockets para actualizar el valor en tiempo real en otros clientes
+
+        return response()->json(['success' => true]);
+        
+    }
 }
 

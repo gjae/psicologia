@@ -232,3 +232,6 @@ Route::get('tipos_terapia_current_user/{id}',function($id){
 Route::post('/registerpsychologist',[App\Http\Controllers\Auth\RegisterController::class, 'createPsychologist'])->name('registerpsychologist');
 
 
+/** PRUEBA BROADCASTING */
+
+Route::post('/actualizar-valor', [App\Http\Controllers\PsychologistController::class, 'actualizarValor']);
