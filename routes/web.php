@@ -139,7 +139,7 @@ Route::middleware(["web"])->group(function () {
 
     Route::post('/password/email', 'App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail');
     Route::get('/password/reset', 'App\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm');
-    Route::post('/password/reset', 'App\Http\Controllers\Auth\ResetPasswordController@reset');
+    Route::post('/password/reset', 'App\Http\Controllers\Auth\ResetPasswordController@reset')->name('password.reset');
     Route::get('/password/reset/{token}', 'App\Http\Controllers\Auth\ResetPasswordController@showResetForm');
 
 

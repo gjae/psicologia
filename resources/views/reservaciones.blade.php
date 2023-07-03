@@ -42,6 +42,17 @@
             link_meet:'',
             
             links:{},
+            isValidLink(link) {
+                const linkRegex = /^https:\/\/meet.google.com\/[a-z0-9_-]+$/;
+                return linkRegex.test(link);
+            },
+            linkText() {
+                if (this.isValidLink(this.link_meet)) {
+                    return link;
+                } else {
+                    alert('El link de google meet ingresado no es válido. Porfavor introduzca un link válido')
+                }
+            },
             eliminarreserva(reserva){
                 Swal.fire({
 
@@ -128,34 +139,6 @@
                 }
                 
             },
-            actualizar_link_meet(){
-
-            },
-            actualizareserva(id, link){
-                
-                fetch(`link_meet/${id}`,{
-
-                        method: 'POST',
-
-                        headers: {
-
-                            'Content-Type': 'application/json',
-
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-
-                        },
-                        body: JSON.stringify({ link: this.links[id]})
-                    }).
-                then(r => r.json()).
-                then((data) => {
-                    Swal.fire({
-                        title: 'Listo',
-                        icon: 'success'
-
-                })
-                    location.reload()
-                }).catch()
-            }
         }
     }
 </script>
@@ -170,7 +153,8 @@
     </div>
 
     <div class="card-body" x-data="reservas()">
-            <table id="example" class="table table-responsive-lg table-striped">
+        <div class="table-responsive">
+            <table id="example" class="table table-striped">
 
                 <thead class="thead-dark">
                     <tr>
@@ -194,6 +178,8 @@
                         <th>Link de la reunión</th>
                         <th></th>
                         @elseif(Auth::user()->hasRole('administrador'))
+                        
+                        <th>LINK de la reunión</th>
                         
                         <th></th>
                         @endif
@@ -245,21 +231,17 @@
 							{{csrf_field()}}
                         <td>
                             <input type="hidden" value="{{$reservation->id}}" name="id">
-                            @if($reservation->link_meeting)
-                                <input type="text" name="link_meeting" placeholder="Link de la reunión" title="Porfavor comparte el link del meeting" class="form-control" value="{{$reservation->link_meeting}}"  x-show="ocultos" > 
 
-                                
-                            @else
-                                <input type="text" name="link_meeting" placeholder="Link de la reunión" title="Porfavor comparte el link del meeting" class="form-control"  x-show="ocultos">
-                            @endif    
+                                <input type="text" name="link_meeting" placeholder="Link de la reunión" title="Porfavor comparte el link del meeting" class="form-control" value="{{$reservation->link_meeting}}"  x-show="ocultos" x-model="link_meet" @blur="linkText()" x-data="{ link_meet: '{{$reservation->link_meeting}}' }">
+  
                             @if($reservation->status==1)
-                                    <h5 >El paciente ya asistió a su cita</h5>
-                                @endif
+                                <h5 >El paciente ya asistió a su cita</h5>
+                            @endif
                         </td>
                         <td> 
-                            @if(!$reservation->link_meeting)
-                            <button type="submit" class="btn btn-success" x-show="ocultos" @click="actualizar_link_meet">Actualizar</button>
-                            @endif
+                            
+                            <button type="submit" class="btn btn-success" x-show="ocultos" >Actualizar Link para la reunión</button>
+                            
 
                             @if($reservation->link_meeting)
                             <button type="button" class="btn btn-info" @click="confirmarAsistencia(citaPasada,'{{$reservation->id}}')" x-show="ocultos">Confirmar asistencia</button>    
@@ -267,7 +249,11 @@
                         </td>
                     </form>
                     @elseif(Auth::user()->hasRole('administrador'))
-                    
+                    <td>
+                        @if($reservation->link_meeting)
+                            <a  class="inputlink"  x-data="{ link_meet: '{{$reservation->link_meeting}}' }" x-bind:href="link_meet" x-text="link_meet"></a>
+                        @endif 
+                    </td>
                     <td><button class="btn btn-danger" x-on:click="eliminarreserva({{$reservation->id}})">
                        Eliminar</button></td>
                     @endif
@@ -281,6 +267,7 @@
                     Las reservaciones concretadas aparecerán marcadas en color verde
                 </p>
             </small>
+        </div>
     </div>
 
 </div>

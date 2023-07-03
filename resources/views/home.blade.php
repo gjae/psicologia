@@ -165,8 +165,6 @@
 
 
 
-            
-
             horario: '',           //Id de horario
             tipo_terapia_id:'',
             tipo_problema_id:'',
@@ -301,19 +299,17 @@
                             then((data) => {
 
                                 this.mis_reservaciones= data;
-                                
+
                                 if(this.mis_reservaciones[0].link_meeting==undefined){
                                     this.link= 'Espera que tu psicólogo te compara el link de la reunión. Regresa más tarde para ver si ya está disponible el link';
                                 }else{
                                     this.link=this.mis_reservaciones[0].link_meeting
                                 }
-
                             }).catch()
                         }
                     }
                     ).catch()
             },
-
             ReservaForm(){
 
                 this.formData.schedule = this.horario
@@ -333,7 +329,6 @@
                 showCancelButton: true,
 
             })
-
             .then((opt)=> {
 
                 if (opt.isConfirmed) {
@@ -649,7 +644,11 @@
                             <td x-text="reservacion.cause"></td>
                             
                             <td>
+
+                                <a :href="isValidLink(link) ? link : '#'" x-text="linkText(link)"></a>
+
                                 <a x-bind:href="link" target="_blank" x-text="link"></a>
+                                
                             </td>
                         </tr>
                         <option :value="tipo_problema.id" x-text="tipo_problema.problem"></option>

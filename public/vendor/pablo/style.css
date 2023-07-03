@@ -17,6 +17,9 @@ center a img {
 .remember-login {
     font-size: 16px;
 }
+.inputlink {
+    width: 200px;
+}
 .login-page,
 .register-page {
     background-image: url(terapista.jpg);
