@@ -9,6 +9,19 @@ body {
 center a img {
     margin: 30px 0;
 }
+.logo-cognitiva {
+    padding-left: 11px;
+}
+.custom-bg {
+    background-color: rgba(
+        255,
+        255,
+        255,
+        0.5
+    ); /* Utilizamos rgba para establecer el color con transparencia */
+    padding: 20px; /* Espaciado entre los elementos */
+    border-radius: 10px;
+}
 
 /* login */
 .footer-login {

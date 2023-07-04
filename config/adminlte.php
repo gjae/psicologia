@@ -128,9 +128,11 @@ return [
 
 
 
-    'logo' => 'Psicologo monterrico',
+    'logo' => '',
 
     'logo_img' => 'vendor/adminlte/dist/img/logo.png',
+    
+    'logo_img2' => 'vendor/adminlte/dist/img/cognitiva.png',
 
     'logo_img_class' => 'brand-image img-circle elevation-3',
 
@@ -220,7 +222,7 @@ return [
 
         'img' => [
 
-            'path' => 'vendor/adminlte/dist/img/logo.png',
+            'path' => 'vendor/adminlte/dist/img/logo1.png',
 
             'alt' => 'AdminLTE Preloader Image',
 

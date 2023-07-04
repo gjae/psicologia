@@ -18,11 +18,14 @@
     {{-- Small brand logo --}}
     <img src="{{ asset(config('adminlte.logo_img', 'vendor/adminlte/dist/img/AdminLTELogo.png')) }}"
          alt="{{ config('adminlte.logo_img_alt', 'AdminLTE') }}"
-         class="{{ config('adminlte.logo_img_class', 'brand-image-xl') }} logo-xs">
-
-    {{-- Large brand logo --}}
-    <img src="{{ asset(config('adminlte.logo_img_xl')) }}"
+        
+         style="opacity:.8" height="85">
+    {{-- Brand text --}}
+    <br>
+    <img src="{{ asset(config('adminlte.logo_img2', 'vendor/adminlte/dist/img/cognitiva.png')) }}"
          alt="{{ config('adminlte.logo_img_alt', 'AdminLTE') }}"
-         class="{{ config('adminlte.logo_img_xl_class', 'brand-image-xs') }} logo-xl">
+          height="60"
+         class="logo-cognitiva">
+<!-- AQUI ESTA EL LOGO DE COGNITIVA EN EL SIDEBAR DE ADMINLTE  esto es en brand-logo-xl-->
 
 </a>
