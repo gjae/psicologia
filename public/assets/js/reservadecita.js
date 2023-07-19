@@ -31,13 +31,16 @@ function reservacita() {
         formData: {
             now: timezoneOffset,
 
-            id_user: "",
+            name: "",
+            lastname: "",
+            email: "",
+            phone: "",
+            gender: "",
 
             appointment_date: appointment_date,
 
             schedule: "",
 
-            cause: "",
             apoderado: "",
             especialista: "",
             tipo_terapia: "",
@@ -65,85 +68,51 @@ function reservacita() {
                 showCancelButton: true,
             }).then((opt) => {
                 if (opt.isConfirmed) {
-                    Swal.fire({
-                        icon: "info",
+                    fetch("reservas", {
+                        method: "POST",
 
-                        title: "Debe iniciar sesión en zoom para gestionar un link para una nueva reunión",
+                        headers: {
+                            "Content-Type": "application/json",
 
-                        cancelButtonText: "No",
+                            "X-CSRF-TOKEN": document
+                                .querySelector('meta[name="csrf-token"]')
+                                .getAttribute("content"),
+                        },
 
-                        showCancelButton: true,
-                    }).then((opt) => {
-                        if (opt.isConfirmed) {
-                            fetch("reservas", {
-                                method: "POST",
+                        body: JSON.stringify(this.formData),
+                    }).then((r) => r.json());
 
-                                headers: {
-                                    "Content-Type": "application/json",
+                    /*.then((data) => {
+                            if (data == 1) {
+                                Swal.fire({
+                                    title: "El horario ya está reservado ",
 
-                                    "X-CSRF-TOKEN": document
-                                        .querySelector(
-                                            'meta[name="csrf-token"]'
-                                        )
-                                        .getAttribute("content"),
-                                },
+                                    text: "Ya existe una reserva con ese especialista a la hora seleccionada. Porfavor seleccione un horario diferente o una fecha diferente.",
 
-                                body: JSON.stringify(this.formData),
-                            })
-                                .then((r) => r.json())
+                                    icon: "warning",
 
-                                .then((data) => {
-                                    if (data == 1) {
-                                        Swal.fire({
-                                            title: "El horario ya está reservado ",
+                                    confirmButtonColor: "#3085d6",
 
-                                            text: "Ya existe una reserva con ese especialista a la hora seleccionada. Porfavor seleccione un horario diferente o una fecha diferente.",
-
-                                            icon: "warning",
-
-                                            confirmButtonColor: "#3085d6",
-
-                                            confirmButtonText: "Ok",
-                                        }).then((result) => {
-                                            if (result.isConfirmed) {
-                                                location.reload();
-                                            }
-                                        });
+                                    confirmButtonText: "Ok",
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        location.reload();
                                     }
-
-                                    if (data == 0) {
-                                        var client_id =
-                                            "C4gTVgBkToy9PWDrBMFJuw";
-                                        var redirectUri =
-                                            "https://www.registro.psicologomonterrico.pe/auth/zoom/callback";
-                                        window.location.href =
-                                            "https://zoom.us/oauth/authorize?response_type=code&client_id=" +
-                                            client_id +
-                                            "&redirect_uri=" +
-                                            redirectUri +
-                                            "";
-                                        /*Swal.fire({
-                                        icon: "success",
-
-                                        title: "Listo! La reserva de la sesión gratuita ha sido creada con éxito",
-                                    });
-                                    location.reload();*/
-                                    }
-                                })
-                                .catch((data) => {
-                                    console.log("Error"),
-                                        Swal.fire({
-                                            icon: "error",
-
-                                            title: "Oops...",
-
-                                            text: "Algo salió mal",
-
-                                            html: "<h4>Asegurate de que completaste todo el formulario.</h4>",
-                                        });
                                 });
-                        }
-                    });
+                            }
+                        })
+                        .catch((data) => {
+                            console.log("Error"),
+                                Swal.fire({
+                                    icon: "error",
+
+                                    title: "Oops...",
+
+                                    text: "Algo salió mal",
+
+                                    html: "<h4>Asegurate de que completaste todo el formulario.</h4>",
+                                });
+                        });*/
                 }
             });
         },

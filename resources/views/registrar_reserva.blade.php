@@ -28,6 +28,229 @@
                 <div class="card-body">
                     <form action="" method="post" @submit.prevent="ReservaForm">
                         <div class="row">
+                            <div class="container p-5">
+                                <h1 class="text-uppercase">Registro de pacientes</h1>
+                            
+                                {{-- Name field --}}
+
+                                <div class="input-group mb-3">
+                                    <input title="Introduce tu nombre" type="text" required name="name" x-model="formData.name" class="form-control @error('name') is-invalid @enderror"
+
+                                        value="{{ old('name') }}" placeholder="{{ __('adminlte::adminlte.full_name') }}" autofocus>
+
+
+
+                                    <div class="input-group-append">
+
+                                        <div class="input-group-text">
+
+                                            <span class="fas fa-user-circle {{ config('adminlte.classes_auth_icon', '') }}"></span>
+
+                                        </div>
+
+                                    </div>
+
+
+
+                                    @error('name')
+
+                                        <span class="invalid-feedback" role="alert">
+
+                                            <strong>{{ $message }}</strong>
+
+                                        </span>
+
+                                    @enderror
+
+                                </div>
+
+
+
+                                {{-- lastName field --}}
+
+                                <div class="input-group mb-3">
+
+                                    <input title="Apellido" title="Introduce tu apellido" type="text" x-model="formData.lastname" required name="lastname" class="form-control @error('lastname') is-invalid @enderror"
+
+                                        value="{{ old('lastname') }}" placeholder="{{ __('adminlte::adminlte.lastname') }}" autofocus>
+
+
+
+                                    <div class="input-group-append">
+
+                                        <div class="input-group-text">
+
+                                            <span class="fas fa-user-circle {{ config('adminlte.classes_auth_icon', '') }}"></span>
+
+                                        </div>
+
+                                    </div>
+
+
+
+                                    @error('lastname')
+
+                                        <span class="invalid-feedback" role="alert">
+
+                                            <strong>{{ $message }}</strong>
+
+                                        </span>
+
+                                    @enderror
+
+                                </div>
+
+
+
+                                {{-- Email field --}}
+
+
+
+                                <div class="input-group mb-3">
+
+                                    <input title="Email" type="email" name="email" x-model="formData.email" class="form-control @error('email') is-invalid @enderror"
+
+                                        value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}">
+
+
+
+                                    <div class="input-group-append">
+
+                                        <div class="input-group-text">
+
+                                            <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
+
+                                        </div>
+
+                                    </div>
+
+
+
+                                    @error('email')
+
+                                        <span class="invalid-feedback" role="alert">
+
+                                            <strong>{{ $message }}</strong>
+
+                                        </span>
+
+                                    @enderror
+
+                                </div>
+
+
+
+                                {{-- Phone field --}}
+
+                                <div class="input-group mb-3">
+
+                                    <input title="Teléfono" type="text" required x-model="formData.phone" name="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" placeholder="Teléfono">
+
+
+
+                                    <div class="input-group-append">
+
+                                        <div class="input-group-text">
+
+                                            <span class="fas fa-phone {{ config('adminlte.classes_auth_icon', '') }}"></span>
+
+                                        </div>
+
+                                    </div>
+
+
+
+                                    @error('phone')
+
+                                        <span class="invalid-feedback" role="alert">
+
+                                            <strong>{{ $message }}</strong>
+
+                                        </span>
+
+                                    @enderror
+
+                                </div>
+
+
+
+                                {{-- Gender field --}}
+
+                                <div class="input-group mb-3">
+
+                                    <select title="Género" name="gender" id="gender" x-model="formData.gender" class="form-control @error('gender') is-invalid @enderror" value="{{ old('gender') }}">
+
+                                    <option disabled selected class="text-bold">--Indica tu Sexo--</option>
+
+
+                                        <option value="H">Hombre</option>
+
+                                        <option value="M">Mujer</option>
+
+                                    </select>
+
+
+
+                                    <div class="input-group-append">
+
+                                        <div class="input-group-text">
+
+                                            <span class="fas fa-venus-mars {{ config('adminlte.classes_auth_icon', '') }}"></span>
+
+                                        </div>
+
+                                    </div>
+
+
+
+                                    @error('gender')
+
+                                        <span class="invalid-feedback" role="alert">
+
+                                            <strong>{{ $message }}</strong>
+
+                                        </span>
+
+                                    @enderror
+
+                                </div>
+
+
+
+                                {{-- Age field --}}
+
+                                <div class="input-group mb-3">
+
+                                    <input title="edad" type="text" required name="age" class="form-control @error('age') is-invalid @enderror" value="{{ old('age') }}" placeholder="Edad" >
+
+
+
+                                    <div class="input-group-append">
+
+                                        <div class="input-group-text">
+
+                                            <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+
+                                        </div>
+
+                                    </div>
+
+
+
+                                    @error('age')
+
+                                        <span class="invalid-feedback" role="alert">
+
+                                            <strong>{{ $message }}</strong>
+
+                                        </span>
+
+                                    @enderror
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--div class="row p-5">
                             <div class="col-3 d-flex align-items-center">
                                 <h3>Paciente</h3>
                             </div>
@@ -40,9 +263,9 @@
                                     @endforeach
                                 </select>
                             </div>
-                        </div>
+                        </div-->
 
-                        <div class="row">
+                        <div class="row p-5">
                             <div class="col-3 align-items-center">
                                 <h3>Tipo de terapia</h3>
 
@@ -69,13 +292,13 @@
                             </div>
                         </div>
 
-                        <div class="row" >
+                        <div class="row p-5" >
                             <div class="col d-flex justify-content-center">
                                 <h3>Lista de psicólogos especialistas en <span x-text="tipo_de_terapia_name"></span> especializados en <span x-text="tipo_de_problema_name"></span></h3>
                             </div>
                         </div>
                         
-                        <div class="row table-responsive" x-bind:class="{ 'd-none': !especialistas }">
+                        <div class="row  p-5 table-responsive" x-bind:class="{ 'd-none': !especialistas }">
                                 
                                     <template x-for="especialista in especialistas" :key="especialista.id" >
                                         <div class="col-lg-4 col-md-6 col-sm-12 p-5 efecto-foto">
@@ -105,7 +328,7 @@
                                 <h4 x-text="mensaje"></h4>
                         </div>
 
-                        <div class="row">
+                        <div class="row p-5">
                             <div class="col p10" x-show="selectedTherapist">
 
                                 <div class="container col-lg-6">
@@ -138,7 +361,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row p-5">
                             <div class="col-12" >
                                 <div id="resume_pane"  x-show="resume_pane">
                                     <h1>Resumen</h1>
@@ -146,7 +369,7 @@
                                     <div class="card">
                                         <div class="card-body">
 
-                                            <h4>Paciente: <span x-text="paciente_name"></span></h4>
+                                            <h4>Paciente: <span x-text="formData.name"></span></h4>
 
                                             <h4>
                                             Fecha de consulta: <span x-text="formData.appointment_date"></span></h4>

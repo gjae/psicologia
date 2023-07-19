@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Reservations;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Hash;/** */
 use App\Models\Psychologist;
 use App\Models\Therapy;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Validator;/** */
 use DB;
 
 class AdminController extends Controller
@@ -31,7 +31,7 @@ class AdminController extends Controller
 
     public function registrar_pacientes_post(Request $request){
 
-        $validator = Validator::make($request->all(), [
+        /*$validator = Validator::make($request->all(), [
             'name'      => ['required', 'string', 'max:255'],
 
             'lastname'  => ['required', 'string', 'max:255'],
@@ -106,7 +106,7 @@ class AdminController extends Controller
 
         ])->assignRole('paciente');
             return back()->with('success', 'El paciente ha sido creado con éxito!');
-        }
+        } */
 
     }
 
