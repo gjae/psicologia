@@ -118,7 +118,7 @@
 
     @section('auth_body')
 
-    <ul class="nav nav-tabs m-0 p-0 flex-container">
+    <!--ul class="nav nav-tabs m-0 p-0 flex-container">
         <li class="bg-primary lista-registro">
             <a class="texto-registro" data-toggle="tab" href="#pacientes">
                 <div class="card-registro-new">
@@ -137,7 +137,7 @@
                 <h3 class="text-center text-uppercase my-3">Registro de Psicólogos</h3>
             </a>
         </li>
-    </ul>
+    </ul-->
 
     <div class="tab-content" x-data="registro()" x-init="terapias()">
 
@@ -151,7 +151,7 @@
 
         @endif
 
-            <div class="card">
+            <!--div class="card">
 
                 <div class="card-body ">
 
@@ -473,21 +473,15 @@
 
                 </div>
 
-            </div>
+            </div-->
 
         </div>
 
 
 
-        @if(session()->has('psicologo'))
 
             <div id="psicologo" class="tab-pane active"> 
 
-        @else
-
-        <div id="psicologo" class="tab-pane">
-
-        @endif
 
 
 
@@ -884,8 +878,6 @@
 
                                     <input title="Carga una foto" required type="file"  name="photo" class="form-control @error('photo') is-invalid @enderror" value="{{ old('photo') }}">
 
-
-
                                     <div class="input-group-append">
 
                                         <div class="input-group-text">
@@ -895,8 +887,6 @@
                                         </div>
 
                                     </div>
-
-
 
                                     @error('photo')
 

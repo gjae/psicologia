@@ -25,6 +25,12 @@
                             {{ session()->get('success') }}
                         </div>
                     @endif
+
+                    @if(session()->has('ended_session'))
+                        <div class="alert alert-info">
+                            {{ session()->get('ended_session') }}
+                        </div>
+                    @endif
                 </center>
             </div>
         </div>
@@ -41,7 +47,7 @@
                             <img src="{{ asset(config('adminlte.logo_img', 'vendor/adminlte/dist/img/AdminLTELogo.png')) }}"
                             alt="{{ config('adminlte.logo_img_alt', 'AdminLTE') }}"
                             
-                            height="150">
+                            height="150" class="img-responsive">
                             </center>
                         </div>
                     </div>
@@ -53,15 +59,15 @@
 
                                 <img src="{{ asset(config('adminlte.logo_img2', 'vendor/adminlte/dist/img/cognitiva.png')) }}"
                                 alt="{{ config('adminlte.logo_img_alt', 'AdminLTE') }}"
-                                height="107" class="logo-cognitiva">
+                                height="107" class="logo-cognitiva img-responsive">
                             </a>
                             </center>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-lg-4"></div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3"></div>
+                        <div class="col-lg-6">
                             {{-- Card Box --}}
                             <div class="card {{ config('adminlte.classes_auth_card', 'card-outline card-primary') }}">
                                 {{-- Card Header --}}
@@ -87,7 +93,7 @@
 
                             </div>
                         </div>
-                        <div class="col-lg-4"></div>
+                        <div class="col-lg-3"></div>
                     </div>
                 </div>
             </div>

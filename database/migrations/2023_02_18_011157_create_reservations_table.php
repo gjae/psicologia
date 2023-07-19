@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('id_schedule')->unsigned(); //schedule
             
             //$table->integer('status')->unsigned();
-            $table->string('cause');
+            $table->string('cause')->nullable();
             $table->timestamps();
 
             

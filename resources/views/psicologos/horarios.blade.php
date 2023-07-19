@@ -270,11 +270,12 @@
 </script>
 
 <body>
-    <h2>PROBANDO PUSHER</h2>
+    <!--h2>PROBANDO PUSHER</h2>
+    <h5>Hay un script para probar pusher que recibe el input-valor y lo manda por javascript... Cuando tengas chance lo pruebas a ver q lo q</h5>
     <form id="form-valor">
         <input type="text" id="input-valor">
         <button type="submit">Actualizar</button>
-    </form>
+    </form-->
 
     <div class="row" x-data="horarios()">
 

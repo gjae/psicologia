@@ -127,7 +127,6 @@
                         ).catch()
                         this.ocultos= false
                         this.message= false
-                        //aquí ocultar los botones de link meeting, actualizar, y confirmar asistencia. Cambiar por un mensaje que diga "El paciente asistió a su cita."
                         location.reload()
                     } else if (result.dismiss === Swal.DismissReason.cancel) {
                         fetch(`confirmar_asistencia/0/${idCita}`).
@@ -137,12 +136,21 @@
                     }
                     });
                 }
-                
             },
         }
     }
 </script>
-
+<div class="row">
+    <div class="col-lg-12">
+        <center>
+            @if(session()->has('cita_agendada'))
+                <div class="alert alert-success">
+                    {{ session()->get('cita_agendada') }}
+                </div>
+            @endif
+        </center>
+    </div>
+</div>
 
 <div class="card">
 
@@ -152,8 +160,12 @@
 
     </div>
 
+    
+
     <div class="card-body" x-data="reservas()">
         <div class="table-responsive">
+
+        
             <table id="example" class="table table-striped">
 
                 <thead class="thead-dark">
@@ -170,16 +182,19 @@
                         <th>Terapeuta</th> 
                         <th>Terapia</th>
                         <th>Problema a tratar</th>
-                        <th>Motivo de consulta</th>
+                        <!--th>Motivo de consulta</th-->
                         <th>
                              Apoderado
                         </th>
-                        @if(Auth::user()->hasRole('psicologo'))
+                        @if(Auth::user()->hasRole('administrador'))
                         <th>Link de la reunión</th>
-                        <th></th>
-                        @elseif(Auth::user()->hasRole('administrador'))
+                        @endif 
                         
-                        <th>LINK de la reunión</th>
+                        <th> Confirmar asistencia</th>
+                        
+                        
+                        @if(Auth::user()->hasRole('administrador') || Auth::user()->hasRole('psicologo'))
+                        
                         
                         <th></th>
                         @endif
@@ -212,7 +227,6 @@
                     
                     <td>{{$reservation->tipo_terapia}}</td>
                     <td>{{$reservation->tipo_problema}}</td>
-                    <td>{{$reservation->cause}}</td>
                     @if($reservation->tipo_terapia == "Terapia de menores")
                         <td>
                             @if($reservation->apoderado == 1)
@@ -224,40 +238,35 @@
                     @else
                         <td></td>
                     @endif
-                    @if(Auth::user()->hasRole('psicologo'))
-                    <form method="post" action="{{route('link_meet',['reservation'=>$reservation->id])}}" role="form" >
 							@method("post")
 							
 							{{csrf_field()}}
+
+                    @if(Auth::user()->hasRole('administrador'))
                         <td>
-                            <input type="hidden" value="{{$reservation->id}}" name="id">
-
-                                <input type="text" name="link_meeting" placeholder="Link de la reunión" title="Porfavor comparte el link del meeting" class="form-control" value="{{$reservation->link_meeting}}"  x-show="ocultos" x-model="link_meet" @blur="linkText()" x-data="{ link_meet: '{{$reservation->link_meeting}}' }">
-  
-                            @if($reservation->status==1)
-                                <h5 >El paciente ya asistió a su cita</h5>
-                            @endif
+                            <a href="{{$reservation->link_meeting}}">{{$reservation->link_meeting}}</a>
+                            <!--  El controlador que renderiza esta vista debe recibir el link de la reunion y enviarlo a esta vista-->
                         </td>
-                        <td> 
-                            
-                            <button type="submit" class="btn btn-success" x-show="ocultos" >Actualizar Link para la reunión</button>
-                            
+                    @endif
+                    <td> 
+                        @if($reservation->status==1)
+                            <h5 >El paciente ya asistió a su cita</h5>
+                        @else 
 
-                            @if($reservation->link_meeting)
-                            <button type="button" class="btn btn-info" @click="confirmarAsistencia(citaPasada,'{{$reservation->id}}')" x-show="ocultos">Confirmar asistencia</button>    
-                            @endif
-                        </td>
-                    </form>
-                    @elseif(Auth::user()->hasRole('administrador'))
-                    <td>
-                        @if($reservation->link_meeting)
-                            <a  class="inputlink"  x-data="{ link_meet: '{{$reservation->link_meeting}}' }" x-bind:href="link_meet" x-text="link_meet"></a>
-                        @endif 
+                        
+
+                        <button type="button" class="btn btn-info" @click="confirmarAsistencia(citaPasada,'{{$reservation->id}}')" >Confirmar asistencia</button>    
+                        @endif
+                        
+                        
                     </td>
+                    
                     <td><button class="btn btn-danger" x-on:click="eliminarreserva({{$reservation->id}})">
                        Eliminar</button></td>
-                    @endif
+                    
+                       
                 </tr>
+                
                 @endforeach
             </table>
 

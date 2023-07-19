@@ -324,102 +324,94 @@
 
                     template: '#my-template',
 
-                cancelButtonText: "No",
+                    cancelButtonText: "No",
 
-                showCancelButton: true,
+                    showCancelButton: true,
 
-            })
-            .then((opt)=> {
+                })
+                .then((opt)=> {
 
-                if (opt.isConfirmed) {
+                    if (opt.isConfirmed) {
 
-                    fetch('{{route("reservas.store")}}', 
+                        fetch('{{route("reservas.store")}}', 
 
-                    {
+                        {
 
-                        method: 'POST',
+                            method: 'POST',
 
-                        headers: {
+                            headers: {
 
-                            'Content-Type': 'application/json',
+                                'Content-Type': 'application/json',
 
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 
-                        },
+                            },
 
-                        body: JSON.stringify(this.formData)
+                            body: JSON.stringify(this.formData)
 
-                    }).then(r => r.json())
+                        }).then(r => r.json())
 
-                    .then((data) => {
+                        .then((data) => {
 
-                        if(data==1){
+                            if(data==1){
 
-                            Swal.fire({
+                                Swal.fire({
 
-                            title: 'El horario ya está reservado ',
+                                title: 'El horario ya está reservado ',
 
-                            text: "Ya existe una reserva con ese especialista a la hora que usted seleccionó. Porfavor seleccione un horario diferente o una fecha diferente.",
+                                text: "Ya existe una reserva con ese especialista a la hora que usted seleccionó. Porfavor seleccione un horario diferente o una fecha diferente.",
 
-                            icon: 'warning',
+                                icon: 'warning',
 
-                            confirmButtonColor: '#3085d6',
+                                confirmButtonColor: '#3085d6',
 
-                            confirmButtonText: 'Ok'
+                                confirmButtonText: 'Ok'
 
-                            }).then((result) => {
+                                }).then((result) => {
 
-                            if (result.isConfirmed) {
+                                if (result.isConfirmed) {
 
-                                location.reload()
+                                    location.reload()
+
+                                }
+
+                                })
 
                             }
 
-                            })
+                            if(data==0){
 
-                        }
+                                Swal.fire({
 
-                        if(data==0){
+                                icon: 'success',
 
+                                title: 'Listo! La reserva de la sesión de prueba con éxito',
+                                html: '<h4>En breves momentos le enviaremos al psicólogo y al paciente un email que contiene el link a la reunión de meet</h4>'
+                                })
+
+                                this.disableButton=true
+
+                                this.open_resumen_link= true
+                                
+                                location.href ='{{route("home")}}';
+                            }
+                        })
+                        .catch((data)=> {
+                            console.log('Error'),
                             Swal.fire({
 
-                            icon: 'success',
+                            icon: 'error',
 
-                            title: 'Listo! La reserva de su sesión gratuita ha sido creada con éxito',
-                            html: '<h4>En breves momentos le enviaremos a su correo un email que contiene el link a la reunión de meet con el terapeuta que usted seleccionó</h4>'
+                            title: 'Oops...',
+
+                            text: 'Algo salió mal',
+
+                            html: '<h4>Asegurate de que completaste todo el formulario.</h4>'
+
                             })
-
-                            this.disableButton=true
-
-                            this.open_resumen_link= true
-                            
-                            location.href ='{{route("home")}}';
-                        }
-                    })
-                    .catch((data)=> {
-                        console.log('Error'),
-
-                    
-
-                        Swal.fire({
-
-                        icon: 'error',
-
-                        title: 'Oops...',
-
-                        text: 'Algo salió mal',
-
-                        html: '<h4>Asegurate de que completaste todo el formulario.</h4>'
-
                         })
                     }
-
-                    )
-
-                }
-
-            });
-
+                });
             },
 
             psicologos(param){
@@ -876,43 +868,43 @@
                                 <h3 class="bg-info p-3 my-3">Paso 2. Que día y en que horario desea tener su consulta?</h3>
                                 <div class="row p10" x-show="selectedTherapist">
 
-                                <div class="container col-lg-6">
+                                    <div class="container col-lg-6">
 
-                                    <label x-show="message">Fecha de consulta</label>
+                                        <label x-show="message">Fecha de consulta</label>
 
-                                    <input type="date" class="form-control" x-model="formData.appointment_date" :min="fecha_actual" :max="fecha_actual_mas_1" :change="validarfecha()">
+                                        <input type="date" class="form-control" x-model="formData.appointment_date" :min="fecha_actual" :max="fecha_actual_mas_1" :change="validarfecha()">
+
+                                    </div>
+
+                                    <div class="col-lg-6">
+
+                                        <label x-show="message">Horarios disponibles</label>
+                                        <select name="horario" class="form-control" id="horario" x-model="horario" @change="resume_pane= true">
+
+                                            <option value="#"><b>Seleccione una opcion</b></option>
+
+                                            <template x-if="horarios.length === 0">
+
+                                                <option value="#">Este psicólogo no ha registrado ningún horario de atención</option>
+
+                                            </template>
+
+                                            <template x-for="horario in horarios" :key="horario.id">
+
+                                                <option :value="horario.id" x-text="horario.schedule" @click="horario_consulta: horario.schedule"></option>
+
+                                            </template>
+
+                                        </select>
+
+                                    </div>
+
+                                    <div class="col-lg-6" x-show="menores">
+                                        <label for="apoderado">Soy el apoderado</label>
+                                        <input name="apoderado" x-model="formData.apoderado" type="checkbox">
+                                    </div>
 
                                 </div>
-
-                                <div class="col-lg-6">
-
-                                    <label x-show="message">Horarios disponibles</label>
-                                    <select name="horario" class="form-control" id="horario" x-model="horario" @change="resume_pane= true">
-
-                                        <option value="#"><b>Seleccione una opcion</b></option>
-
-                                        <template x-if="horarios.length === 0">
-
-                                            <option value="#">Este psicólogo no ha registrado ningún horario de atención</option>
-
-                                        </template>
-
-                                        <template x-for="horario in horarios" :key="horario.id">
-
-                                            <option :value="horario.id" x-text="horario.schedule" @click="horario_consulta: horario.schedule"></option>
-
-                                        </template>
-
-                                    </select>
-
-                                </div>
-
-                                <div class="col-lg-6" x-show="menores">
-                                    <label for="apoderado">Soy el apoderado</label>
-                                    <input name="apoderado" x-model="formData.apoderado" type="checkbox">
-                                </div>
-
-                            </div>
 
                             
                             <hr>

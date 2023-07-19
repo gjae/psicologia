@@ -409,7 +409,7 @@ class PsychologistController extends Controller
             ->whereHas('TherapiesOffered.ProblemsTreated',function($j) use ($idProblema){
                 $j->where('id_problem',$idProblema);
             })
-            ->take(3)
+            //->take(3)
             ->orderBy('ranking', 'desc')
             ->get();
 

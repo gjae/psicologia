@@ -114,7 +114,7 @@ class RegisterController extends Controller
 
     {
 
-        return Validator::make($data, [
+        /*return Validator::make($data, [
 
             'name'      => ['required', 'string', 'max:255'],
 
@@ -159,7 +159,7 @@ class RegisterController extends Controller
 
             
 
-        ]);
+        ]);*/
 
     }
 
@@ -183,11 +183,8 @@ class RegisterController extends Controller
 
     {
 
-        
 
-
-
-        return User::create([
+        /*return User::create([
 
             'name'      => $data['name'],
 
@@ -204,7 +201,7 @@ class RegisterController extends Controller
 
             'password'  => Hash::make($data['password']),
 
-        ])->assignRole('paciente');
+        ])->assignRole('paciente');*/
         
         // Send confirmation code
        /* Mail::send('emails.confirmation_code', $data, function($message) use ($data) {

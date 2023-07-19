@@ -587,56 +587,71 @@ return [
     'menu' => [
 
 
-
-        [
-
-            'text'      => 'Usuarios',
-
-            'route'     => 'usuarios.index',
-
+        
+        ['text'=>' Pacientes',
+        
             'icon'      => 'fa fa-users',
 
-            'can'       => 'usuarios.index'
+            'can'       => 'registrar_pacientes',
+            'submenu'=>[
 
+                [
+
+                    'text'      => 'Pacientes',
+
+                    'route'     => 'pacientes.index',
+
+                    'icon'      => 'fa fa-users',
+
+                    'can'       => 'pacientes.index'
+
+                ],
+                [
+
+                    'text'      => 'Registrar Nuevo Paciente',
+
+                    'route'     => 'registro_pacientes',
+
+                    'icon'      => 'fa fa-plus',
+
+                    'can'       => 'registrar_pacientes'
+
+                ]
+          ]
+          
         ],
-        
-
-        [
-
-            'text'      => 'Pacientes',
-
-            'route'     => 'pacientes.index',
-
-            'icon'      => 'fa fa-users',
-
-            'can'       => 'pacientes.index'
-
-        ],
-        
 
         [
 
             'text'      => 'Psicologos',
-
-            'route'     => 'psicologos.index',
-
             'icon'      => 'fa fa-graduation-cap',
+            'can'       => 'psicologos.index',
+            'submenu'=>[
+                [
 
-            'can'       => 'psicologos.index'
+                    'text'      => 'Listado de psicologos',
+                    'route'     => 'psicologos.index',
+
+                    'icon'      => 'fa fa-graduation-cap',
+
+                    'can'       => 'psicologos.index',
+
+                ],
+                [
+
+                    'text'      => 'Puntuar psicologos',
+
+                    'route'     => 'evaluar_psicologo',
+
+                    'icon'      => 'fa fa-star',
+
+                    'can'       => 'evaluar'
+
+                ],
+            ]
 
         ],
 
-        [
-
-            'text'      => 'Puntuar psicologos',
-
-            'route'     => 'evaluar_psicologo',
-
-            'icon'      => 'fa fa-star',
-
-            'can'       => 'evaluar'
-
-        ],
 
 
         
@@ -660,6 +675,18 @@ return [
             'route'     => 'reservas.index',
 
             'icon'      => 'fa fa-bookmark'
+
+        ],
+
+        [
+
+            'text'      => 'Reservar cita para paciente',
+
+            'route'     => 'registro_reserva',
+
+            'icon'      => 'fa fa-bookmark',
+
+            'can'       => 'registrar_reservacion_paciente_psicologo'
 
         ],
         

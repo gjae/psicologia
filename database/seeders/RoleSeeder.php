@@ -55,6 +55,10 @@ class RoleSeeder extends Seeder
          Permission::create(['name' =>  'psicologos.index'])->assignRole($role2);
          
          Permission::create(['name' =>  'pacientes.index'])->assignRole($role2);
+         
+         Permission::create(['name' =>  'registrar_pacientes'])->assignRole($role2);
+
+         Permission::create(['name' =>  'registrar_reservacion_paciente_psicologo'])->assignRole($role2);
 
     }
 

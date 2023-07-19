@@ -24,9 +24,8 @@
     <br>
     <img src="{{ asset(config('adminlte.logo_img2', 'vendor/adminlte/dist/img/cognitiva.png')) }}"
          alt="{{ config('adminlte.logo_img_alt', 'AdminLTE') }}"
-          height="60"
-         class="logo-cognitiva">
-<!-- AQUI ESTA EL LOGO DE COGNITIVA EN EL SIDEBAR DE ADMINLTE  esto es en brand-logo-xs-->
+          height="60" class="logo-sidebar-lte"
+         >
     <span class="brand-text font-weight-light {{ config('adminlte.classes_brand_text') }}">
         {!! config('adminlte.logo', '<b>Admin</b>LTE') !!}
     </span>

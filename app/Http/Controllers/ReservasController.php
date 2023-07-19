@@ -10,8 +10,13 @@ use Illuminate\Http\Request;
 
 use App\Models\Reservations;
 use App\Models\Therapy;
-use App\Models\Problems;
 
+use App\Clases\ArmarNotificacion;
+use App\Models\Problems;
+use App\Models\User;
+use App\Models\Schedules;
+use App\Mail\AppointmentNotification;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -130,7 +135,7 @@ class ReservasController extends Controller
             $tipo_terapia= Therapy::where('id',$request->tipo_terapia)->first()->therapy_type;
 
             $tipo_problema= Problems::where('id',$request->tipo_problema)->first()->problem;
-            
+
             Reservations::create([
 
                 'appointment_date'  => $request->appointment_date,
@@ -139,13 +144,14 @@ class ReservasController extends Controller
 
                 'id_schedule'       => $request->schedule,
 
-                'cause'             => $request->cause,
+                //'cause'             => $request->cause,
                 
                 'apoderado'      => $request->apoderado,
                 'tipo_terapia'      => $tipo_terapia,
                 'tipo_problema'     => $tipo_problema
 
             ]);
+
             return 0;
 
         } 

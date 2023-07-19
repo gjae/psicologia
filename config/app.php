@@ -140,7 +140,7 @@ return [
 
 
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Panama',
 
 
 
@@ -392,8 +392,7 @@ return [
 
         App\Providers\RouteServiceProvider::class,
 
-        Collective\Html\HtmlServiceProvider::class
-
+        Collective\Html\HtmlServiceProvider::class,
 
 
     ],
@@ -429,7 +428,7 @@ return [
         "Form" => Collective\Html\FormFacade::class,
 
         "Html" => Collective\Html\HtmlFacade::class,
-        'Pusher'    =>  Pusher\Pusher::class
+        'Pusher'    =>  Pusher\Pusher::class,
 
     ])->toArray(),
 

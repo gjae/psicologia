@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\VerificationController;
 
 use Illuminate\Http\Request;
+use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\ZoomAuthController;
 
 
 /*
@@ -41,7 +43,7 @@ use Illuminate\Http\Request;
 
 //Route::middleware(["web","auth","auth.session.timeout"])->group(function () {
     
-Route::middleware(["web","auth","verified","auth.session.timeout"])->group(function () {
+Route::middleware(["web","auth","verified"])->group(function () {
 
     Route::resource('usuarios',App\Http\Controllers\UserController::class)->middleware('permission:usuarios.index');
 
@@ -106,8 +108,12 @@ Route::middleware(["web","auth","verified","auth.session.timeout"])->group(funct
         Route::get('delete_problems/{id}/{idproblema}',[App\Http\Controllers\PsychologistController::class,'delete_problems'])->name('delete_problems');
     /* ACTUALIZAR INFO PSICOLOGO */
 
+
+    Route::get('seleccionar_especialista/{id_terapia}/{id_problema}',[App\Http\Controllers\PsychologistController::class,'seleccionarEspecialista'])->name('especialistaEn');
+    Route::post('/consulta_problemas/{id_problema}',[App\Http\Controllers\PsychologistController::class,'problems'])->name('consulta_problemas');
+
 });
-Route::post('/consulta_problemas/{id_problema}',[App\Http\Controllers\PsychologistController::class,'problems'])->name('consulta_problemas');
+
 
 Route::get('/tipo_terapia_tipo_problema/{id_terapia}',function($id){ 
     $problemas = Problems::where('id_therapy',$id)->get();
@@ -115,7 +121,6 @@ Route::get('/tipo_terapia_tipo_problema/{id_terapia}',function($id){
 })->name('tipo_problemas');
 
 
-Route::get('seleccionar_especialista/{id_terapia}/{id_problema}',[App\Http\Controllers\PsychologistController::class,'seleccionarEspecialista'])->name('especialistaEn');
 
 Route::get('/', function () {
 
@@ -149,18 +154,10 @@ Route::middleware(["web"])->group(function () {
     Route::get('/email/verify/redirect', function () {
         return redirect()->route('register');
     })->name('verification.redirect');
-
-
-
-
-
-    
 });
 
 
-/* PARA IMPLEMENTAR ESTAS RUTAS DE FORMA PERSONALIZADA, TIENES QUE PONERLE LOS NOMBRES A LAS RUTAS logout, login, register, verification.verify, verification.notice, y verification.resend. Equivale a Auth::routes(['verify => true']);
-
-RUTAS DE Autenticacion*/
+/* RUTAS DE Autenticacion*/
     
     Route::post('/register', 'App\Http\Controllers\Auth\RegisterController@register');
     Route::get('/register', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
@@ -179,7 +176,7 @@ RUTAS DE Autenticacion*/
     Route::post('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 Route::post('/email/resend', 'App\Http\Controllers\Auth\VerificationController@resend')->name('verification.resend');
 /*
- PARA IMPLEMENTAR ESTAS RUTAS DE FORMA PERSONALIZADA, TIENES QUE PONERLE LOS NOMBRES A LAS SIGUIENTES TRES RUTAS QUE SON LAS RESPONSABLES DE LA VERIFICACION POR CORREO ELECTRONICO */
+Rutas de autenticación */
 
 Route::get('registrar_nuevo_correo',function(){
     Auth::logout();
@@ -235,3 +232,15 @@ Route::post('/registerpsychologist',[App\Http\Controllers\Auth\RegisterControlle
 /** PRUEBA BROADCASTING */
 
 Route::post('/actualizar-valor', [App\Http\Controllers\PsychologistController::class, 'actualizarValor']);
+
+
+Route::get('/registro_pacientes', [App\Http\Controllers\AdminController::class, 'registrar_pacientes_form'])->name('registro_pacientes')->middleware('permission:registrar_pacientes');
+Route::post('/registro_pacientes', [App\Http\Controllers\AdminController::class, 'registrar_pacientes_post'])->name('registrar_pacientes_post');
+
+
+Route::get('/registrar_reserva', [App\Http\Controllers\AdminController::class, 'registrar_reserva_form'])->name('registro_reserva')->middleware('permission:registrar_reservacion_paciente_psicologo');
+
+/***********************************  ZOOM*/
+    Route::get('auth/zoom', [ZoomAuthController::class, 'redirectToProvider'])->name('zoom.auth');
+    Route::get('auth/zoom/callback', [ZoomAuthController::class, 'handleProviderCallback']);
+/*********************************** ZOOM*/
