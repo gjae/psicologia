@@ -19,6 +19,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(App\Services\ReservaService::class, function ($app) {
             return new ReservaService();
         });
+
+        $this->app->bind("ReservaService", ReservaService::class);
     }
 
     /**
