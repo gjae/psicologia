@@ -587,38 +587,16 @@ return [
     'menu' => [
 
 
-        
-        ['text'=>' Pacientes',
-        
+        [
+
+            'text'      => 'Listado de Pacientes',
+
+            'route'     => 'pacientes.index',
+
             'icon'      => 'fa fa-users',
 
-            'can'       => 'registrar_pacientes',
-            'submenu'=>[
+            'can'       => 'pacientes.index'
 
-                [
-
-                    'text'      => 'Pacientes',
-
-                    'route'     => 'pacientes.index',
-
-                    'icon'      => 'fa fa-users',
-
-                    'can'       => 'pacientes.index'
-
-                ],
-                [
-
-                    'text'      => 'Registrar Nuevo Paciente',
-
-                    'route'     => 'registro_pacientes',
-
-                    'icon'      => 'fa fa-plus',
-
-                    'can'       => 'registrar_pacientes'
-
-                ]
-          ]
-          
         ],
 
         [

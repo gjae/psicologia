@@ -57,7 +57,13 @@ class UserController extends Controller
     {
         //
     }
-
+    public function buscar_usuario_email($email){
+       if(User::where('email',$email)->exists()){
+        return User::where('email',$email)->first();
+       }else{
+        return false;
+       }
+    }
     /**
      * Show the form for editing the specified resource.
      *

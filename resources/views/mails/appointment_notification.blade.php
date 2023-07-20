@@ -6,9 +6,9 @@
     <title>Asignacion de cita</title>
 </head>
 <body>
-    <p>Hola! Se ha agendado una nueva cita de atención psicológica para el día {{$fecha}} en el horario de {{$hora}}.</p>
+    <p>Hola! Se ha agendado una nueva cita de atención psicológica para el día {{$fecha}} {{$appointment_date}} en el horario de {{$hora}}.</p>
 
     <p>Le invitamos a unirse a la videollamada através del siguiente link: </p>
-    {{$apiResponse['join_url']}}
+    {{$link}}
 </body>
 </html>

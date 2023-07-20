@@ -21,16 +21,18 @@ class AppointmentNotification extends Mailable
      * @return void
      */
     public $user;
-    public $apiResponse;
+    public $link;
     public $fecha;
     public $hora;
+    public $appointment_date;
 
-    public function __construct($apiResponse, $fecha, $hora)
+    public function __construct($link, $fecha, $appointment_date, $hora)
     {
         //
 
-        $this->apiResponse = $apiResponse;
+        $this->link = $link;
         $this->fecha= $fecha;
+        $this->appointment_date= $appointment_date;
         $this->hora= $hora;
     }
 
@@ -57,8 +59,9 @@ class AppointmentNotification extends Mailable
         return new Content(
             view: 'mails.appointment_notification',
             with: [
-                'apiResponse' => $this->apiResponse,
+                'link' => $this->link,
                 'fecha'=> $this->fecha,
+                'appointment_date'=> $this->appointment_date,
                 'hora'=> $this->hora
             ]
         );

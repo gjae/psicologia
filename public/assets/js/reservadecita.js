@@ -36,6 +36,8 @@ function reservacita() {
             email: "",
             phone: "",
             gender: "",
+            age: "",
+            link_meeting: "",
 
             appointment_date: appointment_date,
 
@@ -80,9 +82,10 @@ function reservacita() {
                         },
 
                         body: JSON.stringify(this.formData),
-                    }).then((r) => r.json());
+                    })
+                        .then((r) => r.json())
 
-                    /*.then((data) => {
+                        .then((data) => {
                             if (data == 1) {
                                 Swal.fire({
                                     title: "El horario ya está reservado ",
@@ -100,6 +103,15 @@ function reservacita() {
                                     }
                                 });
                             }
+
+                            if (data == 0) {
+                                Swal.fire({
+                                    icon: "success",
+
+                                    title: "Listo! La reserva de la sesión gratuita ha sido creada con éxito",
+                                });
+                                location.reload();
+                            }
                         })
                         .catch((data) => {
                             console.log("Error"),
@@ -112,7 +124,7 @@ function reservacita() {
 
                                     html: "<h4>Asegurate de que completaste todo el formulario.</h4>",
                                 });
-                        });*/
+                        });
                 }
             });
         },
@@ -149,6 +161,19 @@ function reservacita() {
             var dias_a_partir_de_hoy = 1;
             return moment(this.fecha_actual).add(1, "day").format("YYYY-MM-DD");
         },
+        isValidLink(link) {
+            const linkRegex = /^https:\/\/meet.google.com\/[a-z0-9_-]+$/;
+            return linkRegex.test(link);
+        },
+        linkText(link) {
+            if (this.isValidLink(link)) {
+                return link;
+            } else {
+                alert(
+                    "El link de google meet ingresado no es válido. Porfavor introduzca un link válido"
+                );
+            }
+        },
         validarfecha() {
             const fecha = this.formData.appointment_date;
             if (moment(fecha).day() === 0) {
@@ -156,6 +181,22 @@ function reservacita() {
                     "No se puede seleccionar el dia domingo. Porfavor seleccione otra fecha"
                 );
             }
+        },
+        buscarUsuario() {
+            // ...
+
+            fetch(`buscar-usuario/${this.formData.email}`)
+                .then((r) => r.json())
+                .then((response) => {
+                    this.formData.name = response.name;
+                    this.formData.lastname = response.lastname;
+                    this.formData.phone = response.phone;
+                    this.formData.gender = response.gender;
+                    this.formData.age = response.age;
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         },
         setPacienteName(event) {
             var selectedOption =
@@ -171,7 +212,6 @@ function reservacita() {
                     this.horarios = data;
                     console.log(this.horarios);
                 })
-
                 .catch();
         },
         seleccionarespecialista(event) {

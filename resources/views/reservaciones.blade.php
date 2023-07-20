@@ -165,7 +165,6 @@
     <div class="card-body" x-data="reservas()">
         <div class="table-responsive">
 
-        
             <table id="example" class="table table-striped">
 
                 <thead class="thead-dark">
@@ -245,7 +244,6 @@
                     @if(Auth::user()->hasRole('administrador'))
                         <td>
                             <a href="{{$reservation->link_meeting}}">{{$reservation->link_meeting}}</a>
-                            <!--  El controlador que renderiza esta vista debe recibir el link de la reunion y enviarlo a esta vista-->
                         </td>
                     @endif
                     <td> 
@@ -253,18 +251,12 @@
                             <h5 >El paciente ya asistió a su cita</h5>
                         @else 
 
-                        
-
                         <button type="button" class="btn btn-info" @click="confirmarAsistencia(citaPasada,'{{$reservation->id}}')" >Confirmar asistencia</button>    
                         @endif
-                        
-                        
                     </td>
                     
                     <td><button class="btn btn-danger" x-on:click="eliminarreserva({{$reservation->id}})">
                        Eliminar</button></td>
-                    
-                       
                 </tr>
                 
                 @endforeach

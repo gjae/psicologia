@@ -71,7 +71,7 @@ class ZoomAuthController extends Controller
             
             $objeto = new ArmarNotificacion();
             Reservations::latest()->first()->update(['link_meeting' => $this->link_meeting]);
-            $objeto->enviarNotification($response);
+            //$objeto->enviarNotification($response);
            
         } else {
             // Aquí puedes manejar el caso de error en la creación de la reunión

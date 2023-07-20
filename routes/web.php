@@ -107,7 +107,7 @@ Route::middleware(["web","auth","verified"])->group(function () {
     
         Route::get('delete_problems/{id}/{idproblema}',[App\Http\Controllers\PsychologistController::class,'delete_problems'])->name('delete_problems');
     /* ACTUALIZAR INFO PSICOLOGO */
-
+        Route::get('buscar-usuario/{email}',[App\Http\Controllers\UserController::class,'buscar_usuario_email'])->name('buscar_usuario');
 
     Route::get('seleccionar_especialista/{id_terapia}/{id_problema}',[App\Http\Controllers\PsychologistController::class,'seleccionarEspecialista'])->name('especialistaEn');
     Route::post('/consulta_problemas/{id_problema}',[App\Http\Controllers\PsychologistController::class,'problems'])->name('consulta_problemas');
@@ -240,7 +240,3 @@ Route::post('/registro_pacientes', [App\Http\Controllers\AdminController::class,
 
 Route::get('/registrar_reserva', [App\Http\Controllers\AdminController::class, 'registrar_reserva_form'])->name('registro_reserva')->middleware('permission:registrar_reservacion_paciente_psicologo');
 
-/***********************************  ZOOM*/
-    Route::get('auth/zoom', [ZoomAuthController::class, 'redirectToProvider'])->name('zoom.auth');
-    Route::get('auth/zoom/callback', [ZoomAuthController::class, 'handleProviderCallback']);
-/*********************************** ZOOM*/

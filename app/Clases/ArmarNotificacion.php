@@ -20,9 +20,9 @@ use App\Http\Controllers\ZoomAuthController;
     }
 
 
-    public function enviarNotification($response){
+    public function enviarNotification($link, $appointment_date){
         //$apiResponse= $this->response->json();
-        
+        //dd("Paso por aqui?");
         $notificar_paciente= User::where('id',Reservations::latest()->first()->id_user)->pluck('email')
         ->first();
 
@@ -36,9 +36,8 @@ use App\Http\Controllers\ZoomAuthController;
 
         $rec = array($notificar_paciente,$notificar_psicologo);
         //dd($response);
-        $apiResponse = $response;
 
-        Mail::to($rec)->send(new AppointmentNotification($apiResponse, $fecha, $hora));
+        Mail::to($rec)->send(new AppointmentNotification($link, $fecha, $appointment_date, $hora));
          return redirect()->back()->withInput()->with('cita_agendada','Se ha creado la reserva y se ha notificado por correo electrónico al paciente y al psicólogo ');
     }
 

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('reservations', function (Blueprint $table) {
             //
-            $table->string('link_meeting')->nullable();
+            $table->string('link_meeting');
         });
     }
 
